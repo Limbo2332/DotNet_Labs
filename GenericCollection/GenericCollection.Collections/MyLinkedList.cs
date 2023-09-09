@@ -71,11 +71,11 @@ namespace GenericCollection.Collections
         #endregion
 
         #region Constructors
-        public MyLinkedList() {}
+        public MyLinkedList() { }
 
         public MyLinkedList(IEnumerable<T> collection)
         {
-            if(!collection.Any() || collection is null)
+            if (!collection.Any() || collection is null)
             {
                 throw new ArgumentNullException(nameof(collection));
             }
@@ -234,12 +234,12 @@ namespace GenericCollection.Collections
                 return RemoveLast();
             }
 
-            if(node.Previous is null)
+            if (node.Previous is null)
             {
                 return RemoveFirst();
             }
 
-            if(!Contains(node.Value))
+            if (!Contains(node.Value))
             {
                 return false;
             }
@@ -323,7 +323,7 @@ namespace GenericCollection.Collections
         {
             MyLinkedListNode<T>? current = _firstElement;
 
-            while(current is not null)
+            while (current is not null)
             {
                 current = current.Next;
             }
@@ -347,7 +347,7 @@ namespace GenericCollection.Collections
         {
             MyLinkedListNode<T>? current = _firstElement;
 
-            while(current is not null)
+            while (current is not null)
             {
                 if (current.Value!.Equals(value))
                 {
@@ -383,17 +383,17 @@ namespace GenericCollection.Collections
         /// <exception cref="ArgumentException"></exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if(array is null)
+            if (array is null)
             {
                 throw new ArgumentNullException(nameof(array));
             }
 
-            if(arrayIndex < 0 || arrayIndex > array.Length)
+            if (arrayIndex < 0 || arrayIndex > array.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             }
 
-            if(array.Length - arrayIndex < Count)
+            if (array.Length - arrayIndex < Count)
             {
                 throw new ArgumentException(NO_SPACE_IN_ARRAY);
             }

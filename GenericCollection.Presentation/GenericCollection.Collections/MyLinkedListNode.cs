@@ -11,8 +11,8 @@
             Value = value;
         }
 
-        public T Value { get; set; }
-        public MyLinkedListNode<T> Previous { get; set; } = null!;
-        public MyLinkedListNode<T> Next { get; set; } = null!;
+        public T Value { get; internal set; }
+        public MyLinkedListNode<T> Previous { get; internal set; } = null!;
+        public MyLinkedListNode<T> Next { get; internal set; } = null!;
     }
 }

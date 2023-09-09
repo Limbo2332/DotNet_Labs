@@ -43,7 +43,7 @@ namespace GenericCollection.Collections
 
         public IEnumerator<T> GetEnumerator()
         {
-            MyLinkedListNode<T> current = _firstElement;
+            MyLinkedListNode<T>? current = _firstElement;
 
             while (current is not null)
             {
@@ -268,6 +268,43 @@ namespace GenericCollection.Collections
 
             CollectionCleared.Invoke();
         }
+
+        #endregion
+
+        #region Finding node
+
+        /// <summary>
+        /// Find node by value
+        /// </summary>
+        /// <param name="value">Value of node to find</param>
+        /// <returns>Node to find or null if collection doesn't contain it</returns>
+        public MyLinkedListNode<T>? Find(T value)
+        {
+            MyLinkedListNode<T>? current = _firstElement;
+
+            while(current is not null)
+            {
+                if (current.Value!.Equals(value))
+                {
+                    return current;
+                }
+
+                current = current.Next;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Check if element is in collection
+        /// </summary>
+        /// <param name="value">Value of node to find</param>
+        /// <returns>true if element is in collection, false if not</returns>
+        public bool Contains(T value)
+        {
+            return Find(value) is not null;
+        }
+
 
         #endregion
     }

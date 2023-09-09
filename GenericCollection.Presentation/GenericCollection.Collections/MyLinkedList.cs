@@ -16,7 +16,15 @@ namespace GenericCollection.Collections
         /// </summary>
         private event Action<MyLinkedListNode<T>> ItemAdded = null!;
 
+        /// <summary>
+        /// Event invokes when item removed
+        /// </summary>
         private event Action<MyLinkedListNode<T>> ItemRemoved = null!;
+
+        /// <summary>
+        /// Event invokes when collection has been cleared
+        /// </summary>
+        private event Action CollectionCleared = null!;
 
         /// <summary>
         /// Get first element of collection
@@ -237,6 +245,28 @@ namespace GenericCollection.Collections
             }
 
             Count--;
+        }
+
+        #endregion
+
+        #region Clearing collection
+
+        /// <summary>
+        /// Clear collection
+        /// </summary>
+        public void Clear()
+        {
+            MyLinkedListNode<T>? current = _firstElement;
+
+            while(current is not null)
+            {
+                current = current.Next;
+            }
+
+            _firstElement = null;
+            Count = 0;
+
+            CollectionCleared.Invoke();
         }
 
         #endregion

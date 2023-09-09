@@ -6,25 +6,46 @@ namespace GenericCollection.Collections
     /// Linked list 
     /// </summary>
     /// <typeparam name="T">Type of linked list</typeparam>
-    public class MyLinkedList<T> : IEnumerable<T>
+    public class MyLinkedList<T> : IEnumerable<T>, ICollection<T>
     {
-        private MyLinkedListNode<T>? _firstElement;
-        private MyLinkedListNode<T>? _lastElement;
+        #region Error messages constants
 
+        private const string NO_SPACE_IN_ARRAY = "Array doesn't have enough space to copy";
+
+        #endregion
+
+        #region Collection events
         /// <summary>
         /// Event invokes when new item added
         /// </summary>
-        private event Action<MyLinkedListNode<T>> ItemAdded = null!;
+        public event Action<MyLinkedListNode<T>>? ItemAdded;
 
         /// <summary>
         /// Event invokes when item removed
         /// </summary>
-        private event Action<MyLinkedListNode<T>> ItemRemoved = null!;
+        public event Action<MyLinkedListNode<T>>? ItemRemoved;
 
         /// <summary>
         /// Event invokes when collection has been cleared
         /// </summary>
-        private event Action CollectionCleared = null!;
+        public event Action? CollectionCleared;
+
+        /// <summary>
+        /// Event invokes when collection touches first item
+        /// </summary>
+        public event Action? OnFirstItemTouched;
+
+        /// <summary>
+        /// Event invokes when collection touches last item
+        /// </summary>
+        public event Action? OnLastItemTouched;
+
+        #endregion
+
+        #region First and last elements properties
+
+        private MyLinkedListNode<T>? _firstElement;
+        private MyLinkedListNode<T>? _lastElement;
 
         /// <summary>
         /// Get first element of collection
@@ -36,11 +57,38 @@ namespace GenericCollection.Collections
         /// </summary>
         public MyLinkedListNode<T>? Last => _lastElement;
 
+        #endregion
+
+        #region Count property
+
         /// <summary>
         /// Get amount of nodes in collection
         /// </summary>
         public int Count { get; private set; }
 
+        public bool IsReadOnly => throw new NotImplementedException();
+
+        #endregion
+
+        #region Constructors
+        public MyLinkedList() {}
+
+        public MyLinkedList(IEnumerable<T> collection)
+        {
+            if(!collection.Any() || collection is null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            foreach (T item in collection)
+            {
+                AddLast(item);
+            }
+        }
+
+        #endregion
+
+        #region IEnumerable implementation
         public IEnumerator<T> GetEnumerator()
         {
             MyLinkedListNode<T>? current = _firstElement;
@@ -56,6 +104,8 @@ namespace GenericCollection.Collections
         {
             return ((IEnumerable<T>)this).GetEnumerator();
         }
+
+        #endregion
 
         #region Adding node
         /// <summary>
@@ -111,7 +161,8 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded.Invoke(node);
+            ItemAdded?.Invoke(node);
+            OnFirstItemTouched?.Invoke();
         }
 
         /// <summary>
@@ -147,7 +198,8 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded.Invoke(node);
+            ItemAdded?.Invoke(node);
+            OnLastItemTouched?.Invoke();
         }
         #endregion
 
@@ -158,12 +210,16 @@ namespace GenericCollection.Collections
         /// </summary>
         /// <param name="value">Value of node to remove</param>
         /// <exception cref="InvalidOperationException"></exception>
-        public void Remove(T value)
+        public bool Remove(T value)
         {
-            //TODO: Replace with find method and exception if not in collection
-            MyLinkedListNode<T> nodeToRemove = new MyLinkedListNode<T>(value);
+            if (!Contains(value))
+            {
+                return false;
+            }
 
-            Remove(nodeToRemove);
+            MyLinkedListNode<T> nodeToRemove = Find(value)!;
+
+            return Remove(nodeToRemove);
         }
 
         /// <summary>
@@ -171,42 +227,46 @@ namespace GenericCollection.Collections
         /// </summary>
         /// <param name="node">Node to remove</param>
         /// <exception cref="InvalidOperationException"></exception>
-        public void Remove(MyLinkedListNode<T> node)
+        public bool Remove(MyLinkedListNode<T> node)
         {
             if (Count == 0 || Count == 1 || node.Next is null)
             {
-                RemoveLast();
-                return;
+                return RemoveLast();
             }
 
             if(node.Previous is null)
             {
-                RemoveFirst();
-                return;
+                return RemoveFirst();
             }
 
-            //TODO: exception if element no in collection (by Find)
+            if(!Contains(node.Value))
+            {
+                return false;
+            }
 
-            ItemRemoved.Invoke(node);
+            ItemRemoved?.Invoke(node);
 
             node.Next.Previous = node.Previous;
             node.Previous.Next = node.Next;
 
             Count--;
+
+            return true;
         }
 
         /// <summary>
         /// Remove first element of collection
         /// </summary>
         /// <exception cref="InvalidOperationException"></exception>
-        public void RemoveFirst()
+        public bool RemoveFirst()
         {
             if (Count == 0)
             {
-                throw new InvalidOperationException("Collection has no elements");
+                return false;
             }
 
-            ItemRemoved.Invoke(_firstElement!);
+            ItemRemoved?.Invoke(_firstElement!);
+            OnFirstItemTouched?.Invoke();
 
             if (Count == 1)
             {
@@ -219,20 +279,23 @@ namespace GenericCollection.Collections
             }
 
             Count--;
+
+            return true;
         }
 
         /// <summary>
         /// Remove last element of collection
         /// </summary>
         /// <exception cref="InvalidOperationException"></exception>
-        public void RemoveLast()
+        public bool RemoveLast()
         {
             if (Count == 0)
             {
-                throw new InvalidOperationException("Collection has no elements");
+                return false;
             }
 
-            ItemRemoved.Invoke(_lastElement!);
+            ItemRemoved?.Invoke(_lastElement!);
+            OnLastItemTouched?.Invoke();
 
             if (Count == 1)
             {
@@ -245,6 +308,8 @@ namespace GenericCollection.Collections
             }
 
             Count--;
+
+            return true;
         }
 
         #endregion
@@ -266,7 +331,7 @@ namespace GenericCollection.Collections
             _firstElement = null;
             Count = 0;
 
-            CollectionCleared.Invoke();
+            CollectionCleared?.Invoke();
         }
 
         #endregion
@@ -304,7 +369,43 @@ namespace GenericCollection.Collections
         {
             return Find(value) is not null;
         }
+        #endregion
 
+        #region Coping
+
+        /// <summary>
+        /// Copies elements from collection to array
+        /// </summary>
+        /// <param name="array">Array to copy to</param>
+        /// <param name="arrayIndex">To start copy from</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            if(array is null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            if(arrayIndex < 0 || arrayIndex > array.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+            }
+
+            if(array.Length - arrayIndex < Count)
+            {
+                throw new ArgumentException(NO_SPACE_IN_ARRAY);
+            }
+
+            MyLinkedListNode<T>? current = _firstElement;
+
+            while (current is not null)
+            {
+                array[arrayIndex++] = current.Value;
+                current = current.Next;
+            }
+        }
 
         #endregion
     }

@@ -16,6 +16,8 @@ namespace GenericCollection.Collections
         /// </summary>
         private event Action<MyLinkedListNode<T>> ItemAdded = null!;
 
+        private event Action<MyLinkedListNode<T>> ItemRemoved = null!;
+
         /// <summary>
         /// Get first element of collection
         /// </summary>
@@ -44,7 +46,7 @@ namespace GenericCollection.Collections
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-             return ((IEnumerable<T>)this).GetEnumerator();
+            return ((IEnumerable<T>)this).GetEnumerator();
         }
 
         #region Adding node
@@ -95,7 +97,7 @@ namespace GenericCollection.Collections
                 _lastElement = _firstElement;
             }
 
-            if(oldFirstElement is not null)
+            if (oldFirstElement is not null)
             {
                 oldFirstElement.Previous = _firstElement;
             }
@@ -131,7 +133,7 @@ namespace GenericCollection.Collections
                 _firstElement = _lastElement;
             }
 
-            if(oldLastElement is not null)
+            if (oldLastElement is not null)
             {
                 oldLastElement.Next = _lastElement;
             }
@@ -141,6 +143,102 @@ namespace GenericCollection.Collections
         }
         #endregion
 
+        #region Removing node
 
+        /// <summary>
+        /// Remove element from collection by value
+        /// </summary>
+        /// <param name="value">Value of node to remove</param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void Remove(T value)
+        {
+            //TODO: Replace with find method and exception if not in collection
+            MyLinkedListNode<T> nodeToRemove = new MyLinkedListNode<T>(value);
+
+            Remove(nodeToRemove);
+        }
+
+        /// <summary>
+        /// Remove element from collection
+        /// </summary>
+        /// <param name="node">Node to remove</param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void Remove(MyLinkedListNode<T> node)
+        {
+            if (Count == 0 || Count == 1 || node.Next is null)
+            {
+                RemoveLast();
+                return;
+            }
+
+            if(node.Previous is null)
+            {
+                RemoveFirst();
+                return;
+            }
+
+            //TODO: exception if element no in collection (by Find)
+
+            ItemRemoved.Invoke(node);
+
+            node.Next.Previous = node.Previous;
+            node.Previous.Next = node.Next;
+
+            Count--;
+        }
+
+        /// <summary>
+        /// Remove first element of collection
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void RemoveFirst()
+        {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("Collection has no elements");
+            }
+
+            ItemRemoved.Invoke(_firstElement!);
+
+            if (Count == 1)
+            {
+                _firstElement = _lastElement = null;
+            }
+            else
+            {
+                _firstElement = _firstElement!.Next;
+                _firstElement!.Previous = null;
+            }
+
+            Count--;
+        }
+
+        /// <summary>
+        /// Remove last element of collection
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void RemoveLast()
+        {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("Collection has no elements");
+            }
+
+            ItemRemoved.Invoke(_lastElement!);
+
+            if (Count == 1)
+            {
+                _lastElement = _firstElement = null;
+            }
+            else
+            {
+                _lastElement = _lastElement!.Previous;
+                _lastElement!.Next = null;
+            }
+
+            Count--;
+        }
+
+        #endregion
     }
 }

@@ -8,8 +8,8 @@ namespace GenericCollection.Collections
     /// <typeparam name="T">Type of linked list</typeparam>
     public class MyLinkedList<T> : IEnumerable<T>
     {
-        private MyLinkedListNode<T> _firstElement = null!;
-        private MyLinkedListNode<T> _lastElement = null!;
+        private MyLinkedListNode<T>? _firstElement;
+        private MyLinkedListNode<T>? _lastElement;
 
         /// <summary>
         /// Event invokes when new item added
@@ -47,12 +47,12 @@ namespace GenericCollection.Collections
              return ((IEnumerable<T>)this).GetEnumerator();
         }
 
-
+        #region Adding node
         /// <summary>
         /// Add element to the linked list
         /// </summary>
         /// <param name="value">Element value to add</param>
-        public void Add(T value) 
+        public void Add(T value)
         {
             MyLinkedListNode<T> newNodeElement = new MyLinkedListNode<T>(value);
 
@@ -63,7 +63,7 @@ namespace GenericCollection.Collections
         /// Add element to the linked list
         /// </summary>
         /// <param name="node">Node to add</param>
-        public void Add(MyLinkedListNode<T> node) 
+        public void Add(MyLinkedListNode<T> node)
         {
             AddLast(node);
         }
@@ -85,7 +85,7 @@ namespace GenericCollection.Collections
         /// <param name="node">New first node to add</param>
         public void AddFirst(MyLinkedListNode<T> node)
         {
-            MyLinkedListNode<T> oldFirstElement = _firstElement;
+            MyLinkedListNode<T>? oldFirstElement = _firstElement;
 
             _firstElement = node;
             _firstElement.Next = oldFirstElement;
@@ -94,7 +94,8 @@ namespace GenericCollection.Collections
             {
                 _lastElement = _firstElement;
             }
-            else
+
+            if(oldFirstElement is not null)
             {
                 oldFirstElement.Previous = _firstElement;
             }
@@ -120,7 +121,7 @@ namespace GenericCollection.Collections
         /// <param name="value">New last node to add</param>
         public void AddLast(MyLinkedListNode<T> node)
         {
-            MyLinkedListNode<T> oldLastElement = _lastElement;
+            MyLinkedListNode<T>? oldLastElement = _lastElement;
 
             _lastElement = node;
             _lastElement.Previous = oldLastElement;
@@ -129,7 +130,8 @@ namespace GenericCollection.Collections
             {
                 _firstElement = _lastElement;
             }
-            else
+
+            if(oldLastElement is not null)
             {
                 oldLastElement.Next = _lastElement;
             }
@@ -137,5 +139,8 @@ namespace GenericCollection.Collections
             Count++;
             ItemAdded.Invoke(node);
         }
+        #endregion
+
+
     }
 }

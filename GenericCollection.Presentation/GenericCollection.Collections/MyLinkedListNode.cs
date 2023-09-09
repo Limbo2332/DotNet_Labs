@@ -12,7 +12,7 @@
         }
 
         public T Value { get; internal set; }
-        public MyLinkedListNode<T> Previous { get; internal set; } = null!;
-        public MyLinkedListNode<T> Next { get; internal set; } = null!;
+        public MyLinkedListNode<T>? Previous { get; internal set; }
+        public MyLinkedListNode<T>? Next { get; internal set; }
     }
 }

@@ -361,6 +361,41 @@ namespace GenericCollection.Collections
         }
 
         /// <summary>
+        /// Find node by index
+        /// </summary>
+        /// <param name="index">Number of item in collection</param>
+        /// <returns>Node to find or null if collection doesn't contain it</returns>
+        public MyLinkedListNode<T>? Find(int index)
+        {
+            if (index < 0 || index > Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            int count = 0;
+
+            MyLinkedListNode<T>? current = _firstElement;
+
+            if(current is null)
+            {
+                return null;
+            }
+
+            while (count < index) 
+            {
+                if(current is null)
+                {
+                    return null;
+                }
+
+                count++;
+                current = current.Next;
+            }
+
+            return current;
+        }
+
+        /// <summary>
         /// Check if element is in collection
         /// </summary>
         /// <param name="value">Value of node to find</param>
@@ -405,6 +440,20 @@ namespace GenericCollection.Collections
                 array[arrayIndex++] = current.Value;
                 current = current.Next;
             }
+        }
+
+        #endregion
+
+        #region Indexer
+
+        /// <summary>
+        /// Get item by index
+        /// </summary>
+        /// <param name="index">Number of item in collection</param>
+        /// <returns>Node to find or null if collection doesn't contain it</returns>
+        public MyLinkedListNode<T>? this[int index]
+        {
+            get => Find(index);
         }
 
         #endregion

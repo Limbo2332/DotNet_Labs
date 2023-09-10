@@ -17,7 +17,7 @@ namespace GenericCollection.BLL.Helpers
 
         public static void PrintMenu(IWriter writer)
         {
-            if(_commands is not null) 
+            if (_commands is not null)
             {
                 writer.WriteMyLinkedList(_commands);
             }

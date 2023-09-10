@@ -1,12 +1,12 @@
-﻿using GenericCollection.Collections;
-using System.Windows.Input;
+﻿using GenericCollection.BLL.Interfaces.Abstract;
+using GenericCollection.Collections;
 
 namespace GenericCollection.BLL.Interfaces
 {
     public interface IInvoker
     {
-        public void AddCommand(ICommand command);
+        public void AddCommand(BaseCommand command);
         public void ExecuteCommand(int index);
-        public MyLinkedList<ICommand> GetCommands();
+        public MyLinkedList<BaseCommand> GetCommands();
     }
 }

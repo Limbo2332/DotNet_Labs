@@ -1,19 +1,29 @@
 ﻿using GenericCollection.BLL.Interfaces;
+using GenericCollection.BLL.Interfaces.Abstract;
 using GenericCollection.Collections;
-using System.Windows.Input;
 
 namespace GenericCollection.BLL.Services
 {
     public class Invoker : IInvoker
     {
-        private MyLinkedList<ICommand> commands = new MyLinkedList<ICommand>();
+        private const string NO_COMMAND_ERROR_MESSAGE = "Command doesn't exist";
 
-        public MyLinkedList<ICommand> GetCommands() => commands;
+        private MyLinkedList<BaseCommand> commands = new MyLinkedList<BaseCommand>();
 
-        public void AddCommand(ICommand command) => commands.Add(command);
+        public MyLinkedList<BaseCommand> GetCommands() => commands;
+
+        public void AddCommand(BaseCommand command) => commands.Add(command);
 
         public void ExecuteCommand(int index)
         {
+            var command = commands[index];
+
+            if (command is null)
+            {
+                throw new ArgumentNullException(NO_COMMAND_ERROR_MESSAGE);
+            }
+
+            command.Value.Execute();
         }
     }
 }

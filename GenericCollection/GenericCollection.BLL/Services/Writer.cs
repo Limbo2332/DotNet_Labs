@@ -28,7 +28,7 @@ namespace GenericCollection.BLL.Services
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            if(list is null)
+            if (list is null)
             {
                 Write(ConsoleColor.Red, EMPTY_LIST_MESSAGE);
                 return;

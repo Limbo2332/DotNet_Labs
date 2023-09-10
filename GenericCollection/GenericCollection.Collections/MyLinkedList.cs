@@ -376,14 +376,14 @@ namespace GenericCollection.Collections
 
             MyLinkedListNode<T>? current = _firstElement;
 
-            if(current is null)
+            if (current is null)
             {
                 return null;
             }
 
-            while (count < index) 
+            while (count < index)
             {
-                if(current is null)
+                if (current is null)
                 {
                     return null;
                 }

@@ -19,6 +19,11 @@ namespace GenericCollection.BLL.Services
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
+        /// <summary>
+        /// Writes collection to console
+        /// </summary>
+        /// <typeparam name="T">Value of collection items</typeparam>
+        /// <param name="list">Collection items</param>
         public void WriteMyLinkedList<T>(MyLinkedList<T>? list)
         {
             Console.ForegroundColor = ConsoleColor.Green;

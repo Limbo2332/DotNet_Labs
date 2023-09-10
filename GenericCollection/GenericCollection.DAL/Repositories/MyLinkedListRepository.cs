@@ -5,12 +5,18 @@ namespace GenericCollection.DAL.Repositories
 {
     public class MyLinkedListRepository<T> : IMyLinkedListRepository<T>
     {
-        private MyLinkedList<T> _items = new MyLinkedList<T>();
+        private readonly MyLinkedList<T> _items;
+
+        public MyLinkedListRepository()
+        {
+            _items = new MyLinkedList<T>();
+        }
 
         public MyLinkedList<T> GetCollection()
         {
             return _items;
         }
+
         public void Add(T item)
         {
             _items.Add(item);

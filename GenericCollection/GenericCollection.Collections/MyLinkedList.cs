@@ -66,7 +66,10 @@ namespace GenericCollection.Collections
         /// </summary>
         public int Count { get; private set; }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        /// <summary>
+        /// Checks if collection is read only
+        /// </summary>
+        public bool IsReadOnly => false;
 
         #endregion
 

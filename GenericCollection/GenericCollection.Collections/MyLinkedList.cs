@@ -6,7 +6,7 @@ namespace GenericCollection.Collections
     /// Linked list 
     /// </summary>
     /// <typeparam name="T">Type of linked list</typeparam>
-    public class MyLinkedList<T> : IEnumerable<T>, ICollection<T>
+    public class MyLinkedList<T> : ICollection<T>
     {
         #region Error messages constants
 
@@ -440,6 +440,11 @@ namespace GenericCollection.Collections
                 array[arrayIndex++] = current.Value;
                 current = current.Next;
             }
+        }
+
+        public int Compare(object? x, object? y)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

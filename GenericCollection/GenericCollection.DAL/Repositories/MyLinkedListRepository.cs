@@ -22,11 +22,6 @@ namespace GenericCollection.DAL.Repositories
             _items.Add(item);
         }
 
-        public void Add(MyLinkedListNode<T> node)
-        {
-            _items.Add(node);
-        }
-
         public MyLinkedListNode<T>? GetItemByIndex(int index)
         {
             return _items[index];
@@ -40,11 +35,6 @@ namespace GenericCollection.DAL.Repositories
         public void Remove(T item)
         {
             _items.Remove(item);
-        }
-
-        public void Remove(MyLinkedListNode<T> node)
-        {
-            _items.Remove(node);
         }
     }
 }

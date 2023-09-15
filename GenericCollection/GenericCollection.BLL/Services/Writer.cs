@@ -15,7 +15,7 @@ namespace GenericCollection.BLL.Services
         public void Write(ConsoleColor color = ConsoleColor.Gray, string value = "")
         {
             Console.ForegroundColor = color;
-            Console.WriteLine(value);
+            Console.WriteLine(value + "\n");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
@@ -34,9 +34,11 @@ namespace GenericCollection.BLL.Services
                 return;
             }
 
+            int counter = 1;
+
             foreach (T item in list)
             {
-                Console.WriteLine(item!.ToString());
+                Console.WriteLine($"{counter++}. {item}");
             }
         }
     }

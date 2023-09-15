@@ -21,7 +21,7 @@ namespace GenericCollection.BLL.Services
         /// <returns>Valid value</returns>
         T ICheckData.CheckData<T>(string inputTextGreeting, string errorMessage)
         {
-            _writer.Write(ConsoleColor.Cyan, inputTextGreeting + "\n");
+            _writer.Write(ConsoleColor.Cyan, inputTextGreeting);
             string? inputText = Console.ReadLine();
             _writer.Write();
 
@@ -29,7 +29,7 @@ namespace GenericCollection.BLL.Services
 
             while (!T.TryParse(inputText, CultureInfo.CurrentCulture, out type))
             {
-                _writer.Write(ConsoleColor.Red, errorMessage + "\n");
+                _writer.Write(ConsoleColor.Red, errorMessage);
                 inputText = Console.ReadLine();
                 _writer.Write();
             }

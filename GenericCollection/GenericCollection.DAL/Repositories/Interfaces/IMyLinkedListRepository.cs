@@ -6,8 +6,11 @@ namespace GenericCollection.DAL.Repositories.Interfaces
     {
         MyLinkedList<T> GetCollection();
         T GetItemByIndex(int index);
-        void Add(T item, Action<T>? onAddedEvent);
-        bool Remove(T item, Action<T>? onRemovedEvent);
-        void Clear(Action? onClearedEvent);
+        void Add(T item);
+        bool Remove(T item);
+        void Clear();
+        void SetOnAddEvent(Action<T> onAddedEvent);
+        void SetOnRemoveEvent(Action<T> onRemovedEvent);
+        void SetOnClearEvent(Action onClearedEvent);
     }
 }

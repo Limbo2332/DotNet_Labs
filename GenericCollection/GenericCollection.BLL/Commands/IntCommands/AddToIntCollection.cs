@@ -8,6 +8,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
     {
         public AddToIntCollection(ICheckData checkData, IWriter writer, IIntLinkedListRepository repository) : base(checkData, writer, repository)
         {
+            _repository.SetOnAddEvent(OnAddEvent);
         }
 
         public override string Name => "Add new item to collection";
@@ -17,7 +18,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
             int newValueToAdd = _checkData.CheckData<int>("Enter new int value to add into collection.",
                                                               "Please, enter valid int data.");
 
-            _repository.Add(newValueToAdd, OnAddEvent);
+            _repository.Add(newValueToAdd);
         }
 
         private void OnAddEvent(int value) =>

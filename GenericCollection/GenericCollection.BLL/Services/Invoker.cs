@@ -25,5 +25,10 @@ namespace GenericCollection.BLL.Services
 
             command.Value.Execute();
         }
+
+        public int GetCommandsCount()
+        {
+            return commands.Count;
+        }
     }
 }

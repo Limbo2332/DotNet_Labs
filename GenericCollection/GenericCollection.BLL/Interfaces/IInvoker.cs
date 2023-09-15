@@ -8,5 +8,6 @@ namespace GenericCollection.BLL.Interfaces
         public void AddCommand(BaseCommand command);
         public void ExecuteCommand(int index);
         public MyLinkedList<BaseCommand> GetCommands();
+        public int GetCommandsCount();
     }
 }

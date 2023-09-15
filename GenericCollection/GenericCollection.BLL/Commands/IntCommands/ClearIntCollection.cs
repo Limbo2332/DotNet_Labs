@@ -8,13 +8,14 @@ namespace GenericCollection.BLL.Commands.IntCommands
     {
         public ClearIntCollection(ICheckData checkData, IWriter writer, IIntLinkedListRepository repository) : base(checkData, writer, repository)
         {
+            _repository.SetOnClearEvent(OnClearEvent);
         }
 
         public override string Name => "Clear all items of the collection";
 
         public override void Execute()
         {
-            _repository.Clear(OnClearEvent);
+            _repository.Clear();
         }
 
         private void OnClearEvent() =>

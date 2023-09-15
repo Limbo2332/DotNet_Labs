@@ -8,7 +8,7 @@ namespace GenericCollection.DAL.Repositories.Interfaces
         MyLinkedListNode<T>? GetItemByValue(T value);
         MyLinkedListNode<T>? GetItemByIndex(int index);
         void Add(T item, Action<T>? onAddedEvent);
-        void Remove(T item, Action<T>? onRemovedEvent);
+        bool Remove(T item, Action<T>? onRemovedEvent);
         void Clear(Action? onClearedEvent);
     }
 }

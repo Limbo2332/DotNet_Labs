@@ -33,10 +33,10 @@ namespace GenericCollection.DAL.Repositories
             return _items.Find(value);
         }
 
-        public void Remove(T item, Action<T>? onRemovedEvent)
+        public bool Remove(T item, Action<T>? onRemovedEvent)
         {
             _items.ItemRemoved += onRemovedEvent;
-            _items.Remove(item);
+            return _items.Remove(item);
         }
 
         public void Clear(Action? onClearedEvent)

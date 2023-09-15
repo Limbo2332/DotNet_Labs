@@ -17,10 +17,10 @@ namespace GenericCollection.BLL.Commands.IntCommands
             int newValueToAdd = _checkData.CheckData<int>("Enter new int value to add into collection.",
                                                               "Please, enter valid int data.");
 
-            _repository.Add(newValueToAdd, (value) =>
-            {
-                _writer.Write(ConsoleColor.Green, $"New item with value {value} was successfully added to collection");
-            });
+            _repository.Add(newValueToAdd, OnAddEvent);
         }
+
+        private void OnAddEvent(int value) =>
+            _writer.Write(ConsoleColor.Green, $"New item with value {value} was successfully added to collection");
     }
 }

@@ -154,7 +154,7 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded?.Invoke(node);
+            ItemAdded?.Invoke(node.Value);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded?.Invoke(node);
+            ItemAdded?.Invoke(node.Value);
         }
         #endregion
 
@@ -235,7 +235,7 @@ namespace GenericCollection.Collections
                 return false;
             }
 
-            ItemRemoved?.Invoke(node);
+            ItemRemoved?.Invoke(node.Value);
 
             node.Next.Previous = node.Previous;
             node.Previous.Next = node.Next;
@@ -256,7 +256,7 @@ namespace GenericCollection.Collections
                 return false;
             }
 
-            ItemRemoved?.Invoke(_firstElement!);
+            ItemRemoved?.Invoke(_firstElement!.Value);
 
             if (Count == 1)
             {
@@ -284,7 +284,7 @@ namespace GenericCollection.Collections
                 return false;
             }
 
-            ItemRemoved?.Invoke(_lastElement!);
+            ItemRemoved?.Invoke(_lastElement!.Value);
 
             if (Count == 1)
             {

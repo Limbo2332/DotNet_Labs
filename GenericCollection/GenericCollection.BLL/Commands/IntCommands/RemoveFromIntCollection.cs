@@ -8,6 +8,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
     {
         public RemoveFromIntCollection(ICheckData checkData, IWriter writer, IIntLinkedListRepository repository) : base(checkData, writer, repository)
         {
+            _repository.SetOnRemoveEvent(OnRemoveEvent);
         }
 
         public override string Name => "Remove item from the collection";
@@ -17,7 +18,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
             int valueToRemove = _checkData.CheckData<int>("Enter int value to remove from collection.",
                                                               "Please, enter valid int data.");
 
-            bool isItemRemoved = _repository.Remove(valueToRemove, OnRemoveEvent);
+            bool isItemRemoved = _repository.Remove(valueToRemove);
 
             if(!isItemRemoved) 
             {

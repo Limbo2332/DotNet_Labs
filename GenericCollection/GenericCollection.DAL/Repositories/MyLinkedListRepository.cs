@@ -23,14 +23,12 @@ namespace GenericCollection.DAL.Repositories
             _items.Add(item);
         }
 
-        public MyLinkedListNode<T>? GetItemByIndex(int index)
+        public T GetItemByIndex(int index)
         {
-            return _items[index];
-        }
+            var item = _items[index]
+                ?? throw new ArgumentNullException($"Item by index {index} doesn't exist");
 
-        public MyLinkedListNode<T>? GetItemByValue(T value)
-        {
-            return _items.Find(value);
+            return item.Value;
         }
 
         public bool Remove(T item, Action<T>? onRemovedEvent)

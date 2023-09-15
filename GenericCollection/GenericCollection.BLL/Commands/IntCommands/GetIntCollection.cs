@@ -6,7 +6,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
 {
     public class GetIntCollection : BaseIntCommand
     {
-        public GetIntCollection(ICheckData checkData, IWriter writer, IIntLinkedListRepository repository) 
+        public GetIntCollection(ICheckData checkData, IWriter writer, IIntLinkedListRepository repository)
             : base(checkData, writer, repository)
         {
         }
@@ -17,7 +17,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
         {
             var collection = _repository.GetCollection();
 
-            if(collection.Count == 0)
+            if (collection.Count == 0)
             {
                 _writer.Write(ConsoleColor.Red, "No items in collection");
             }

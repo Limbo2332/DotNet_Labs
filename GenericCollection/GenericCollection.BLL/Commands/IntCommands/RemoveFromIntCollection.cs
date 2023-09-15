@@ -20,7 +20,7 @@ namespace GenericCollection.BLL.Commands.IntCommands
 
             bool isItemRemoved = _repository.Remove(valueToRemove);
 
-            if(!isItemRemoved) 
+            if (!isItemRemoved)
             {
                 _writer.Write(ConsoleColor.Red, $"Our collection doesn't contain the item with value {valueToRemove}");
             }

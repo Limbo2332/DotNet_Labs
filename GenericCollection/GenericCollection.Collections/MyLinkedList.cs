@@ -6,7 +6,7 @@ namespace GenericCollection.Collections
     /// Linked list 
     /// </summary>
     /// <typeparam name="T">Type of linked list</typeparam>
-    public class MyLinkedList<T> : IEnumerable<T>, ICollection<T>
+    public class MyLinkedList<T> : ICollection<T>
     {
         #region Error messages constants
 
@@ -18,27 +18,17 @@ namespace GenericCollection.Collections
         /// <summary>
         /// Event invokes when new item added
         /// </summary>
-        public event Action<MyLinkedListNode<T>>? ItemAdded;
+        public event Action<T>? ItemAdded;
 
         /// <summary>
         /// Event invokes when item removed
         /// </summary>
-        public event Action<MyLinkedListNode<T>>? ItemRemoved;
+        public event Action<T>? ItemRemoved;
 
         /// <summary>
         /// Event invokes when collection has been cleared
         /// </summary>
         public event Action? CollectionCleared;
-
-        /// <summary>
-        /// Event invokes when collection touches first item
-        /// </summary>
-        public event Action? OnFirstItemTouched;
-
-        /// <summary>
-        /// Event invokes when collection touches last item
-        /// </summary>
-        public event Action? OnLastItemTouched;
 
         #endregion
 
@@ -66,7 +56,10 @@ namespace GenericCollection.Collections
         /// </summary>
         public int Count { get; private set; }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        /// <summary>
+        /// Checks if collection is read only
+        /// </summary>
+        public bool IsReadOnly => false;
 
         #endregion
 
@@ -161,8 +154,7 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded?.Invoke(node);
-            OnFirstItemTouched?.Invoke();
+            ItemAdded?.Invoke(node.Value);
         }
 
         /// <summary>
@@ -198,8 +190,7 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded?.Invoke(node);
-            OnLastItemTouched?.Invoke();
+            ItemAdded?.Invoke(node.Value);
         }
         #endregion
 
@@ -244,7 +235,7 @@ namespace GenericCollection.Collections
                 return false;
             }
 
-            ItemRemoved?.Invoke(node);
+            ItemRemoved?.Invoke(node.Value);
 
             node.Next.Previous = node.Previous;
             node.Previous.Next = node.Next;
@@ -265,8 +256,7 @@ namespace GenericCollection.Collections
                 return false;
             }
 
-            ItemRemoved?.Invoke(_firstElement!);
-            OnFirstItemTouched?.Invoke();
+            ItemRemoved?.Invoke(_firstElement!.Value);
 
             if (Count == 1)
             {
@@ -294,8 +284,7 @@ namespace GenericCollection.Collections
                 return false;
             }
 
-            ItemRemoved?.Invoke(_lastElement!);
-            OnLastItemTouched?.Invoke();
+            ItemRemoved?.Invoke(_lastElement!.Value);
 
             if (Count == 1)
             {
@@ -440,6 +429,11 @@ namespace GenericCollection.Collections
                 array[arrayIndex++] = current.Value;
                 current = current.Next;
             }
+        }
+
+        public int Compare(object? x, object? y)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

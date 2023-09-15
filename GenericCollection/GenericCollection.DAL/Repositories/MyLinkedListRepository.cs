@@ -17,34 +17,30 @@ namespace GenericCollection.DAL.Repositories
             return _items;
         }
 
-        public void Add(T item)
+        public void Add(T item, Action<T>? onAddedEvent)
         {
+            _items.ItemAdded += onAddedEvent;
             _items.Add(item);
         }
 
-        public void Add(MyLinkedListNode<T> node)
+        public T GetItemByIndex(int index)
         {
-            _items.Add(node);
+            var item = _items[index]
+                ?? throw new ArgumentNullException($"Item by index {index} doesn't exist");
+
+            return item.Value;
         }
 
-        public MyLinkedListNode<T>? GetItemByIndex(int index)
+        public bool Remove(T item, Action<T>? onRemovedEvent)
         {
-            return _items[index];
+            _items.ItemRemoved += onRemovedEvent;
+            return _items.Remove(item);
         }
 
-        public MyLinkedListNode<T>? GetItemByValue(T value)
+        public void Clear(Action? onClearedEvent)
         {
-            return _items.Find(value);
-        }
-
-        public void Remove(T item)
-        {
-            _items.Remove(item);
-        }
-
-        public void Remove(MyLinkedListNode<T> node)
-        {
-            _items.Remove(node);
+            _items.CollectionCleared += onClearedEvent;
+            _items.Clear();
         }
     }
 }

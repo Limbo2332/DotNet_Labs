@@ -30,16 +30,6 @@ namespace GenericCollection.Collections
         /// </summary>
         public event Action? CollectionCleared;
 
-        /// <summary>
-        /// Event invokes when collection touches first item
-        /// </summary>
-        public event Action? OnFirstItemTouched;
-
-        /// <summary>
-        /// Event invokes when collection touches last item
-        /// </summary>
-        public event Action? OnLastItemTouched;
-
         #endregion
 
         #region First and last elements properties
@@ -165,7 +155,6 @@ namespace GenericCollection.Collections
 
             Count++;
             ItemAdded?.Invoke(node);
-            OnFirstItemTouched?.Invoke();
         }
 
         /// <summary>
@@ -202,7 +191,6 @@ namespace GenericCollection.Collections
 
             Count++;
             ItemAdded?.Invoke(node);
-            OnLastItemTouched?.Invoke();
         }
         #endregion
 
@@ -269,7 +257,6 @@ namespace GenericCollection.Collections
             }
 
             ItemRemoved?.Invoke(_firstElement!);
-            OnFirstItemTouched?.Invoke();
 
             if (Count == 1)
             {
@@ -298,7 +285,6 @@ namespace GenericCollection.Collections
             }
 
             ItemRemoved?.Invoke(_lastElement!);
-            OnLastItemTouched?.Invoke();
 
             if (Count == 1)
             {

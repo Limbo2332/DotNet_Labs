@@ -18,12 +18,12 @@ namespace GenericCollection.Collections
         /// <summary>
         /// Event invokes when new item added
         /// </summary>
-        public event Action<MyLinkedListNode<T>>? ItemAdded;
+        public event Action<T>? ItemAdded;
 
         /// <summary>
         /// Event invokes when item removed
         /// </summary>
-        public event Action<MyLinkedListNode<T>>? ItemRemoved;
+        public event Action<T>? ItemRemoved;
 
         /// <summary>
         /// Event invokes when collection has been cleared

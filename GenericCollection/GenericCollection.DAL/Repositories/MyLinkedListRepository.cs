@@ -17,8 +17,9 @@ namespace GenericCollection.DAL.Repositories
             return _items;
         }
 
-        public void Add(T item)
+        public void Add(T item, Action<T>? onAddedEvent)
         {
+            _items.ItemAdded += onAddedEvent;
             _items.Add(item);
         }
 
@@ -32,9 +33,16 @@ namespace GenericCollection.DAL.Repositories
             return _items.Find(value);
         }
 
-        public void Remove(T item)
+        public void Remove(T item, Action<T>? onRemovedEvent)
         {
+            _items.ItemRemoved += onRemovedEvent;
             _items.Remove(item);
+        }
+
+        public void Clear(Action? onClearedEvent)
+        {
+            _items.CollectionCleared += onClearedEvent;
+            _items.Clear();
         }
     }
 }

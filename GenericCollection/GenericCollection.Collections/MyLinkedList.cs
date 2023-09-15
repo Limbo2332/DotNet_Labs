@@ -6,7 +6,7 @@ namespace GenericCollection.Collections
     /// Linked list 
     /// </summary>
     /// <typeparam name="T">Type of linked list</typeparam>
-    public class MyLinkedList<T> : ICollection<T>
+    public class MyLinkedList<T> : ICollection<T>, IDisposable
     {
         #region Error messages constants
 
@@ -431,11 +431,6 @@ namespace GenericCollection.Collections
             }
         }
 
-        public int Compare(object? x, object? y)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
         #region Indexer
@@ -448,6 +443,19 @@ namespace GenericCollection.Collections
         public MyLinkedListNode<T>? this[int index]
         {
             get => Find(index);
+        }
+
+        #endregion
+
+        #region Disposable
+
+        public void Dispose()
+        {
+            Clear();
+
+            ItemAdded = null;
+            ItemRemoved = null;
+            CollectionCleared = null;
         }
 
         #endregion

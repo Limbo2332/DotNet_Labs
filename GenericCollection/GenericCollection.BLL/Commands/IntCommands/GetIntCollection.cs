@@ -17,7 +17,14 @@ namespace GenericCollection.BLL.Commands.IntCommands
         {
             var collection = _repository.GetCollection();
 
-            _writer.WriteMyLinkedList(collection);
+            if(collection.Count == 0)
+            {
+                _writer.Write(ConsoleColor.Red, "No items in collection");
+            }
+            else
+            {
+                _writer.WriteMyLinkedList(collection);
+            }
         }
     }
 }

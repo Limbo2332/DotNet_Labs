@@ -10,7 +10,7 @@ namespace GenericCollection.Tests
         [TestCase("Hello")]
         [TestCase(true)]
         [TestCase(27.4F)]
-        public void Check_CollectionAddedItem<T>(T value)
+        public void Check_CollectionAdd_Item<T>(T value)
         {
             // Arrange
             var collection = new MyLinkedList<T>();
@@ -38,7 +38,7 @@ namespace GenericCollection.Tests
         [TestCase("Hello", "World")]
         [TestCase(true, true)]
         [TestCase(27.4F, 65.4F)]
-        public void Check_CollectionAddedTwoItems<T>(T firstValue, T secondValue)
+        public void Check_CollectionAdd_TwoItems<T>(T firstValue, T secondValue)
         {
             // Arrange
             var collection = new MyLinkedList<T>();
@@ -77,7 +77,7 @@ namespace GenericCollection.Tests
         [TestCase("Hello", "World", "!")]
         [TestCase(true, true, false)]
         [TestCase(27.4F, 65.4F, 14.0F)]
-        public void Check_CollectionAddedThreeItems<T>(T firstValue, T secondValue, T thirdValue)
+        public void Check_CollectionAdd_ThreeItems<T>(T firstValue, T secondValue, T thirdValue)
         {
             // Arrange
             var collection = new MyLinkedList<T>();
@@ -127,7 +127,7 @@ namespace GenericCollection.Tests
         [TestCase("Hello", "World")]
         [TestCase(true, true)]
         [TestCase(27.4F, 65.4F)]
-        public void Check_CollectionAddedTwoItemsToStart<T>(T firstValue, T secondValue)
+        public void Check_CollectionAdd_TwoItemsToStart<T>(T firstValue, T secondValue)
         {
             // Arrange
             var collection = new MyLinkedList<T>();

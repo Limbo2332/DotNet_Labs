@@ -162,12 +162,12 @@ namespace GenericCollection.Collections
         /// <returns></returns>
         public bool Remove(T value)
         {
-            MyLinkedListNode<T> nodeToRemove = Find(value)!;
-
             if (!Contains(value))
             {
                 return false;
             }
+
+            MyLinkedListNode<T> nodeToRemove = Find(value)!;
 
             if (Count == 0 || Count == 1 || nodeToRemove.Next is null)
             {

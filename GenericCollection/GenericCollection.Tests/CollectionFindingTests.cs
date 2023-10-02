@@ -109,7 +109,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [Test]  
+        [Test]
         public void CheckIf_ItemNotInCollection()
         {
             //Arrange

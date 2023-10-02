@@ -1,6 +1,5 @@
 ﻿using GenericCollection.Collections;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace GenericCollection.Tests
 {

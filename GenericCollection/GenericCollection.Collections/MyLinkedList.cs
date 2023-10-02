@@ -66,9 +66,9 @@ namespace GenericCollection.Collections
         #region Constructors
         public MyLinkedList() { }
 
-        public MyLinkedList(IEnumerable<T> collection)
+        public MyLinkedList(IEnumerable<T>? collection)
         {
-            if (!collection.Any() || collection is null)
+            if (collection is null || !collection.Any())
             {
                 throw new ArgumentNullException(nameof(collection));
             }

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericCollection.BLL", "Ge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericCollection.DAL", "GenericCollection.DAL\GenericCollection.DAL.csproj", "{FC9AD0E8-2DB3-4847-86C9-FAFACEE94B5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericCollection.Tests", "GenericCollection.Tests\GenericCollection.Tests.csproj", "{F7AD6039-C08D-47C5-A2A7-4D73FE9D6269}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FC9AD0E8-2DB3-4847-86C9-FAFACEE94B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9AD0E8-2DB3-4847-86C9-FAFACEE94B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC9AD0E8-2DB3-4847-86C9-FAFACEE94B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7AD6039-C08D-47C5-A2A7-4D73FE9D6269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7AD6039-C08D-47C5-A2A7-4D73FE9D6269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7AD6039-C08D-47C5-A2A7-4D73FE9D6269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7AD6039-C08D-47C5-A2A7-4D73FE9D6269}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

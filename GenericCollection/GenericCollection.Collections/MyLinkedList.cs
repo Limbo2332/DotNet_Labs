@@ -6,7 +6,7 @@ namespace GenericCollection.Collections
     /// Linked list 
     /// </summary>
     /// <typeparam name="T">Type of linked list</typeparam>
-    public class MyLinkedList<T> : ICollection<T>, IDisposable
+    public class MyLinkedList<T> : ICollection<T>
     {
         #region Error messages constants
 
@@ -66,16 +66,16 @@ namespace GenericCollection.Collections
         #region Constructors
         public MyLinkedList() { }
 
-        public MyLinkedList(IEnumerable<T> collection)
+        public MyLinkedList(IEnumerable<T>? collection)
         {
-            if (!collection.Any() || collection is null)
+            if (collection is null || !collection.Any())
             {
                 throw new ArgumentNullException(nameof(collection));
             }
 
             foreach (T item in collection)
             {
-                AddLast(item);
+                Add(item);
             }
         }
 
@@ -107,76 +107,9 @@ namespace GenericCollection.Collections
         /// <param name="value">Element value to add</param>
         public void Add(T value)
         {
-            MyLinkedListNode<T> newNodeElement = new MyLinkedListNode<T>(value);
-
-            Add(newNodeElement);
-        }
-
-        /// <summary>
-        /// Add element to the linked list
-        /// </summary>
-        /// <param name="node">Node to add</param>
-        public void Add(MyLinkedListNode<T> node)
-        {
-            AddLast(node);
-        }
-
-        /// <summary>
-        /// Add element to the start of linked list
-        /// </summary>
-        /// <param name="value">New first element value to add</param>
-        public void AddFirst(T value)
-        {
-            MyLinkedListNode<T> newFirstElement = new MyLinkedListNode<T>(value);
-
-            AddFirst(newFirstElement);
-        }
-
-        /// <summary>
-        /// Add element to the start of linked list
-        /// </summary>
-        /// <param name="node">New first node to add</param>
-        public void AddFirst(MyLinkedListNode<T> node)
-        {
-            MyLinkedListNode<T>? oldFirstElement = _firstElement;
-
-            _firstElement = node;
-            _firstElement.Next = oldFirstElement;
-
-            if (Count == 0)
-            {
-                _lastElement = _firstElement;
-            }
-
-            if (oldFirstElement is not null)
-            {
-                oldFirstElement.Previous = _firstElement;
-            }
-
-            Count++;
-            ItemAdded?.Invoke(node.Value);
-        }
-
-        /// <summary>
-        /// Add element to the end of linked list
-        /// </summary>
-        /// <param name="value">New last element value to add</param>
-        public void AddLast(T value)
-        {
-            MyLinkedListNode<T> newLastElement = new MyLinkedListNode<T>(value);
-
-            AddLast(newLastElement);
-        }
-
-        /// <summary>
-        /// Add element to the end of linked list
-        /// </summary>
-        /// <param name="value">New last node to add</param>
-        public void AddLast(MyLinkedListNode<T> node)
-        {
             MyLinkedListNode<T>? oldLastElement = _lastElement;
 
-            _lastElement = node;
+            _lastElement = new MyLinkedListNode<T>(value);
             _lastElement.Previous = oldLastElement;
 
             if (Count == 0)
@@ -190,55 +123,66 @@ namespace GenericCollection.Collections
             }
 
             Count++;
-            ItemAdded?.Invoke(node.Value);
+            ItemAdded?.Invoke(_lastElement.Value);
         }
+
+        /// <summary>
+        /// Add element to the start of linked list
+        /// </summary>
+        /// <param name="value">New first value to add</param>
+        public void AddFirst(T value)
+        {
+            MyLinkedListNode<T>? oldFirstElement = _firstElement;
+
+            _firstElement = new MyLinkedListNode<T>(value);
+            _firstElement.Next = oldFirstElement;
+
+            if (Count == 0)
+            {
+                _lastElement = _firstElement;
+            }
+
+            if (oldFirstElement is not null)
+            {
+                oldFirstElement.Previous = _firstElement;
+            }
+
+            Count++;
+            ItemAdded?.Invoke(_firstElement.Value);
+        }
+
         #endregion
 
         #region Removing node
 
         /// <summary>
-        /// Remove element from collection by value
+        /// Remove element from collection
         /// </summary>
-        /// <param name="value">Value of node to remove</param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <param name="value">Value to remove</param>
+        /// <returns></returns>
         public bool Remove(T value)
         {
-            if (!Contains(value))
+            MyLinkedListNode<T>? nodeToRemove = Find(value);
+
+            if (nodeToRemove is null)
             {
                 return false;
             }
 
-            MyLinkedListNode<T> nodeToRemove = Find(value)!;
-
-            return Remove(nodeToRemove);
-        }
-
-        /// <summary>
-        /// Remove element from collection
-        /// </summary>
-        /// <param name="node">Node to remove</param>
-        /// <exception cref="InvalidOperationException"></exception>
-        public bool Remove(MyLinkedListNode<T> node)
-        {
-            if (Count == 0 || Count == 1 || node.Next is null)
+            if (Count == 0 || Count == 1 || nodeToRemove.Next is null)
             {
                 return RemoveLast();
             }
 
-            if (node.Previous is null)
+            if (nodeToRemove.Previous is null)
             {
                 return RemoveFirst();
             }
 
-            if (!Contains(node.Value))
-            {
-                return false;
-            }
+            ItemRemoved?.Invoke(nodeToRemove.Value);
 
-            ItemRemoved?.Invoke(node.Value);
-
-            node.Next.Previous = node.Previous;
-            node.Previous.Next = node.Next;
+            nodeToRemove.Next.Previous = nodeToRemove.Previous;
+            nodeToRemove.Previous.Next = nodeToRemove.Next;
 
             Count--;
 
@@ -318,6 +262,7 @@ namespace GenericCollection.Collections
             }
 
             _firstElement = null;
+            _lastElement = null;
             Count = 0;
 
             CollectionCleared?.Invoke();
@@ -365,20 +310,10 @@ namespace GenericCollection.Collections
 
             MyLinkedListNode<T>? current = _firstElement;
 
-            if (current is null)
-            {
-                return null;
-            }
-
             while (count < index)
             {
-                if (current is null)
-                {
-                    return null;
-                }
-
                 count++;
-                current = current.Next;
+                current = current?.Next;
             }
 
             return current;
@@ -405,7 +340,7 @@ namespace GenericCollection.Collections
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[]? array, int arrayIndex)
         {
             if (array is null)
             {
@@ -440,22 +375,14 @@ namespace GenericCollection.Collections
         /// </summary>
         /// <param name="index">Number of item in collection</param>
         /// <returns>Node to find or null if collection doesn't contain it</returns>
-        public MyLinkedListNode<T>? this[int index]
+        public T? this[int index]
         {
-            get => Find(index);
-        }
+            get
+            {
+                var result = Find(index);
 
-        #endregion
-
-        #region Disposable
-
-        public void Dispose()
-        {
-            Clear();
-
-            ItemAdded = null;
-            ItemRemoved = null;
-            CollectionCleared = null;
+                return result is not null ? result.Value : default;
+            }
         }
 
         #endregion

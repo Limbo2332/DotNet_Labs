@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace GenericCollection.Tests
 {
-    public class Tests
+    public class CollectionCreationTests
     {
         private static readonly List<IEnumerable<object>> itemsCollection = new List<IEnumerable<object>>
         {
@@ -35,8 +35,11 @@ namespace GenericCollection.Tests
             var collection = new MyLinkedList<T>(items);
 
             // Assert
-            Assert.NotNull(collection);
-            Assert.That(collection.Count, Is.EqualTo(items.Count()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(collection, Is.Not.Null);
+                Assert.That(collection, Has.Count.EqualTo(items.Count()));
+            });
         }
     }
 }

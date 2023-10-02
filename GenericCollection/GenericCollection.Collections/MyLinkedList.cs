@@ -75,7 +75,7 @@ namespace GenericCollection.Collections
 
             foreach (T item in collection)
             {
-                AddLast(item);
+                Add(item);
             }
         }
 
@@ -107,13 +107,29 @@ namespace GenericCollection.Collections
         /// <param name="value">Element value to add</param>
         public void Add(T value)
         {
-            AddLast(value);
+            MyLinkedListNode<T>? oldLastElement = _lastElement;
+
+            _lastElement = new MyLinkedListNode<T>(value);
+            _lastElement.Previous = oldLastElement;
+
+            if (Count == 0)
+            {
+                _firstElement = _lastElement;
+            }
+
+            if (oldLastElement is not null)
+            {
+                oldLastElement.Next = _lastElement;
+            }
+
+            Count++;
+            ItemAdded?.Invoke(_lastElement.Value);
         }
 
         /// <summary>
         /// Add element to the start of linked list
         /// </summary>
-        /// <param name="node">New first node to add</param>
+        /// <param name="value">New first value to add</param>
         public void AddFirst(T value)
         {
             MyLinkedListNode<T>? oldFirstElement = _firstElement;
@@ -135,30 +151,6 @@ namespace GenericCollection.Collections
             ItemAdded?.Invoke(_firstElement.Value);
         }
 
-        /// <summary>
-        /// Add element to the end of linked list
-        /// </summary>
-        /// <param name="value">New last node to add</param>
-        public void AddLast(T value)
-        {
-            MyLinkedListNode<T>? oldLastElement = _lastElement;
-
-            _lastElement = new MyLinkedListNode<T>(value);
-            _lastElement.Previous = oldLastElement;
-
-            if (Count == 0)
-            {
-                _firstElement = _lastElement;
-            }
-
-            if (oldLastElement is not null)
-            {
-                oldLastElement.Next = _lastElement;
-            }
-
-            Count++;
-            ItemAdded?.Invoke(_lastElement.Value);
-        }
         #endregion
 
         #region Removing node
@@ -166,8 +158,8 @@ namespace GenericCollection.Collections
         /// <summary>
         /// Remove element from collection
         /// </summary>
-        /// <param name="node">Node to remove</param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <param name="value">Value to remove</param>
+        /// <returns></returns>
         public bool Remove(T value)
         {
             MyLinkedListNode<T> nodeToRemove = Find(value)!;

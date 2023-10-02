@@ -262,6 +262,7 @@ namespace GenericCollection.Collections
             }
 
             _firstElement = null;
+            _lastElement = null;
             Count = 0;
 
             CollectionCleared?.Invoke();

@@ -35,11 +35,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1)]
-        [TestCase('h')]
-        [TestCase("Hello")]
-        [TestCase(true)]
-        [TestCase(27.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.OneItemTestCase))]
         public void Check_CollectionRemoveItem_WhenOneItemInCollection<T>(T value)
         {
             //Arrange
@@ -62,11 +58,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2)]
-        [TestCase('h', '1')]
-        [TestCase("Hello", "World")]
-        [TestCase(true, true)]
-        [TestCase(27.4F, 65.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.TwoItemsTestCases))]
         public void Check_CollectionRemoveItem_WhenTwoItemsInCollection<T>(T firstValue, T secondValue)
         {
             //Arrange
@@ -94,11 +86,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void Check_CollectionRemoveMiddleItem_WhenThreeItemsInCollection<T>(T firstValue, T secondValue, T thirdValue)
         {
             //Arrange
@@ -153,11 +141,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2)]
-        [TestCase('h', '1')]
-        [TestCase("Hello", "World")]
-        [TestCase(true, true)]
-        [TestCase(27.4F, 65.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.TwoItemsTestCases))]
         public void Check_CollectionRemoveFirstItem_WhenTwoItemsInCollection<T>(T firstValue, T secondValue)
         {
             //Arrange
@@ -211,11 +195,7 @@ namespace GenericCollection.Tests
             Assert.That(result, Is.False);
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void Check_CollectionRemoveItem_InTheStart<T>(T firstValue, T secondValue, T thirdValue)
         {
             //Arrange
@@ -248,11 +228,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void Check_CollectionRemoveItems_InTheStart_And_InTheEnd<T>(T firstValue, T secondValue, T thirdValue)
         {
             //Arrange

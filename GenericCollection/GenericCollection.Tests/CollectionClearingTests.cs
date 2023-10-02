@@ -23,11 +23,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1)]
-        [TestCase('h')]
-        [TestCase("Hello")]
-        [TestCase(true)]
-        [TestCase(27.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.OneItemTestCase))]
         public void Check_ClearCollection_WhenItems<T>(T value)
         {
             //Arrange

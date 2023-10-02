@@ -31,11 +31,7 @@ namespace GenericCollection.Tests
             Assert.That(item, Is.Null);
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void FindItem_InItems<T>(T firstValue, T secondValue, T thirdValue)
         {
             //Arrange
@@ -64,11 +60,7 @@ namespace GenericCollection.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => collection.Find(index: index));
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void FindItem_ByIndex_WhenInCollection<T>(T firstValue, T secondValue, T thirdValue)
         {
             //Arrange
@@ -85,11 +77,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void CheckIf_ItemInCollection<T>(T firstValue, T secondValue, T thirdValue)
         {
             //Arrange

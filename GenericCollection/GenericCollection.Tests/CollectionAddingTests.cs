@@ -5,11 +5,7 @@ namespace GenericCollection.Tests
 {
     public class CollectionAddingTests
     {
-        [TestCase(1)]
-        [TestCase('h')]
-        [TestCase("Hello")]
-        [TestCase(true)]
-        [TestCase(27.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.OneItemTestCase))]
         public void Check_CollectionAdd_Item<T>(T value)
         {
             // Arrange
@@ -33,11 +29,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2)]
-        [TestCase('h', '1')]
-        [TestCase("Hello", "World")]
-        [TestCase(true, true)]
-        [TestCase(27.4F, 65.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.TwoItemsTestCases))]
         public void Check_CollectionAdd_TwoItems<T>(T firstValue, T secondValue)
         {
             // Arrange
@@ -72,11 +64,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2, 3)]
-        [TestCase('h', '1', 'h')]
-        [TestCase("Hello", "World", "!")]
-        [TestCase(true, true, false)]
-        [TestCase(27.4F, 65.4F, 14.0F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.ThreeItemsTestCases))]
         public void Check_CollectionAdd_ThreeItems<T>(T firstValue, T secondValue, T thirdValue)
         {
             // Arrange
@@ -122,11 +110,7 @@ namespace GenericCollection.Tests
             });
         }
 
-        [TestCase(1, 2)]
-        [TestCase('h', '1')]
-        [TestCase("Hello", "World")]
-        [TestCase(true, true)]
-        [TestCase(27.4F, 65.4F)]
+        [TestCaseSource(typeof(TestData), nameof(TestData.TwoItemsTestCases))]
         public void Check_CollectionAdd_TwoItemsToStart<T>(T firstValue, T secondValue)
         {
             // Arrange

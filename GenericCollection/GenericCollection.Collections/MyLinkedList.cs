@@ -162,12 +162,12 @@ namespace GenericCollection.Collections
         /// <returns></returns>
         public bool Remove(T value)
         {
-            if (!Contains(value))
+            MyLinkedListNode<T>? nodeToRemove = Find(value);
+
+            if (nodeToRemove is null)
             {
                 return false;
             }
-
-            MyLinkedListNode<T> nodeToRemove = Find(value)!;
 
             if (Count == 0 || Count == 1 || nodeToRemove.Next is null)
             {
@@ -310,20 +310,10 @@ namespace GenericCollection.Collections
 
             MyLinkedListNode<T>? current = _firstElement;
 
-            if (current is null)
-            {
-                return null;
-            }
-
             while (count < index)
             {
-                if (current is null)
-                {
-                    return null;
-                }
-
                 count++;
-                current = current.Next;
+                current = current?.Next;
             }
 
             return current;
@@ -350,7 +340,7 @@ namespace GenericCollection.Collections
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[]? array, int arrayIndex)
         {
             if (array is null)
             {
@@ -387,7 +377,12 @@ namespace GenericCollection.Collections
         /// <returns>Node to find or null if collection doesn't contain it</returns>
         public T? this[int index]
         {
-            get => Find(index)!.Value;
+            get
+            {
+                var result = Find(index);
+
+                return result is not null ? result.Value : default;
+            }
         }
 
         #endregion

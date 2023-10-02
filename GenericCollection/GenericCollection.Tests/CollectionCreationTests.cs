@@ -41,5 +41,37 @@ namespace GenericCollection.Tests
                 Assert.That(collection, Has.Count.EqualTo(items.Count()));
             });
         }
+
+        [Test]
+        public void Check_CollectionIsReadOnly()
+        {
+            //Arrange
+            var collection = new MyLinkedList<int>();
+
+            //Assert
+            Assert.That(collection.IsReadOnly, Is.False);
+        }
+
+        [Test]
+        public void GetEnumerator_ShouldReturnElementsInCorrectOrder()
+        {
+            // Arrange
+            var myEnumerable = new MyLinkedList<int>() { 1, 2, 3 };
+
+            // Act
+            var enumerator = myEnumerable.GetEnumerator();
+
+            // Assert
+            foreach (var element in myEnumerable)
+            {
+                Assert.Multiple(() =>
+                {
+                    Assert.That(enumerator.MoveNext(), Is.True);
+                    Assert.That(element, Is.EqualTo(enumerator.Current));
+                });
+            }
+
+            Assert.That(enumerator.MoveNext(), Is.False);
+        }
     }
 }

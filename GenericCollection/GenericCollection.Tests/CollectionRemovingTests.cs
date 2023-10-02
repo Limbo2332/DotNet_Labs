@@ -5,6 +5,7 @@ namespace GenericCollection.Tests
 {
     public class CollectionRemovingTests
     {
+        [Test]
         public void Check_CollectionRemoveItem_WhenEmptyCollection()
         {
             //Arrange
@@ -17,6 +18,7 @@ namespace GenericCollection.Tests
             Assert.That(result, Is.False);
         }
 
+        [Test]
         public void Check_CollectionRemoveItem_WhenNoItemInCollection()
         {
             //Arrange
@@ -92,6 +94,65 @@ namespace GenericCollection.Tests
             });
         }
 
+        [TestCase(1, 2, 3)]
+        [TestCase('h', '1', 'h')]
+        [TestCase("Hello", "World", "!")]
+        [TestCase(true, true, false)]
+        [TestCase(27.4F, 65.4F, 14.0F)]
+        public void Check_CollectionRemoveMiddleItem_WhenThreeItemsInCollection<T>(T firstValue, T secondValue, T thirdValue)
+        {
+            //Arrange
+            var collection = new MyLinkedList<T>{
+                firstValue,
+                secondValue,
+                thirdValue
+            };
+
+            //Act
+            var result = collection.Remove(secondValue);
+
+            //Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(collection, Has.Count.EqualTo(2));
+
+                Assert.That(collection.First, Is.Not.Null);
+                Assert.That(collection.First!.Next, Is.Not.Null);
+                Assert.That(collection.First!.Previous, Is.Null);
+
+                Assert.That(collection.Last, Is.Not.Null);
+                Assert.That(collection.Last!.Next, Is.Null);
+                Assert.That(collection.Last!.Previous, Is.Not.Null);
+
+                Assert.That(collection.First!.Next, Is.EqualTo(collection.Last));
+                Assert.That(collection.Last!.Previous, Is.EqualTo(collection.First));
+
+                Assert.That(collection.First.Value, Is.EqualTo(firstValue));
+                Assert.That(collection.Last.Value, Is.EqualTo(thirdValue));
+            });
+        }
+
+        [Test]
+        public void Check_CollectionRemoveFirstItem_WhenOneItemInCollection()
+        {
+            //Arrange
+            var collection = new MyLinkedList<int>() { 1 };
+
+            //Act
+            var result = collection.RemoveFirst();
+
+            //Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(collection, Has.Count.EqualTo(0));
+
+                Assert.That(collection.First, Is.Null);
+                Assert.That(collection.Last, Is.Null);
+            });
+        }
+
         [TestCase(1, 2)]
         [TestCase('h', '1')]
         [TestCase("Hello", "World")]
@@ -122,6 +183,32 @@ namespace GenericCollection.Tests
                 Assert.That(collection.Last!.Next, Is.Null);
                 Assert.That(collection.Last!.Previous, Is.Null);
             });
+        }
+
+        [Test]
+        public void Check_CollectionRemoveFirstItem_WhenNoItemsInCollection()
+        {
+            //Arrange
+            var collection = new MyLinkedList<int>();
+
+            //Act
+            var result = collection.RemoveFirst();
+
+            //Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void Check_CollectionRemoveLastItem_WhenNoItemsInCollection()
+        {
+            //Arrange
+            var collection = new MyLinkedList<int>();
+
+            //Act
+            var result = collection.RemoveLast();
+
+            //Assert
+            Assert.That(result, Is.False);
         }
 
         [TestCase(1, 2, 3)]

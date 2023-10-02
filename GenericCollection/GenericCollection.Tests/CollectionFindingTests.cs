@@ -109,6 +109,7 @@ namespace GenericCollection.Tests
             });
         }
 
+        [Test]  
         public void CheckIf_ItemNotInCollection()
         {
             //Arrange
@@ -119,6 +120,29 @@ namespace GenericCollection.Tests
 
             //Assert
             Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void Check_Indexer_IfNoInCollection()
+        {
+            //Arrange
+            var collection = new MyLinkedList<int>();
+
+            //Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => _ = collection[1]);
+        }
+
+        [Test]
+        public void Check_Indexer_IfInCollection()
+        {
+            //Arrange
+            var collection = new MyLinkedList<int>() { 1, 2, 3 };
+
+            //Act
+            var result = collection[1];
+
+            //Assert
+            Assert.That(result, Is.EqualTo(2));
         }
     }
 }

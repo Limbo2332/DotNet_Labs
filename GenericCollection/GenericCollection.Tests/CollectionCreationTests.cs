@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace GenericCollection.Tests
 {
+    [TestFixture]
     public class CollectionCreationTests
     {
         private static readonly List<IEnumerable<object>> itemsCollection = new List<IEnumerable<object>>

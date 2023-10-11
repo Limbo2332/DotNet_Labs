@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace GenericCollection.Tests
 {
+    [TestFixture]
     public class CollectionAddingTests
     {
         [TestCaseSource(typeof(TestData), nameof(TestData.OneItemTestCase))]

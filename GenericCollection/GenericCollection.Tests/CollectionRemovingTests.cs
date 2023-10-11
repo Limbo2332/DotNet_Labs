@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace GenericCollection.Tests
 {
+    [TestFixture]
     public class CollectionRemovingTests
     {
         [Test]

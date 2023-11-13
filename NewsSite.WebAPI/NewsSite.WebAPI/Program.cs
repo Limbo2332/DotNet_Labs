@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
+using NewsSite.UI.Extensions;
 
 namespace NewsSite.WebAPI
 {
@@ -14,6 +16,20 @@ namespace NewsSite.WebAPI
             builder.Services.AddDbContext<OnlineNewsContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("NewsDatabaseConnection")));
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<OnlineNewsContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddAuthenticationWithJwt(builder.Configuration);
+
+            builder.Services.RegisterRepositories();
+            builder.Services.RegisterAutoMapper();
+            builder.Services.AddCustomServices();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

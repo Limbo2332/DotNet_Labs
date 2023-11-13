@@ -13,11 +13,9 @@ namespace NewsSite.DAL.Entities
 
         public string? PublicInformation { get; set; }
 
-        public DateTime DateOfRegistration { get; set; }
-
         public DateTime? BirthDate { get; set; }
 
-        public IdentityUser<Guid> IdentityUser { get; set; } = null!;
+        public IdentityUser IdentityUser { get; set; } = null!;
 
         public IEnumerable<PieceOfNews>? News { get; set; }
     }

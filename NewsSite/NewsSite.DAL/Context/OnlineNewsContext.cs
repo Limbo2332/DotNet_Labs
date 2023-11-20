@@ -33,9 +33,7 @@ namespace NewsSite.DAL.Context
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var newEntries = ChangeTracker.Entries()
-                .Where(entryEntity => entryEntity.State == EntityState.Added
-                    && entryEntity.Entity != null
-                    && entryEntity.Entity as BaseEntity != null)
+                .Where(entryEntity => entryEntity is { State: EntityState.Added, Entity: BaseEntity })
                 .Select(entryEntity => entryEntity.Entity as BaseEntity);
 
             foreach (var newEntry in newEntries)
@@ -45,9 +43,7 @@ namespace NewsSite.DAL.Context
             }
 
             var updatedEntries = ChangeTracker.Entries()
-                .Where(entryEntity => entryEntity.State == EntityState.Modified
-                    && entryEntity.Entity != null
-                    && entryEntity.Entity as BaseEntity != null)
+                .Where(entryEntity => entryEntity is { State: EntityState.Modified, Entity: BaseEntity })
                 .Select(entryEntity => entryEntity.Entity as BaseEntity);
 
             foreach (var updatedEntry in updatedEntries)

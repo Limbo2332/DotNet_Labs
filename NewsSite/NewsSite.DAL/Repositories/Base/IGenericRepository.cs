@@ -4,7 +4,7 @@ namespace NewsSite.DAL.Repositories.Base
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
-        Task<IEnumerable<T>> GetAllAsync();
+        IQueryable<T> GetAll();
 
         Task<T?> GetByIdAsync(Guid id);
 

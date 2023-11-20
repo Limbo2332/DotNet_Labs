@@ -18,6 +18,10 @@ namespace NewsSite.BLL.MappingProfiles
 
             CreateMap<Author, NewUserResponse>();
             CreateMap<Author, LoginUserResponse>();
+
+            CreateMap<Author, AuthorResponse>();
+            CreateMap<UpdatedAuthorRequest, Author>()
+                .ForMember(dest => dest.IdentityUser, src => src.MapFrom<IdentityUserResolver>());
         }
     }
 }

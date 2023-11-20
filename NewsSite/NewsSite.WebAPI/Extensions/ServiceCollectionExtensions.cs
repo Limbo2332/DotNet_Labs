@@ -49,6 +49,7 @@ namespace NewsSite.UI.Extensions
         public static void AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAuthorsService, AuthorsService>();
         }
     }
 }

@@ -16,9 +16,9 @@ namespace NewsSite.DAL.Repositories
             _dbSet = _context.Set<T>(); 
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual IQueryable<T> GetAll()
         {
-            return await _dbSet.ToListAsync();
+            return _dbSet.AsQueryable();
         }
 
         public virtual async Task<T?> GetByIdAsync(Guid id)

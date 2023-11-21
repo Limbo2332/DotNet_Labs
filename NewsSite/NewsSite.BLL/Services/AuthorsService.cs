@@ -102,9 +102,7 @@ namespace NewsSite.BLL.Services
             {
                 "email" => author => author.Email.Contains(propertyValue),
                 "fullname" => author => author.FullName.Contains(propertyValue),
-                "birthdate" => author => propertyValue.ToDateTimeWithoutOutParameter()
-                                         && author.BirthDate.HasValue 
-                                         && author.BirthDate.Value == DateTime.Parse(propertyValue),
+                "birthdate" => author => propertyValue.ToDateTimeWithoutOutParameter(),
                 "publicinformation" => author => author.PublicInformation != null
                                                  && author.PublicInformation.Contains(propertyValue),
                 _ => author => true
@@ -117,7 +115,7 @@ namespace NewsSite.BLL.Services
             {
                 "email" => author => author.Email,
                 "fullname" => author => author.FullName,
-                "birthdate" => author => author.BirthDate ?? DateTime.UtcNow,
+                "birthdate" => author => author.BirthDate,
                 "publicinformation" => author => author.PublicInformation != null
                     ? author.PublicInformation.Length
                     : 0,

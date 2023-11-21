@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
 using NewsSite.UI.Extensions;
 
-namespace NewsSite.WebAPI
+namespace NewsSite.UI
 {
     public class Program
     {
@@ -31,7 +30,8 @@ namespace NewsSite.WebAPI
             builder.Services.RegisterAutoMapper();
             builder.Services.AddCustomServices();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

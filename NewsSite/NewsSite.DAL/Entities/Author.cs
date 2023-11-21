@@ -13,7 +13,7 @@ namespace NewsSite.DAL.Entities
 
         public string? PublicInformation { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public IdentityUser IdentityUser { get; set; } = null!;
 

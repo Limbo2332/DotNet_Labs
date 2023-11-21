@@ -2,10 +2,10 @@
 {
     public class PageSettings
     {
-        public PageSorting? PageSorting { get; }
+        public PageSorting? PageSorting { get; set; }
 
-        public PageFiltering? PageFiltering { get; }
+        public PageFiltering? PageFiltering { get; set; }
 
-        public PagePagination? PagePagination { get; }
+        public PagePagination? PagePagination { get; set; }
     }
 }

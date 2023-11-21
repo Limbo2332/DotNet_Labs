@@ -29,7 +29,8 @@ namespace NewsSite.DAL.Repositories
 
             if(author is not null)
             {
-                await _userManager.DeleteAsync(author.IdentityUser);
+                var identityUser = await _userManager.FindByEmailAsync(author.Email);
+                await _userManager.DeleteAsync(identityUser!);
             }
 
             await base.DeleteAsync(id);

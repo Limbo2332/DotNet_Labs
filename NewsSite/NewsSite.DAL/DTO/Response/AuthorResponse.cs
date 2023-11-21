@@ -14,7 +14,7 @@ namespace NewsSite.DAL.DTO.Response
 
         public string? PublicInformation { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public DateTime UpdatedAt { get; set; }
     }

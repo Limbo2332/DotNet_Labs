@@ -9,7 +9,7 @@ namespace NewsSite.DAL.Context.EntityConfigurations
         public void Configure(EntityTypeBuilder<NewsRubrics> builder)
         {
             builder
-                .HasKey(nr => new { nr.PieceOfNewsId, nr.RubricId });
+                .HasKey(nr => new { nr.NewsId, nr.RubricId });
         }
     }
 }

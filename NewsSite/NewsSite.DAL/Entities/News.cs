@@ -2,7 +2,7 @@
 
 namespace NewsSite.DAL.Entities
 {
-    public class PieceOfNews : BaseEntity
+    public class News : BaseEntity
     {
         public Guid CreatedBy { get; set; }
         public Author? Author { get; set; }

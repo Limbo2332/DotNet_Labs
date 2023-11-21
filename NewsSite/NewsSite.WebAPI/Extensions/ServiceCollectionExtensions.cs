@@ -43,6 +43,7 @@ namespace NewsSite.UI.Extensions
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<AuthorsProfile>();
+                cfg.AddProfile<NewsProfile>();
             }, Assembly.GetAssembly(typeof(AuthorsProfile)));
         }
 
@@ -50,6 +51,7 @@ namespace NewsSite.UI.Extensions
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAuthorsService, AuthorsService>();
+            services.AddScoped<INewsService, NewsService>();
         }
     }
 }

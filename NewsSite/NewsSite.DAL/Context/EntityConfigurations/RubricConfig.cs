@@ -12,6 +12,9 @@ namespace NewsSite.DAL.Context.EntityConfigurations
             builder
                 .Property(r => r.Name)
                 .HasMaxLength(ConfigurationConstants.RUBRIC_MAXLENGTH);
+
+            builder
+                .HasIndex(r => r.Name);
         }
     }
 }

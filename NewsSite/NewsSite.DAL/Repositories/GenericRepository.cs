@@ -18,12 +18,12 @@ namespace NewsSite.DAL.Repositories
 
         public virtual IQueryable<T> GetAll()
         {
-            return _dbSet.AsQueryable();
+            return _dbSet.AsQueryable().AsNoTracking();
         }
 
         public virtual async Task<T?> GetByIdAsync(Guid id)
         {
-            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public virtual async Task AddAsync(T entity)

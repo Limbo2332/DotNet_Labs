@@ -17,6 +17,6 @@ namespace NewsSite.DAL.Entities
 
         public IdentityUser IdentityUser { get; set; } = null!;
 
-        public IEnumerable<PieceOfNews>? News { get; set; }
+        public IEnumerable<News>? News { get; set; }
     }
 }

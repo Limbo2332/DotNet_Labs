@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using NewsSite.BLL.Extensions;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
@@ -13,7 +12,7 @@ using NewsSite.DAL.Repositories.Base;
 
 namespace NewsSite.BLL.Services
 {
-    public class AuthorsService : BaseService, IAuthorsService
+    public class AuthorsService : BaseEntityService<Author, AuthorResponse>, IAuthorsService
     {
         private readonly IAuthorsRepository _authorsRepository;
 
@@ -30,46 +29,9 @@ namespace NewsSite.BLL.Services
         { 
             var authors = _authorsRepository.GetAll();
 
-            if (pageSettings?.PageFiltering is not null)
-            {
-                var propertyValue = pageSettings.PageFiltering.PropertyValue.ToLower();
+            PageList<AuthorResponse> pageList = await base.GetAllAsync(authors, pageSettings);
 
-                var filteringFunc =
-                    GetFilteringExpressionFunc(pageSettings.PageFiltering.PropertyName, propertyValue);
-
-                authors = authors.Where(filteringFunc);
-            }
-
-            if (pageSettings?.PageSorting is not null)
-            {
-                var sortingExpression = GetSortingExpressionFunc(pageSettings.PageSorting.SortingProperty);
-
-                authors = pageSettings.PageSorting.SortingOrder switch
-                {
-                    SortingOrder.Ascending => authors.OrderBy(sortingExpression),
-                    SortingOrder.Descending => authors.OrderByDescending(sortingExpression),
-                    _ => authors
-                };
-            }
-
-            var totalItemsCount = authors.Count();
-
-            if (pageSettings?.PagePagination is not null)
-            {
-                authors = authors
-                    .Skip(pageSettings.PagePagination.PageSize * (pageSettings.PagePagination.PageNumber - 1))
-                    .Take(pageSettings.PagePagination.PageSize);
-            }
-
-            var authorsEnumerable = await authors.ToListAsync();
-
-            return new PageList<AuthorResponse>()
-            {
-                TotalCount = totalItemsCount,
-                PageSize = pageSettings?.PagePagination?.PageSize ?? PageList<AuthorResponse>.MAX_PAGE_SIZE,
-                PageNumber = pageSettings?.PagePagination?.PageNumber ?? 1,
-                Items = _mapper.Map<List<AuthorResponse>>(authorsEnumerable)
-            };
+            return pageList;
         }
 
         public async Task<AuthorResponse> GetAuthorByIdAsync(Guid authorId)
@@ -96,7 +58,7 @@ namespace NewsSite.BLL.Services
             await _authorsRepository.DeleteAsync(authorId);
         }
 
-        private Expression<Func<Author, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
+        public override Expression<Func<Author, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
         {
             return propertyName.ToLower() switch
             {
@@ -109,7 +71,7 @@ namespace NewsSite.BLL.Services
             };
         }
 
-        private Expression<Func<Author, object>> GetSortingExpressionFunc(string sortingValue)
+        public override Expression<Func<Author, object>> GetSortingExpressionFunc(string sortingValue)
         {
             return sortingValue.ToLower() switch
             {
@@ -119,7 +81,7 @@ namespace NewsSite.BLL.Services
                 "publicinformation" => author => author.PublicInformation != null
                     ? author.PublicInformation.Length
                     : 0,
-                _ => author => author.CreatedAt
+                _ => author => author.UpdatedAt
             };
         }
     }

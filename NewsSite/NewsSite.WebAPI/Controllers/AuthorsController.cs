@@ -47,7 +47,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpDelete("{authorId}")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult<AuthorResponse>> DeleteAuthor([FromRoute] Guid authorId)
+        public async Task<ActionResult> DeleteAuthor([FromRoute] Guid authorId)
         {
             await _authorsService.DeleteAuthorAsync(authorId);
 

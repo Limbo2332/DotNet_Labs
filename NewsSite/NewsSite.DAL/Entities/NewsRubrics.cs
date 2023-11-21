@@ -2,8 +2,8 @@
 {
     public class NewsRubrics
     {
-        public Guid PieceOfNewsId { get; set; }
-        public PieceOfNews? PieceOfNews { get; set; }
+        public Guid NewsId { get; set; }
+        public News? News { get; set; }
 
         public Guid RubricId { get; set; }
         public Rubric? Rubric { get; set; }

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using NewsSite.DAL.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
+using NewsSite.DAL.DTO.Page;
+using NewsSite.DAL.DTO.Response;
+using System.Linq.Expressions;
+using NewsSite.DAL.Entities.Abstract;
 
 namespace NewsSite.BLL.Services.Abstract
 {
@@ -9,7 +13,9 @@ namespace NewsSite.BLL.Services.Abstract
         protected readonly UserManager<IdentityUser> _userManager;
         protected readonly IMapper _mapper;
 
-        public BaseService(UserManager<IdentityUser> userManager, IMapper mapper)
+        protected BaseService(
+            UserManager<IdentityUser> userManager, 
+            IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;

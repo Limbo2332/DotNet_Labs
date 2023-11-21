@@ -2,7 +2,8 @@
 
 namespace NewsSite.DAL.Repositories.Base
 {
-    public interface INewsRepository : IGenericRepository<PieceOfNews>
+    public interface INewsRepository : IGenericRepository<News>
     {
+        
     }
 }

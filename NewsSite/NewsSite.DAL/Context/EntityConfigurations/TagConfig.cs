@@ -12,6 +12,9 @@ namespace NewsSite.DAL.Context.EntityConfigurations
             builder
                 .Property(t => t.Name)
                 .HasMaxLength(ConfigurationConstants.TAG_MAXLENGTH);
+
+            builder
+                .HasIndex(r => r.Name);
         }
     }
 }

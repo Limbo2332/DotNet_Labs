@@ -9,7 +9,7 @@ namespace NewsSite.DAL.Context.EntityConfigurations
         public void Configure(EntityTypeBuilder<NewsTags> builder)
         {
             builder
-                .HasKey(nt => new { nt.PieceOfNewsId, nt.TagId });
+                .HasKey(nt => new { nt.NewsId, nt.TagId });
         }
     }
 }

@@ -5,9 +5,9 @@ using NewsSite.DAL.Entities;
 
 namespace NewsSite.DAL.Context.EntityConfigurations
 {
-    public class PieceOfNewsConfig : IEntityTypeConfiguration<PieceOfNews>
+    public class NewsConfig : IEntityTypeConfiguration<News>
     {
-        public void Configure(EntityTypeBuilder<PieceOfNews> builder)
+        public void Configure(EntityTypeBuilder<News> builder)
         {
             builder
                 .Property(pon => pon.Subject)
@@ -19,13 +19,13 @@ namespace NewsSite.DAL.Context.EntityConfigurations
 
             builder
                 .HasMany(pon => pon.NewsTags)
-                .WithOne(nt => nt.PieceOfNews)
-                .HasForeignKey(nt => nt.PieceOfNewsId);
+                .WithOne(nt => nt.News)
+                .HasForeignKey(nt => nt.NewsId);
 
             builder
                 .HasMany(pon => pon.NewsRubrics)
-                .WithOne(nt => nt.PieceOfNews)
-                .HasForeignKey(nt => nt.PieceOfNewsId);
+                .WithOne(nt => nt.News)
+                .HasForeignKey(nt => nt.NewsId);
         }
     }
 }

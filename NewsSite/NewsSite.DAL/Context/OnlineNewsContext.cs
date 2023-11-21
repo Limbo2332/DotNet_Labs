@@ -11,7 +11,7 @@ namespace NewsSite.DAL.Context
     public class OnlineNewsContext : IdentityDbContext
     {
         public DbSet<Author> Authors => Set<Author>();
-        public DbSet<PieceOfNews> News => Set<PieceOfNews>();
+        public DbSet<News> News => Set<News>();
         public DbSet<Rubric> Rubrics => Set<Rubric>();
         public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<NewsRubrics> NewsRubrics => Set<NewsRubrics>();

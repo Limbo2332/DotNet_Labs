@@ -1,5 +1,5 @@
 ﻿using NewsSite.DAL.DTO.Page;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.News;
 using NewsSite.DAL.DTO.Response;
 
 namespace NewsSite.BLL.Interfaces

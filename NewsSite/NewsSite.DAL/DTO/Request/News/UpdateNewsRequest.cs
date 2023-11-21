@@ -1,12 +1,8 @@
-﻿namespace NewsSite.DAL.DTO.Request
+﻿namespace NewsSite.DAL.DTO.Request.News
 {
     public class UpdateNewsRequest
     {
         public Guid Id { get; set; }
-
-        public Guid? RubricId { get; set; }
-
-        public List<Guid>? TagsIds { get; set; }
 
         public string Subject { get; set; } = string.Empty;
 

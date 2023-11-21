@@ -1,4 +1,4 @@
-﻿using NewsSite.DAL.DTO.Request;
+﻿using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Response;
 
 namespace NewsSite.BLL.Interfaces

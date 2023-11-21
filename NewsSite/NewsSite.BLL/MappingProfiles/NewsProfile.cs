@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.News;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 

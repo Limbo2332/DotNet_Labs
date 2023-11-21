@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Auth;
+using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.Entities;
 
 namespace NewsSite.BLL.MappingProfiles.Resolvers

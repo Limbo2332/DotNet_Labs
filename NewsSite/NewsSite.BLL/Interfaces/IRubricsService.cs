@@ -1,5 +1,5 @@
 ﻿using NewsSite.DAL.DTO.Page;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.DAL.DTO.Response;
 
 namespace NewsSite.BLL.Interfaces
@@ -12,8 +12,12 @@ namespace NewsSite.BLL.Interfaces
 
         Task<RubricResponse> CreateNewRubricAsync(NewRubricRequest newRubric);
 
+        Task<RubricResponse> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId);
+
         Task<RubricResponse> UpdateRubricAsync(UpdateRubricRequest newRubric);
         
         Task DeleteRubricAsync(Guid id);
+
+        Task DeleteRubricForNewsIdAsync(Guid rubricId, Guid newsId);
     }
 }

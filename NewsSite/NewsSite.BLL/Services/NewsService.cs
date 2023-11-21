@@ -7,8 +7,8 @@ using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using NewsSite.DAL.DTO.Request;
 using NewsSite.DAL.Repositories.Base;
+using NewsSite.DAL.DTO.Request.News;
 
 namespace NewsSite.BLL.Services
 {
@@ -91,11 +91,12 @@ namespace NewsSite.BLL.Services
         public async Task<NewsResponse> CreateNewNewsAsync(NewNewsRequest newNewsRequest)
         {
             var newNews = _mapper.Map<News>(newNewsRequest);
+
             await _newsRepository.AddAsync(newNews);
 
-            if (newNewsRequest.RubricId is not null)
+            if (newNewsRequest.RubricsIds is not null && newNewsRequest.RubricsIds.Any())
             {
-                await _newsRepository.AddNewsRubrics(newNews.Id, newNewsRequest.RubricId.Value);
+                await _newsRepository.AddNewsRubrics(newNews.Id, newNewsRequest.RubricsIds);
             }
 
             if (newNewsRequest.TagsIds is not null && newNewsRequest.TagsIds.Any())
@@ -116,17 +117,6 @@ namespace NewsSite.BLL.Services
             updateNews.CreatedBy = news.AuthorId;
 
             await _newsRepository.UpdateAsync(updateNews);
-
-            if (updateNewsRequest.RubricId is not null)
-            {
-                await _newsRepository.AddNewsRubrics(updateNews.Id, updateNewsRequest.RubricId.Value);
-            }
-
-            if (updateNewsRequest.TagsIds is not null && updateNewsRequest.TagsIds.Any())
-            {
-                await _newsRepository.AddNewsTags(updateNews.Id, updateNewsRequest.TagsIds);
-            }
-
             await _newsRepository.SaveChangesAsync();
 
             return _mapper.Map<NewsResponse>(updateNews);

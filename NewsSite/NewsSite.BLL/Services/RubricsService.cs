@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Page;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
@@ -41,6 +41,14 @@ namespace NewsSite.BLL.Services
             return _mapper.Map<RubricResponse>(rubric);
         }
 
+        public async Task<RubricResponse> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId)
+        {
+            var rubric = await _rubricsRepository.AddRubricForNewsIdAsync(rubricId, newsId)
+                      ?? throw new Exception();
+
+            return _mapper.Map<RubricResponse>(rubric);
+        }
+
         public async Task<RubricResponse> CreateNewRubricAsync(NewRubricRequest newRubric)
         {
             var rubric = _mapper.Map<Rubric>(newRubric);
@@ -66,12 +74,17 @@ namespace NewsSite.BLL.Services
             await _rubricsRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteRubricForNewsIdAsync(Guid rubricId, Guid newsId)
+        {
+            await _rubricsRepository.DeleteRubricForNewsIdAsync(rubricId, newsId);
+        }
+
         public override Expression<Func<Rubric, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
         {
             return propertyName.ToLower() switch
             {
-                "name" => news => news.Name.Contains(propertyValue),
-                _ => news => true
+                "name" => rubric => rubric.Name.Contains(propertyValue),
+                _ => rubric => true
             };
         }
 
@@ -79,8 +92,8 @@ namespace NewsSite.BLL.Services
         {
             return sortingValue.ToLower() switch
             {
-                "name" => news => news.Name.Length,
-                _ => news => news.UpdatedAt
+                "name" => rubric => rubric.Name.Length,
+                _ => rubric => rubric.UpdatedAt
             };
         }
     }

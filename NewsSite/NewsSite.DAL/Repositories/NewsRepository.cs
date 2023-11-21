@@ -11,17 +11,18 @@ namespace NewsSite.DAL.Repositories
         {
         }
 
-        public async Task AddNewsRubrics(Guid newsId, Guid rubricId)
+        public async Task AddNewsRubrics(Guid newsId, List<Guid> rubricsIds)
         {
             await DeleteNewsRubricsByNewsIdAsync(newsId);
 
-            var newsRubrics = new NewsRubrics
-            {
-                RubricId = rubricId,
-                NewsId = newsId,
-            };
+            var newsRubrics =
+                rubricsIds.Select(rubricId => new NewsRubrics
+                {
+                    RubricId = rubricId,
+                    NewsId = newsId
+                });
 
-            await _context.NewsRubrics.AddAsync(newsRubrics);
+            await _context.NewsRubrics.AddRangeAsync(newsRubrics);
         }
 
         public async Task AddNewsTags(Guid newsId, List<Guid> tagsIds)
@@ -40,12 +41,12 @@ namespace NewsSite.DAL.Repositories
 
         private async Task DeleteNewsRubricsByNewsIdAsync(Guid newsId)
         {
-            var existingNewsRubrics = await _context.NewsRubrics
-                .FirstOrDefaultAsync(nr => nr.NewsId == newsId);
+            var existingNewsRubrics = _context.NewsRubrics
+                .Where(nr => nr.NewsId == newsId);
             
-            if (existingNewsRubrics is not null)
+            if (await existingNewsRubrics.AnyAsync())
             {
-                _context.NewsRubrics.Remove(existingNewsRubrics);
+                _context.NewsRubrics.RemoveRange(existingNewsRubrics);
             }
         }
 

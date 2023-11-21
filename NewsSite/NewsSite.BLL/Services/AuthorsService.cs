@@ -5,7 +5,7 @@ using NewsSite.BLL.Extensions;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Page;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories;

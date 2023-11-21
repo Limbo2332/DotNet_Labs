@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NewsSite.BLL.MappingProfiles.Resolvers;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Auth;
+using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 

@@ -1,10 +1,10 @@
-﻿namespace NewsSite.DAL.DTO.Request
+﻿namespace NewsSite.DAL.DTO.Request.News
 {
     public class NewNewsRequest
     {
         public Guid AuthorId { get; set; }
 
-        public Guid? RubricId { get; set; }
+        public List<Guid>? RubricsIds { get; set; }
 
         public List<Guid>? TagsIds { get; set; }
 

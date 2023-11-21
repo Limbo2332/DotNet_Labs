@@ -1,4 +1,4 @@
-﻿namespace NewsSite.DAL.DTO.Request
+﻿namespace NewsSite.DAL.DTO.Request.Auth
 {
     public class UserLoginRequest
     {

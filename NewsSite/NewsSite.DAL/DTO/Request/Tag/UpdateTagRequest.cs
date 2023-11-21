@@ -1,6 +1,6 @@
-﻿namespace NewsSite.DAL.DTO.Request
+﻿namespace NewsSite.DAL.DTO.Request.Tag
 {
-    public class UpdateRubricRequest
+    public class UpdateTagRequest
     {
         public Guid Id { get; set; }
 

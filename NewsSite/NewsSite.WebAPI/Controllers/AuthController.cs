@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewsSite.BLL.Interfaces;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Response;
 
 namespace NewsSite.UI.Controllers

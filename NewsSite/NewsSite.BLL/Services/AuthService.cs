@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
-using NewsSite.DAL.DTO.Request;
+using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories;

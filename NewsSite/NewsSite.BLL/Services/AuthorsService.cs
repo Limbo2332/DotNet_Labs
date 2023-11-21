@@ -8,6 +8,7 @@ using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
+using NewsSite.DAL.Repositories;
 using NewsSite.DAL.Repositories.Base;
 
 namespace NewsSite.BLL.Services
@@ -56,6 +57,7 @@ namespace NewsSite.BLL.Services
         public async Task DeleteAuthorAsync(Guid authorId)
         {
             await _authorsRepository.DeleteAsync(authorId);
+            await _authorsRepository.SaveChangesAsync();
         }
 
         public override Expression<Func<Author, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)

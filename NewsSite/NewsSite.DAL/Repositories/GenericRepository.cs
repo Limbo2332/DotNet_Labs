@@ -29,8 +29,6 @@ namespace NewsSite.DAL.Repositories
         public virtual async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-
-            await SaveChangesAsync();
         }
 
         public virtual async Task UpdateAsync(T entity)
@@ -47,8 +45,6 @@ namespace NewsSite.DAL.Repositories
             if(entity is not null)
             {
                 _dbSet.Remove(entity);
-
-                await SaveChangesAsync();
             }
         }
 

@@ -44,6 +44,7 @@ namespace NewsSite.UI.Extensions
             {
                 cfg.AddProfile<AuthorsProfile>();
                 cfg.AddProfile<NewsProfile>();
+                cfg.AddProfile<RubricProfile>();
             }, Assembly.GetAssembly(typeof(AuthorsProfile)));
         }
 
@@ -52,6 +53,7 @@ namespace NewsSite.UI.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAuthorsService, AuthorsService>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IRubricsService, RubricsService>();
         }
     }
 }

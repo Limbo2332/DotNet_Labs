@@ -4,6 +4,10 @@
     {
         public Guid Id { get; set; }
 
+        public Guid? RubricId { get; set; }
+
+        public List<Guid>? TagsIds { get; set; }
+
         public string Subject { get; set; } = string.Empty;
 
         public string Content { get; set; } = string.Empty;

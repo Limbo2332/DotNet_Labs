@@ -7,6 +7,7 @@ using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Request;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
+using NewsSite.DAL.Repositories;
 using NewsSite.DAL.Repositories.Base;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -68,6 +69,7 @@ namespace NewsSite.BLL.Services
             var author = _mapper.Map<Author>(userRegister);
 
             await _authorsRepository.AddAsync(author);
+            await _authorsRepository.SaveChangesAsync();
 
             return _mapper.Map<NewUserResponse>(author);
         }

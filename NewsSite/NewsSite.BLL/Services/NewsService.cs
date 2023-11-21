@@ -38,9 +38,8 @@ namespace NewsSite.BLL.Services
         {
             var news =
                 _newsRepository.GetAll()
-                    .Include(n => n.NewsRubrics!.Where(nr => nr.RubricId == rubricId))
-                        .ThenInclude(nr => nr.Rubric)
-                    .Where(n => n.NewsRubrics!.Any());
+                    .Include(n => n.NewsRubrics)
+                    .Where(n => n.NewsRubrics!.Any(nr => nr.RubricId == rubricId));
 
             PageList<NewsResponse> pageList = await base.GetAllAsync(news, pageSettings);
 
@@ -51,9 +50,8 @@ namespace NewsSite.BLL.Services
         {
             var news =
                 _newsRepository.GetAll()
-                    .Include(n => n.NewsTags!.Where(nt => tagsId.Contains(nt.TagId)))
-                        .ThenInclude(nt => nt.Tag)
-                    .Where(n => n.NewsRubrics!.Any());
+                    .Include(n => n.NewsTags)
+                    .Where(n => n.NewsTags!.Any(nt => tagsId.Contains(nt.TagId)));
 
             PageList<NewsResponse> pageList = await base.GetAllAsync(news, pageSettings);
 
@@ -95,6 +93,18 @@ namespace NewsSite.BLL.Services
             var newNews = _mapper.Map<News>(newNewsRequest);
             await _newsRepository.AddAsync(newNews);
 
+            if (newNewsRequest.RubricId is not null)
+            {
+                await _newsRepository.AddNewsRubrics(newNews.Id, newNewsRequest.RubricId.Value);
+            }
+
+            if (newNewsRequest.TagsIds is not null && newNewsRequest.TagsIds.Any())
+            {
+                await _newsRepository.AddNewsTags(newNews.Id, newNewsRequest.TagsIds);
+            }
+
+            await _newsRepository.SaveChangesAsync();
+
             return _mapper.Map<NewsResponse>(newNews);
         }
 
@@ -107,12 +117,25 @@ namespace NewsSite.BLL.Services
 
             await _newsRepository.UpdateAsync(updateNews);
 
+            if (updateNewsRequest.RubricId is not null)
+            {
+                await _newsRepository.AddNewsRubrics(updateNews.Id, updateNewsRequest.RubricId.Value);
+            }
+
+            if (updateNewsRequest.TagsIds is not null && updateNewsRequest.TagsIds.Any())
+            {
+                await _newsRepository.AddNewsTags(updateNews.Id, updateNewsRequest.TagsIds);
+            }
+
+            await _newsRepository.SaveChangesAsync();
+
             return _mapper.Map<NewsResponse>(updateNews);
         }
 
         public async Task DeleteNewsAsync(Guid newsId)
         {
             await _newsRepository.DeleteAsync(newsId);
+            await _newsRepository.SaveChangesAsync();
         }
 
         public override Expression<Func<News, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)

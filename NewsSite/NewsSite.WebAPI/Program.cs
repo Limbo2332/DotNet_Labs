@@ -31,8 +31,7 @@ namespace NewsSite.UI
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.RegisterValidators();
 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.ConfigureSwagger();
 
             var app = builder.Build();
 

@@ -13,6 +13,8 @@ namespace NewsSite.UI.Extensions
                     .WithMessage(ValidationMessages.GetEntityIsEmptyMessage(ValidationMessages.EMAIL_PROPERTY_NAME))
                 .EmailAddress()
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.EMAIL_PROPERTY_NAME))
+                .Matches(Regexes.NO_SPACES_REGEX)
+                    .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.EMAIL_PROPERTY_NAME))
                 .Matches(Regexes.EMAIL_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.EMAIL_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.EMAIL_MINLENGTH)
@@ -28,6 +30,8 @@ namespace NewsSite.UI.Extensions
             return rule
                 .NotEmpty()
                     .WithMessage(ValidationMessages.GetEntityIsEmptyMessage(ValidationMessages.PASSWORD_PROPERTY_NAME))
+                .Matches(Regexes.NO_SPACES_REGEX)
+                    .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.PASSWORD_PROPERTY_NAME))
                 .Matches(Regexes.PASSWORD_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.PASSWORD_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.PASSWORD_MINLENGTH)
@@ -44,6 +48,8 @@ namespace NewsSite.UI.Extensions
                 .NotEmpty()
                     .WithMessage(ValidationMessages.GetEntityIsEmptyMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME))
                 .Matches(Regexes.NO_SPACES_REGEX)
+                    .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME))
+                .Matches(Regexes.FULL_NAME_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.FULL_NAME_MINLENGTH)
                         .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME, 

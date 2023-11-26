@@ -28,6 +28,11 @@ namespace NewsSite.DAL.Repositories
             return !_dbSet.Any(a => a.Email == email);
         }
 
+        public bool IsFullNameUnique(string fullName)
+        {
+            return !_dbSet.Any(a => a.FullName == fullName);
+        }
+
         public override async Task DeleteAsync(Guid id)
         {
             var author = await GetByIdAsync(id);

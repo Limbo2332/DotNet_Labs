@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NewsSite.BLL.Interfaces;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.Tag;
@@ -7,6 +8,7 @@ using NewsSite.DAL.DTO.Response;
 namespace NewsSite.UI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TagsController : ControllerBase
     {
@@ -18,6 +20,7 @@ namespace NewsSite.UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(PageList<TagResponse>), 200)]
         public async Task<ActionResult<PageList<TagResponse>>> GetTags([FromQuery] PageSettings? pageSettings)
         {
@@ -26,7 +29,7 @@ namespace NewsSite.UI.Controllers
             return Ok(pageList);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(TagResponse), 200)]
         public async Task<ActionResult<PageList<TagResponse>>> GetTagById([FromRoute] Guid id)
         {
@@ -62,7 +65,7 @@ namespace NewsSite.UI.Controllers
             return Ok(updateTag);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         [ProducesResponseType(204)]
         public async Task<ActionResult> DeleteTag([FromRoute] Guid id)
         {

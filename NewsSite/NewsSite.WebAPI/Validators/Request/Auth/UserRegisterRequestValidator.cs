@@ -17,7 +17,9 @@ namespace NewsSite.UI.Validators.Request.Auth
                     .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.EMAIL_PROPERTY_NAME));
 
             RuleFor(ur => ur.FullName)
-                .CustomFullName();
+                .CustomFullName()
+                .Must(authorsService.IsFullNameUnique)
+                    .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME));
 
             RuleFor(ur => ur.Password)
                 .CustomPassword();

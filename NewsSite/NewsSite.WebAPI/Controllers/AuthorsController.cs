@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NewsSite.BLL.Interfaces;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.Author;
@@ -26,7 +27,7 @@ namespace NewsSite.UI.Controllers
             return Ok(pageList);
         }
 
-        [HttpGet("{authorId}")]
+        [HttpGet("{authorId:guid}")]
         [ProducesResponseType(typeof(AuthorResponse), 200)]
         public async Task<ActionResult<PageList<AuthorResponse>>> GetAuthorById([FromRoute] Guid authorId)
         {
@@ -36,6 +37,7 @@ namespace NewsSite.UI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(typeof(AuthorResponse), 200)]
         public async Task<ActionResult<AuthorResponse>> UpdateAuthor([FromBody] UpdatedAuthorRequest updatedAuthor)
         {
@@ -44,7 +46,8 @@ namespace NewsSite.UI.Controllers
             return Ok(author);
         }
 
-        [HttpDelete("{authorId}")]
+        [HttpDelete("{authorId:guid}")]
+        [Authorize]
         [ProducesResponseType(204)]
         public async Task<ActionResult> DeleteAuthor([FromRoute] Guid authorId)
         {

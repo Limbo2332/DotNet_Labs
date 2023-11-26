@@ -7,5 +7,7 @@ namespace NewsSite.DAL.Repositories.Base
         Task<Author> GetAuthorByEmailAsync(string email);
 
         bool IsEmailUnique(string email);
+
+        bool IsFullNameUnique(string fullName);
     }
 }

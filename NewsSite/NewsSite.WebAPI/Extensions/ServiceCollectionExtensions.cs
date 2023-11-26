@@ -5,9 +5,11 @@ using NewsSite.BLL.Services;
 using NewsSite.DAL.Repositories;
 using NewsSite.DAL.Repositories.Base;
 using System.Reflection;
+using System.Text;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using NewsSite.DAL.Context;
 using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Request.Author;
@@ -35,26 +37,67 @@ namespace NewsSite.UI.Extensions
                 .AddDefaultTokenProviders();
         }
 
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Online news API",
+                    Version = "v1",
+                    Description = "Online news API Services.",
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer",
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
+        }
+
         public static void AddAuthenticationWithJwt(this IServiceCollection services, IConfiguration config)
         {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            services.AddAuthentication(options => {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    RequireExpirationTime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = config.GetSection("JWT:Issuer").Value,
-                    ValidAudience = config.GetSection("JWT:Audience").Value
+                    ValidAudience = config.GetSection("JWT:Audience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("JWT:Key").Value!))
                 };
             });
+
+            services.AddAuthorization();
         }
+
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAuthorsRepository, AuthorsRepository>();

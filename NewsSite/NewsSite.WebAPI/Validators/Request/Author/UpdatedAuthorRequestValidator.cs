@@ -17,7 +17,9 @@ namespace NewsSite.UI.Validators.Request.Author
                     .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.EMAIL_PROPERTY_NAME));
 
             RuleFor(ua => ua.FullName)
-                .CustomFullName();
+                .CustomFullName()
+                .Must(authorsService.IsFullNameUnique)
+                .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME));
 
             RuleFor(ur => ur.BirthDate)
                 .LessThan(DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))

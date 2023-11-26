@@ -15,5 +15,7 @@ namespace NewsSite.BLL.Interfaces
         Task DeleteAuthorAsync(Guid authorId);
 
         bool IsEmailUnique(string email);
+
+        bool IsFullNameUnique(string fullName);
     }
 }

@@ -65,6 +65,11 @@ namespace NewsSite.BLL.Services
             return _authorsRepository.IsEmailUnique(email);
         }
 
+        public bool IsFullNameUnique(string fullName)
+        {
+            return _authorsRepository.IsFullNameUnique(fullName);
+        }
+
         public override Expression<Func<Author, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
         {
             return propertyName.ToLower() switch

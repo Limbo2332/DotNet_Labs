@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NewsSite.BLL.Interfaces;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.News;
@@ -71,7 +72,7 @@ namespace NewsSite.UI.Controllers
             return Ok(pageList);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(NewsResponse), 200)]
         public async Task<ActionResult<PageList<NewsResponse>>> GetNewsById([FromRoute] Guid id)
         {
@@ -81,6 +82,7 @@ namespace NewsSite.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(NewsResponse), 201)]
         public async Task<ActionResult<NewsResponse>> CreateNewNewsAsync([FromBody] NewNewsRequest newNewsRequest)
         {
@@ -90,6 +92,7 @@ namespace NewsSite.UI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(typeof(NewsResponse), 200)]
         public async Task<ActionResult<NewsResponse>> UpdateNewsAsync([FromBody] UpdateNewsRequest updateNewsRequest)
         {
@@ -98,7 +101,8 @@ namespace NewsSite.UI.Controllers
             return Ok(updateNews);
         }
 
-        [HttpDelete("{newsId}")]
+        [HttpDelete("{newsId:guid}")]
+        [Authorize]
         [ProducesResponseType(204)]
         public async Task<ActionResult> DeleteNews([FromRoute] Guid newsId)
         {

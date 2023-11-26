@@ -10,8 +10,8 @@ namespace NewsSite.DAL.Repositories
         private readonly INewsRepository _newsRepository;
 
         public RubricsRepository(
-            OnlineNewsContext context, 
-            INewsRepository newsRepository) 
+            OnlineNewsContext context,
+            INewsRepository newsRepository)
             : base(context)
         {
             _newsRepository = newsRepository;

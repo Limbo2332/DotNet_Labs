@@ -7,7 +7,6 @@ using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
-using NewsSite.DAL.Repositories;
 using NewsSite.DAL.Repositories.Base;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -24,7 +23,7 @@ namespace NewsSite.BLL.Services
             UserManager<IdentityUser> userManager,
             IMapper mapper,
             IConfiguration config,
-            IAuthorsRepository authorsRepository) 
+            IAuthorsRepository authorsRepository)
             : base(userManager, mapper)
         {
             _config = config;

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities.Abstract;
 using System.Linq.Expressions;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 
 namespace NewsSite.BLL.Services.Abstract
 {

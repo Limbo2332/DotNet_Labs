@@ -1,6 +1,4 @@
-﻿using NewsSite.DAL.Entities.Abstract;
-
-namespace NewsSite.DAL.DTO.Response
+﻿namespace NewsSite.DAL.DTO.Response
 {
     public class AuthorResponse
     {

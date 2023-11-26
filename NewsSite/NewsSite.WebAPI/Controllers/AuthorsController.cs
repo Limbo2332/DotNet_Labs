@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NewsSite.BLL.Interfaces;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.Author;
@@ -24,7 +23,7 @@ namespace NewsSite.UI.Controllers
         {
             var pageList = await _authorsService.GetAuthorsAsync(pageSettings);
 
-            return Ok(pageList);    
+            return Ok(pageList);
         }
 
         [HttpGet("{authorId}")]

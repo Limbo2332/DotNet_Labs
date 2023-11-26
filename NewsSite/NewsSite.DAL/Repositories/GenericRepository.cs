@@ -13,7 +13,7 @@ namespace NewsSite.DAL.Repositories
         public GenericRepository(OnlineNewsContext context)
         {
             _context = context;
-            _dbSet = _context.Set<T>(); 
+            _dbSet = _context.Set<T>();
         }
 
         public virtual IQueryable<T> GetAll()
@@ -42,7 +42,7 @@ namespace NewsSite.DAL.Repositories
         {
             var entity = await GetByIdAsync(id);
 
-            if(entity is not null)
+            if (entity is not null)
             {
                 _dbSet.Remove(entity);
             }

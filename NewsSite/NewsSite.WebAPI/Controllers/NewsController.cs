@@ -29,7 +29,7 @@ namespace NewsSite.UI.Controllers
         [HttpGet("by-rubric")]
         [ProducesResponseType(typeof(PageList<NewsResponse>), 200)]
         public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByRubricAsync(
-            [FromQuery] Guid rubricId, 
+            [FromQuery] Guid rubricId,
             [FromQuery] PageSettings? pageSettings)
         {
             var pageList = await _newsService.GetNewsByRubricAsync(rubricId, pageSettings);

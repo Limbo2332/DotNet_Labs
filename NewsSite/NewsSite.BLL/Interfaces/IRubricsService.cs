@@ -15,7 +15,7 @@ namespace NewsSite.BLL.Interfaces
         Task<RubricResponse> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId);
 
         Task<RubricResponse> UpdateRubricAsync(UpdateRubricRequest newRubric);
-        
+
         Task DeleteRubricAsync(Guid id);
 
         Task DeleteRubricForNewsIdAsync(Guid rubricId, Guid newsId);

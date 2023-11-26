@@ -11,8 +11,8 @@ namespace NewsSite.DAL.Repositories
         private readonly UserManager<IdentityUser> _userManager;
 
         public AuthorsRepository(
-            OnlineNewsContext context, 
-            UserManager<IdentityUser> userManager) 
+            OnlineNewsContext context,
+            UserManager<IdentityUser> userManager)
             : base(context)
         {
             _userManager = userManager;
@@ -27,7 +27,7 @@ namespace NewsSite.DAL.Repositories
         {
             var author = await GetByIdAsync(id);
 
-            if(author is not null)
+            if (author is not null)
             {
                 var identityUser = await _userManager.FindByEmailAsync(author.Email);
                 await _userManager.DeleteAsync(identityUser!);

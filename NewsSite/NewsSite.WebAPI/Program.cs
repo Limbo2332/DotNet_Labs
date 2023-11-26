@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
 using NewsSite.UI.Extensions;
+using System.Text.Json.Serialization;
 
 namespace NewsSite.UI
 {

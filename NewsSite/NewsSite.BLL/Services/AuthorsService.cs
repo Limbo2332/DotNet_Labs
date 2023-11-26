@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using NewsSite.BLL.Extensions;
 using NewsSite.BLL.Interfaces;
@@ -8,8 +7,8 @@ using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
-using NewsSite.DAL.Repositories;
 using NewsSite.DAL.Repositories.Base;
+using System.Linq.Expressions;
 
 namespace NewsSite.BLL.Services
 {
@@ -18,16 +17,16 @@ namespace NewsSite.BLL.Services
         private readonly IAuthorsRepository _authorsRepository;
 
         public AuthorsService(
-            UserManager<IdentityUser> userManager, 
-            IMapper mapper, 
-            IAuthorsRepository authorsRepository) 
+            UserManager<IdentityUser> userManager,
+            IMapper mapper,
+            IAuthorsRepository authorsRepository)
             : base(userManager, mapper)
         {
-            _authorsRepository = authorsRepository; 
+            _authorsRepository = authorsRepository;
         }
 
         public async Task<PageList<AuthorResponse>> GetAuthorsAsync(PageSettings? pageSettings)
-        { 
+        {
             var authors = _authorsRepository.GetAll();
 
             PageList<AuthorResponse> pageList = await base.GetAllAsync(authors, pageSettings);

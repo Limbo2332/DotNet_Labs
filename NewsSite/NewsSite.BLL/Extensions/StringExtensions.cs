@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace NewsSite.BLL.Extensions
+﻿namespace NewsSite.BLL.Extensions
 {
     public static class StringExtensions
     {

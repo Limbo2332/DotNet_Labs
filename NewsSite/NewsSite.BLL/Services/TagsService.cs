@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using Microsoft.AspNetCore.Identity;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;

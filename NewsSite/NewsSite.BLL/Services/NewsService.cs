@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Page;
+using NewsSite.DAL.DTO.Request.News;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Repositories.Base;
-using NewsSite.DAL.DTO.Request.News;
+using System.Linq.Expressions;
 
 namespace NewsSite.BLL.Services
 {
@@ -17,9 +17,9 @@ namespace NewsSite.BLL.Services
         private readonly INewsRepository _newsRepository;
 
         public NewsService(
-            UserManager<IdentityUser> userManager, 
-            IMapper mapper, 
-            INewsRepository newsRepository) 
+            UserManager<IdentityUser> userManager,
+            IMapper mapper,
+            INewsRepository newsRepository)
             : base(userManager, mapper)
         {
             _newsRepository = newsRepository;

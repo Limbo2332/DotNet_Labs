@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
@@ -8,6 +7,7 @@ using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
+using System.Linq.Expressions;
 
 namespace NewsSite.BLL.Services
 {
@@ -16,9 +16,9 @@ namespace NewsSite.BLL.Services
         private readonly IRubricsRepository _rubricsRepository;
 
         public RubricsService(
-            UserManager<IdentityUser> userManager, 
-            IMapper mapper, 
-            IRubricsRepository rubricsRepository) 
+            UserManager<IdentityUser> userManager,
+            IMapper mapper,
+            IRubricsRepository rubricsRepository)
             : base(userManager, mapper)
         {
             _rubricsRepository = rubricsRepository;

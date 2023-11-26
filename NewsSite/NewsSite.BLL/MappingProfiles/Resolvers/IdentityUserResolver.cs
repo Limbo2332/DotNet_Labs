@@ -6,7 +6,7 @@ using NewsSite.DAL.Entities;
 
 namespace NewsSite.BLL.MappingProfiles.Resolvers
 {
-    public class IdentityUserResolver 
+    public class IdentityUserResolver
         : IValueResolver<UserRegisterRequest, Author, IdentityUser>,
         IValueResolver<UserLoginRequest, Author, IdentityUser>,
         IValueResolver<UpdatedAuthorRequest, Author, IdentityUser>

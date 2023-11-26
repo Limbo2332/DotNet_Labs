@@ -10,8 +10,8 @@ namespace NewsSite.DAL.Repositories
         private readonly INewsRepository _newsRepository;
 
         public TagsRepository(
-            OnlineNewsContext context, 
-            INewsRepository newsRepository) 
+            OnlineNewsContext context,
+            INewsRepository newsRepository)
             : base(context)
         {
             _newsRepository = newsRepository;
@@ -47,7 +47,7 @@ namespace NewsSite.DAL.Repositories
             if (newsTags is not null)
             {
                 _context.NewsTags.Remove(newsTags);
-                await SaveChangesAsync(); 
+                await SaveChangesAsync();
             }
         }
 

@@ -29,7 +29,7 @@ namespace NewsSite.DAL.Repositories
         {
             await DeleteNewsTagsByNewsIsAsync(newsId);
 
-            var newsTags = 
+            var newsTags =
                 tagsIds.Select(tagId => new NewsTags
                 {
                     TagId = tagId,
@@ -43,7 +43,7 @@ namespace NewsSite.DAL.Repositories
         {
             var existingNewsRubrics = _context.NewsRubrics
                 .Where(nr => nr.NewsId == newsId);
-            
+
             if (await existingNewsRubrics.AnyAsync())
             {
                 _context.NewsRubrics.RemoveRange(existingNewsRubrics);

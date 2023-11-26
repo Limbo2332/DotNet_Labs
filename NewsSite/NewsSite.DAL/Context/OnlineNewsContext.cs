@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context.EntityConfigurations;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Entities.Abstract;
-using System.Reflection.Emit;
 
 namespace NewsSite.DAL.Context
 {

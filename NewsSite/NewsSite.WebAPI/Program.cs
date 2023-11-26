@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
 using NewsSite.UI.Extensions;
 using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 
 namespace NewsSite.UI
 {
@@ -16,22 +17,20 @@ namespace NewsSite.UI
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("NewsDatabaseConnection")));
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            {
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-                options.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<OnlineNewsContext>()
-                .AddDefaultTokenProviders();
-
+            builder.Services.AddIdentity();
             builder.Services.AddAuthenticationWithJwt(builder.Configuration);
 
             builder.Services.RegisterRepositories();
             builder.Services.RegisterAutoMapper();
             builder.Services.AddCustomServices();
 
-            builder.Services.AddControllers()
+            builder.Services
+                .AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.RegisterValidators();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

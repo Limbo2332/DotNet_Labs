@@ -14,6 +14,10 @@ namespace NewsSite.DAL.Context.EntityConfigurations
                 .HasMaxLength(ConfigurationConstants.FULL_NAME_MAXLENGTH);
 
             builder
+                .Property(a => a.Email)
+                .HasMaxLength(ConfigurationConstants.EMAIL_MAXLENGTH);
+
+            builder
                 .Property(a => a.PublicInformation)
                 .HasMaxLength(ConfigurationConstants.PUBLIC_INFORMATION_MAXLENGTH);
 

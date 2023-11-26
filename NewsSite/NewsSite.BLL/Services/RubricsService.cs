@@ -8,6 +8,7 @@ using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
 using System.Linq.Expressions;
+using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {
@@ -35,8 +36,8 @@ namespace NewsSite.BLL.Services
 
         public async Task<RubricResponse> GetRubricByIdAsync(Guid id)
         {
-            var rubric = await _rubricsRepository.GetByIdAsync(id)
-                ?? throw new Exception();
+            var rubric = await _rubricsRepository.GetByIdAsync(id) 
+                         ?? throw new NotFoundException(nameof(Rubric), id);
 
             return _mapper.Map<RubricResponse>(rubric);
         }
@@ -44,7 +45,7 @@ namespace NewsSite.BLL.Services
         public async Task<RubricResponse> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId)
         {
             var rubric = await _rubricsRepository.AddRubricForNewsIdAsync(rubricId, newsId)
-                      ?? throw new Exception();
+                      ?? throw new NotFoundException(nameof(Rubric), rubricId);
 
             return _mapper.Map<RubricResponse>(rubric);
         }

@@ -9,6 +9,7 @@ using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
 using System.Linq.Expressions;
+using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {
@@ -83,7 +84,7 @@ namespace NewsSite.BLL.Services
         public async Task<NewsResponse> GetNewsByIdAsync(Guid id)
         {
             var news = await _newsRepository.GetByIdAsync(id)
-                ?? throw new Exception();
+                ?? throw new NotFoundException(nameof(News));
 
             return _mapper.Map<NewsResponse>(news);
         }

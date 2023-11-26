@@ -9,6 +9,7 @@ using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
 using System.Linq.Expressions;
+using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {
@@ -37,7 +38,7 @@ namespace NewsSite.BLL.Services
         public async Task<AuthorResponse> GetAuthorByIdAsync(Guid authorId)
         {
             var author = await _authorsRepository.GetByIdAsync(authorId)
-                ?? throw new Exception();
+                ?? throw new NotFoundException(nameof(Author), authorId);
 
             return _mapper.Map<AuthorResponse>(author);
         }
@@ -57,6 +58,11 @@ namespace NewsSite.BLL.Services
         {
             await _authorsRepository.DeleteAsync(authorId);
             await _authorsRepository.SaveChangesAsync();
+        }
+
+        public bool IsEmailUnique(string email)
+        {
+            return _authorsRepository.IsEmailUnique(email);
         }
 
         public override Expression<Func<Author, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)

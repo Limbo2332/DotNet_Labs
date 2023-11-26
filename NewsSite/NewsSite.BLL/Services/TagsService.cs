@@ -8,6 +8,7 @@ using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
 using System.Linq.Expressions;
+using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {
@@ -36,7 +37,7 @@ namespace NewsSite.BLL.Services
         public async Task<TagResponse> GetTagByIdAsync(Guid id)
         {
             var tag = await _tagsRepository.GetByIdAsync(id)
-                ?? throw new Exception();
+                ?? throw new NotFoundException(nameof(Tag), id);
 
             return _mapper.Map<TagResponse>(tag);
         }
@@ -44,7 +45,7 @@ namespace NewsSite.BLL.Services
         public async Task<TagResponse> AddTagForNewsIdAsync(Guid tagId, Guid newsId)
         {
             var tag = await _tagsRepository.AddTagForNewsIdAsync(tagId, newsId)
-                ?? throw new Exception();
+                ?? throw new NotFoundException(nameof(Tag), tagId);
 
             return _mapper.Map<TagResponse>(tag);
         }

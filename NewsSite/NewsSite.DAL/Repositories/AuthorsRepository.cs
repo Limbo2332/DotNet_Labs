@@ -23,6 +23,11 @@ namespace NewsSite.DAL.Repositories
             return await _dbSet.FirstAsync(a => a.Email == email);
         }
 
+        public bool IsEmailUnique(string email)
+        {
+            return !_dbSet.Any(a => a.Email == email);
+        }
+
         public override async Task DeleteAsync(Guid id)
         {
             var author = await GetByIdAsync(id);

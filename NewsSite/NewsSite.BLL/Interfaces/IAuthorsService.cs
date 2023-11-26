@@ -13,5 +13,7 @@ namespace NewsSite.BLL.Interfaces
         Task<AuthorResponse> UpdateAuthorAsync(UpdatedAuthorRequest updatedAuthor);
 
         Task DeleteAuthorAsync(Guid authorId);
+
+        bool IsEmailUnique(string email);
     }
 }

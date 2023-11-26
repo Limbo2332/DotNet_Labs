@@ -11,6 +11,7 @@ using NewsSite.DAL.Repositories.Base;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {
@@ -33,13 +34,13 @@ namespace NewsSite.BLL.Services
         public async Task<LoginUserResponse> LoginAsync(UserLoginRequest userLogin)
         {
             var identityUser = await _userManager.FindByEmailAsync(userLogin.Email)
-                ?? throw new Exception();
+                ?? throw new NotFoundException(nameof(Author));
 
             var result = await _userManager.CheckPasswordAsync(identityUser, userLogin.Password);
 
             if (!result)
             {
-                throw new Exception();
+                throw new InvalidEmailOrPasswordException();
             }
 
             var author = await _authorsRepository.GetAuthorByEmailAsync(userLogin.Email);
@@ -62,7 +63,9 @@ namespace NewsSite.BLL.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception();
+                var errorsMessages = result.Errors.Select(e => e.Description);
+
+                throw new BadRequestException(string.Join(' ', errorsMessages));
             }
 
             var author = _mapper.Map<Author>(userRegister);

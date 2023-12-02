@@ -1,12 +1,10 @@
 ﻿using System.Globalization;
-using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Repositories.Base;
 using NewsSite.UnitTests.Systems.Services.Abstract;
 using NewsSite.UnitTests.TestData;
-using System.Linq.Dynamic.Core;
 using NewsSite.BLL.Exceptions;
 using NewsSite.BLL.Extensions;
 using NewsSite.UnitTests.TestData.PageSettings.Authors;
@@ -14,11 +12,12 @@ using NewsSite.DAL.DTO.Request.Author;
 
 namespace NewsSite.UnitTests.Systems.Services
 {
-    public class AuthorsServiceTests : BaseServiceTests
+    public class AuthorsServiceTests : BaseEntityServiceTests<Author, AuthorResponse>
     {
         private readonly Mock<IAuthorsRepository> _authorsRepositoryMock;
         private readonly IQueryable<Author> _authorsQueryableMock;
-        private readonly IAuthorsService _sut;
+
+        protected override AuthorsService _sut { get; }
 
         public AuthorsServiceTests()
         {
@@ -33,107 +32,6 @@ namespace NewsSite.UnitTests.Systems.Services
                 _userManagerMock.Object,
                 _mapper,
                 _authorsRepositoryMock.Object);
-        }
-
-        [Fact]
-        public async Task GetAuthorsAsync_ShouldReturnAllAuthors_WhenNoPageSettings()
-        {
-            // Arrange
-            PageSettings? pageSettings = null;
-            var authorsResponse = _mapper.Map<List<AuthorResponse>>(RepositoriesFakeData.Authors);
-
-            // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
-
-            // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
-            using (new AssertionScope())
-            {
-                result.Items.Should().BeEquivalentTo(authorsResponse);
-                result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.AUTHORS_ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<AuthorResponse>.DEFAULT_PAGE_SIZE);
-                result.PageNumber.Should().Be(1);
-                result.HasNextPage.Should().BeFalse();
-                result.HasPreviousPage.Should().BeFalse();
-            }
-        }
-
-        [Fact]
-        public async Task GetAuthorsAsync_ShouldReturnPagedList_WhenPagePagination()
-        {
-            // Arrange
-            var pageNumber = 2;
-            var pageSize = 3;
-
-            var pageSettings = new PageSettings
-            {
-                PagePagination = new PagePagination
-                {
-                    PageNumber = pageNumber,
-                    PageSize = pageSize,
-                }
-            };
-            var authorsResponse = 
-                _mapper.Map<List<AuthorResponse>>(
-                RepositoriesFakeData.Authors
-                    .Skip(pageSize)
-                    .Take(pageNumber));
-
-            // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
-
-            // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
-            using (new AssertionScope())
-            {
-                result.Items.Should().BeEquivalentTo(authorsResponse);
-                result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.AUTHORS_ITEMS_COUNT);
-                result.PageSize.Should().Be(pageSize);
-                result.PageNumber.Should().Be(pageNumber);
-                result.HasNextPage.Should().BeFalse();
-                result.HasPreviousPage.Should().BeTrue();
-            }
-        }
-
-        [Theory]
-        [ClassData(typeof(AuthorsFilteringData))]
-        public async Task GetAuthorsAsync_ShouldReturnPagedList_WhenPageFiltering(string propertyName, string propertyValue)
-        {
-            // Arrange
-            var pageSettings = new PageSettings
-            {
-                PageFiltering = new PageFiltering
-                {
-                    PropertyName = propertyName,
-                    PropertyValue = propertyValue
-                }
-            };
-            var authorsResponse = 
-                _mapper.Map<List<AuthorResponse>>(
-                    _authorsQueryableMock
-                        .Where($"{propertyName}.ToLowerInvariant().Contains(@0)", 
-                            propertyValue.ToLowerInvariant()));
-
-            // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
-
-            // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
-            using (new AssertionScope())
-            {
-                result.Items.Should().BeEquivalentTo(authorsResponse);
-                result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(1);
-                result.PageSize.Should().Be(PageList<AuthorResponse>.DEFAULT_PAGE_SIZE);
-                result.PageNumber.Should().Be(1);
-                result.HasNextPage.Should().BeFalse();
-                result.HasPreviousPage.Should().BeFalse();
-            }
         }
 
         [Fact]
@@ -161,8 +59,6 @@ namespace NewsSite.UnitTests.Systems.Services
             var result = await _sut.GetAuthorsAsync(pageSettings);
 
             // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
             using (new AssertionScope())
             {
                 result.Items.Should().BeEquivalentTo(authorsResponse);
@@ -175,105 +71,18 @@ namespace NewsSite.UnitTests.Systems.Services
             }
         }
 
-        [Fact]
-        public async Task GetAuthorsAsync_ShouldReturnPagedList_WhenPageFilteringWrongData()
+        [Theory]
+        [ClassData(typeof(AuthorsFilteringData))]
+        public override Task GetAllAsync_ShouldReturnPagedList_WhenPageFiltering(string propertyName, string propertyValue)
         {
-            var propertyName = "wrongName";
-            var propertyValue = "wrongValue";
-
-            // Arrange
-            var pageSettings = new PageSettings
-            {
-                PageFiltering = new PageFiltering
-                {
-                    PropertyName = propertyName,
-                    PropertyValue = propertyValue
-                }
-            };
-            var authorsResponse = _mapper.Map<List<AuthorResponse>>(_authorsQueryableMock);
-
-            // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
-
-            // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
-            using (new AssertionScope())
-            {
-                result.Items.Should().BeEquivalentTo(authorsResponse);
-                result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.AUTHORS_ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<AuthorResponse>.DEFAULT_PAGE_SIZE);
-                result.PageNumber.Should().Be(1);
-                result.HasNextPage.Should().BeFalse();
-                result.HasPreviousPage.Should().BeFalse();
-            }
+            return base.GetAllAsync_ShouldReturnPagedList_WhenPageFiltering(propertyName, propertyValue);
         }
 
         [Theory]
         [ClassData(typeof(AuthorsSortingData))]
-        public async Task GetAuthorsAsync_ShouldReturnPagedList_WhenPageSortingProperty(SortingOrder order, string sortingProperty)
+        public override Task GetAllAsync_ShouldReturnPagedList_WhenPageSortingProperty(SortingOrder order, string sortingProperty)
         {
-            // Arrange
-            var pageSettings = new PageSettings
-            {
-                PageSorting = new PageSorting
-                {
-                    SortingOrder = order,
-                    SortingProperty = sortingProperty
-                }
-            };
-            var authorsResponse =
-                _mapper.Map<List<AuthorResponse>>(
-                    _authorsQueryableMock
-                        .OrderBy($"{sortingProperty} {(order == SortingOrder.Ascending ? "asc" : "desc")}"));
-
-            // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
-
-            // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
-            using (new AssertionScope())
-            {
-                result.Items.Should().ContainInConsecutiveOrder(authorsResponse);
-                result.TotalCount.Should().Be(RepositoriesFakeData.AUTHORS_ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<AuthorResponse>.DEFAULT_PAGE_SIZE);
-                result.PageNumber.Should().Be(1);
-                result.HasNextPage.Should().BeFalse();
-                result.HasPreviousPage.Should().BeFalse();
-            }
-        }
-
-        [Fact]
-        public async Task GetAuthorsAsync_ShouldReturnPagedList_WhenPageSortingPropertyNotSpecified()
-        {
-            // Arrange
-            var pageSettings = new PageSettings
-            {
-                PageSorting = new PageSorting
-                {
-                    SortingOrder = SortingOrder.Ascending,
-                    SortingProperty = "sortingProperty"
-                }
-            };
-            var authorsResponse = _mapper.Map<List<AuthorResponse>>(_authorsQueryableMock);
-
-            // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
-
-            // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetAll(), Times.Once);
-
-            using (new AssertionScope())
-            {
-                result.Items.Should().ContainInConsecutiveOrder(authorsResponse);
-                result.TotalCount.Should().Be(RepositoriesFakeData.AUTHORS_ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<AuthorResponse>.DEFAULT_PAGE_SIZE);
-                result.PageNumber.Should().Be(1);
-                result.HasNextPage.Should().BeFalse();
-                result.HasPreviousPage.Should().BeFalse();
-            }
+            return base.GetAllAsync_ShouldReturnPagedList_WhenPageSortingProperty(order, sortingProperty);
         }
 
         [Fact]
@@ -307,8 +116,6 @@ namespace NewsSite.UnitTests.Systems.Services
             var result = await _sut.GetAuthorByIdAsync(author.Id);
 
             // Assert
-            _authorsRepositoryMock.Verify(ar => ar.GetByIdAsync(author.Id), Times.Once);
-
             result.Should().Be(authorResponse);
         }
 
@@ -327,6 +134,8 @@ namespace NewsSite.UnitTests.Systems.Services
                 Id = author.Id
             };
 
+            AuthorResponse? authorResponse = null;
+
             _userManagerMock
                 .Setup(um => um.FindByEmailAsync(author.Email).Result)
                 .Returns(author.IdentityUser);
@@ -338,8 +147,8 @@ namespace NewsSite.UnitTests.Systems.Services
                 .ReturnsAsync(author);
 
             _authorsRepositoryMock
-                .Setup(ar => ar.UpdateAsync(newAuthor))
-                .Returns(Task.CompletedTask);
+                .Setup(ar => ar.UpdateAsync(It.IsAny<Author>()))
+                .Callback(() => authorResponse = _mapper.Map<AuthorResponse>(newAuthor));
 
             _userManagerMock
                 .Setup(um => um.SetEmailAsync(newAuthor.IdentityUser, newAuthor.Email))
@@ -348,8 +157,6 @@ namespace NewsSite.UnitTests.Systems.Services
             _userManagerMock
                 .Setup(um => um.SetUserNameAsync(newAuthor.IdentityUser, newAuthor.FullName))
                 .Callback(() => newAuthor.IdentityUser.UserName = newAuthor.FullName);
-            
-            var authorResponse = _mapper.Map<AuthorResponse>(newAuthor);
 
             // Act
             var result = await _sut.UpdateAuthorAsync(updatedAuthor);
@@ -378,8 +185,6 @@ namespace NewsSite.UnitTests.Systems.Services
             await _sut.DeleteAuthorAsync(author.Id);
 
             // Assert
-            _authorsRepositoryMock.Verify(ar => ar.DeleteAsync(author.Id), Times.Once);
-
             authors.Should().NotContain(author);
         }
 

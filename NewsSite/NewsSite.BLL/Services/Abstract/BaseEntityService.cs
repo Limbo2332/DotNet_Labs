@@ -5,12 +5,13 @@ using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities.Abstract;
 using System.Linq.Expressions;
+using NewsSite.DAL.DTO.Response.Abstract;
 
 namespace NewsSite.BLL.Services.Abstract
 {
     public abstract class BaseEntityService<TEntry, TResult> : BaseService
         where TEntry : BaseEntity
-        where TResult : class
+        where TResult : BaseResponse
     {
         protected BaseEntityService(UserManager<IdentityUser> userManager, IMapper mapper) : base(userManager, mapper)
         {
@@ -40,7 +41,7 @@ namespace NewsSite.BLL.Services.Abstract
                 {
                     SortingOrder.Ascending => items.OrderBy(sortingExpression),
                     SortingOrder.Descending => items.OrderByDescending(sortingExpression),
-                    _ => items
+                    _ => items,
                 };
             }
 

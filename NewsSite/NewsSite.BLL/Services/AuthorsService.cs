@@ -45,7 +45,7 @@ namespace NewsSite.BLL.Services
 
         public async Task<AuthorResponse> UpdateAuthorAsync(UpdatedAuthorRequest updatedAuthor)
         {
-            await GetAuthorEntityByIdAsync(updatedAuthor.Id);
+            _ = await GetAuthorEntityByIdAsync(updatedAuthor.Id);
 
             var authorToUpdate = _mapper.Map<Author>(updatedAuthor);
 

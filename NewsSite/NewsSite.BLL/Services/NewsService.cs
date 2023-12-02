@@ -16,14 +16,17 @@ namespace NewsSite.BLL.Services
     public class NewsService : BaseEntityService<News, NewsResponse>, INewsService
     {
         private readonly INewsRepository _newsRepository;
+        private readonly IAuthorsRepository _authorsRepository;
 
         public NewsService(
             UserManager<IdentityUser> userManager,
             IMapper mapper,
-            INewsRepository newsRepository)
+            INewsRepository newsRepository,
+            IAuthorsRepository authorsRepository)
             : base(userManager, mapper)
         {
             _newsRepository = newsRepository;
+            _authorsRepository = authorsRepository;
         }
 
         public async Task<PageList<NewsResponse>> GetNewsAsync(PageSettings? pageSettings)
@@ -47,12 +50,12 @@ namespace NewsSite.BLL.Services
             return pageList;
         }
 
-        public async Task<PageList<NewsResponse>> GetNewsByTagsAsync(List<Guid> tagsId, PageSettings? pageSettings)
+        public async Task<PageList<NewsResponse>> GetNewsByTagsAsync(List<Guid> tagsIds, PageSettings? pageSettings)
         {
             var news =
                 _newsRepository.GetAll()
                     .Include(n => n.NewsTags)
-                    .Where(n => n.NewsTags!.Any(nt => tagsId.Contains(nt.TagId)));
+                    .Where(n => n.NewsTags!.Any(nt => tagsIds.Contains(nt.TagId)));
 
             PageList<NewsResponse> pageList = await base.GetAllAsync(news, pageSettings);
 
@@ -84,7 +87,7 @@ namespace NewsSite.BLL.Services
         public async Task<NewsResponse> GetNewsByIdAsync(Guid id)
         {
             var news = await _newsRepository.GetByIdAsync(id)
-                ?? throw new NotFoundException(nameof(News));
+                ?? throw new NotFoundException(nameof(News), id);
 
             return _mapper.Map<NewsResponse>(news);
         }
@@ -92,6 +95,9 @@ namespace NewsSite.BLL.Services
         public async Task<NewsResponse> CreateNewNewsAsync(NewNewsRequest newNewsRequest)
         {
             var newNews = _mapper.Map<News>(newNewsRequest);
+
+            _ = await _authorsRepository.GetByIdAsync(newNewsRequest.AuthorId)
+                ?? throw new NotFoundException(nameof(Author), newNewsRequest.AuthorId);
 
             await _newsRepository.AddAsync(newNews);
 

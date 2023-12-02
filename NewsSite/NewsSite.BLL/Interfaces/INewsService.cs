@@ -10,7 +10,7 @@ namespace NewsSite.BLL.Interfaces
 
         Task<PageList<NewsResponse>> GetNewsByRubricAsync(Guid rubricId, PageSettings? pageSettings);
 
-        Task<PageList<NewsResponse>> GetNewsByTagsAsync(List<Guid> tagsId, PageSettings? pageSettings);
+        Task<PageList<NewsResponse>> GetNewsByTagsAsync(List<Guid> tagsIds, PageSettings? pageSettings);
 
         Task<PageList<NewsResponse>> GetNewsByAuthorAsync(Guid authorId, PageSettings? pageSettings);
 

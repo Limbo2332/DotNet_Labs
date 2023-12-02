@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsSite.DAL", "NewsSite.DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsSite.BLL", "NewsSite.BLL\NewsSite.BLL.csproj", "{0965CC14-3A74-4BB3-8BA7-FB98D8A10F9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSite.UnitTests", "NewsSite.UnitTests\NewsSite.UnitTests.csproj", "{E2ABE47E-15A6-4C4F-B930-C15B049A05A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsSite.UnitTests", "NewsSite.UnitTests\NewsSite.UnitTests.csproj", "{E2ABE47E-15A6-4C4F-B930-C15B049A05A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

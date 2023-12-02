@@ -15,5 +15,22 @@
         public DateTime BirthDate { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            var anotherAuthor = obj as AuthorResponse;
+
+            if(anotherAuthor is null)
+            {
+                return false;
+            }
+
+            return Id == anotherAuthor.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

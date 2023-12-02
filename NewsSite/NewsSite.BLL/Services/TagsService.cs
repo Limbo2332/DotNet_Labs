@@ -82,18 +82,18 @@ namespace NewsSite.BLL.Services
 
         public override Expression<Func<Tag, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
         {
-            return propertyName.ToLower() switch
+            return propertyName.ToLowerInvariant() switch
             {
-                "name" => tag => tag.Name.Contains(propertyValue),
+                "name" => tag => tag.Name.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
                 _ => tag => true
             };
         }
 
         public override Expression<Func<Tag, object>> GetSortingExpressionFunc(string sortingValue)
         {
-            return sortingValue.ToLower() switch
+            return sortingValue.ToLowerInvariant() switch
             {
-                "name" => tag => tag.Name.Length,
+                "name" => tag => tag.Name,
                 _ => tag => tag.UpdatedAt
             };
         }

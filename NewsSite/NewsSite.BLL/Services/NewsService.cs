@@ -131,19 +131,19 @@ namespace NewsSite.BLL.Services
 
         public override Expression<Func<News, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
         {
-            return propertyName.ToLower() switch
+            return propertyName.ToLowerInvariant() switch
             {
-                "content" => news => news.Content.Contains(propertyValue),
-                "subject" => news => news.Subject.Contains(propertyValue),
+                "content" => news => news.Content.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
+                "subject" => news => news.Subject.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
                 _ => news => true
             };
         }
 
         public override Expression<Func<News, object>> GetSortingExpressionFunc(string sortingValue)
         {
-            return sortingValue.ToLower() switch
+            return sortingValue.ToLowerInvariant() switch
             {
-                "content" => news => news.Content.Length,
+                "content" => news => news.Content,
                 "subject" => news => news.Subject,
                 _ => news => news.UpdatedAt
             };

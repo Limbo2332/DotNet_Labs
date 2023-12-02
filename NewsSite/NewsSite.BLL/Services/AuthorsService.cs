@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Globalization;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using NewsSite.BLL.Extensions;
 using NewsSite.BLL.Interfaces;
@@ -37,14 +38,15 @@ namespace NewsSite.BLL.Services
 
         public async Task<AuthorResponse> GetAuthorByIdAsync(Guid authorId)
         {
-            var author = await _authorsRepository.GetByIdAsync(authorId)
-                ?? throw new NotFoundException(nameof(Author), authorId);
+            var author = await GetAuthorEntityByIdAsync(authorId);
 
             return _mapper.Map<AuthorResponse>(author);
         }
 
         public async Task<AuthorResponse> UpdateAuthorAsync(UpdatedAuthorRequest updatedAuthor)
         {
+            await GetAuthorEntityByIdAsync(updatedAuthor.Id);
+
             var authorToUpdate = _mapper.Map<Author>(updatedAuthor);
 
             await _authorsRepository.UpdateAsync(authorToUpdate);
@@ -72,29 +74,36 @@ namespace NewsSite.BLL.Services
 
         public override Expression<Func<Author, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)
         {
-            return propertyName.ToLower() switch
+            return propertyName.ToLowerInvariant() switch
             {
-                "email" => author => author.Email.Contains(propertyValue),
-                "fullname" => author => author.FullName.Contains(propertyValue),
-                "birthdate" => author => propertyValue.ToDateTimeWithoutOutParameter(),
+                "email" => author => author.Email.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
+                "fullname" => author => author.FullName.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
+                "birthdate" => author => propertyValue.IsDateTime() 
+                                         && author.BirthDate >= Convert.ToDateTime(propertyValue, CultureInfo.InvariantCulture),
                 "publicinformation" => author => author.PublicInformation != null
-                                                 && author.PublicInformation.Contains(propertyValue),
+                                                 && author.PublicInformation.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
                 _ => author => true
             };
         }
 
         public override Expression<Func<Author, object>> GetSortingExpressionFunc(string sortingValue)
         {
-            return sortingValue.ToLower() switch
+            return sortingValue.ToLowerInvariant() switch
             {
                 "email" => author => author.Email,
                 "fullname" => author => author.FullName,
                 "birthdate" => author => author.BirthDate,
                 "publicinformation" => author => author.PublicInformation != null
-                    ? author.PublicInformation.Length
+                    ? author.PublicInformation
                     : 0,
                 _ => author => author.UpdatedAt
             };
+        }
+
+        private async Task<Author> GetAuthorEntityByIdAsync(Guid id)
+        {
+            return await _authorsRepository.GetByIdAsync(id)
+                   ?? throw new NotFoundException(nameof(Author), id);
         }
     }
 }

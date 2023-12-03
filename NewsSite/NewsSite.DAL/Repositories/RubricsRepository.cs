@@ -17,7 +17,7 @@ namespace NewsSite.DAL.Repositories
             _newsRepository = newsRepository;
         }
 
-        public async Task<Rubric?> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId)
+        public async Task<NewsRubrics?> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId)
         {
             var rubric = await GetByIdAsync(rubricId);
             var news = await _newsRepository.GetByIdAsync(newsId);
@@ -37,7 +37,7 @@ namespace NewsSite.DAL.Repositories
             await _context.NewsRubrics.AddAsync(newNewsRubrics);
             await SaveChangesAsync();
 
-            return rubric;
+            return newNewsRubrics;
         }
 
         public async Task DeleteRubricForNewsIdAsync(Guid rubricId, Guid newsId)

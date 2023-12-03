@@ -18,19 +18,25 @@ namespace NewsSite.UnitTests.Systems.Services
         private readonly Mock<INewsRepository> _newsRepositoryMock;
         private readonly Mock<IAuthorsRepository> _authorsRepositoryMock;
 
-        protected override NewsService _sut { get; }
+        protected override IQueryable<News> QueryableMock { get; }
+
+        protected override NewsService Sut { get; }
+
+        protected override List<News> Entities { get; }
 
         public NewsServiceTests()
         {
             _newsRepositoryMock = new Mock<INewsRepository>();
             _authorsRepositoryMock = new Mock<IAuthorsRepository>();
-            var newsQueryableMock = RepositoriesFakeData.News.BuildMock();
+            QueryableMock = RepositoriesFakeData.News.BuildMock();
+
+            Entities = RepositoriesFakeData.News;
 
             _newsRepositoryMock
                 .Setup(ar => ar.GetAll())
-                .Returns(newsQueryableMock);
+                .Returns(QueryableMock);
 
-            _sut = new NewsService(
+            Sut = new NewsService(
                 _userManagerMock.Object,
                 _mapper,
                 _newsRepositoryMock.Object,
@@ -45,7 +51,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var response = _mapper.Map<List<NewsResponse>>(RepositoriesFakeData.News);
 
             // Act
-            var result = await _sut.GetNewsAsync(pageSettings);
+            var result = await Sut.GetNewsAsync(pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -101,7 +107,7 @@ namespace NewsSite.UnitTests.Systems.Services
                     .Where(n => n.NewsRubrics!.Any(nr => nr.RubricId == rubric.Id)));
 
             // Act
-            var result = await _sut.GetNewsByRubricAsync(rubric.Id, pageSettings);
+            var result = await Sut.GetNewsByRubricAsync(rubric.Id, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -142,7 +148,7 @@ namespace NewsSite.UnitTests.Systems.Services
                     .Where(n => n.NewsTags!.Any(nt => tagsIds.Contains(nt.TagId))));
 
             // Act
-            var result = await _sut.GetNewsByTagsAsync(tagsIds, pageSettings);
+            var result = await Sut.GetNewsByTagsAsync(tagsIds, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -168,7 +174,7 @@ namespace NewsSite.UnitTests.Systems.Services
                     .Where(n => n.CreatedBy == author.Id));
 
             // Act
-            var result = await _sut.GetNewsByAuthorAsync(author.Id, pageSettings);
+            var result = await Sut.GetNewsByAuthorAsync(author.Id, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -193,10 +199,11 @@ namespace NewsSite.UnitTests.Systems.Services
 
             var response = _mapper.Map<List<NewsResponse>>(
                 RepositoriesFakeData.News
-                    .Where(n => n.UpdatedAt >= startDate && n.UpdatedAt <= endDate));
+                    .Where(n => n.UpdatedAt >= startDate && n.UpdatedAt <= endDate)
+                    .ToList());
 
             // Act
-            var result = await _sut.GetNewsByPeriodOfTimeAsync(startDate, endDate, pageSettings);
+            var result = await Sut.GetNewsByPeriodOfTimeAsync(startDate, endDate, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -218,7 +225,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var exceptionMessage = new NotFoundException(nameof(News), newsId).Message;
 
             // Act
-            var action = async () => await _sut.GetNewsByIdAsync(newsId);
+            var action = async () => await Sut.GetNewsByIdAsync(newsId);
 
             // Assert
             await action.Should()
@@ -238,7 +245,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var newsResponse = _mapper.Map<NewsResponse>(news);
 
             // Act
-            var result = await _sut.GetNewsByIdAsync(news.Id);
+            var result = await Sut.GetNewsByIdAsync(news.Id);
 
             // Assert
             result.Should().BeEquivalentTo(newsResponse);
@@ -257,7 +264,7 @@ namespace NewsSite.UnitTests.Systems.Services
             };
 
             // Act
-            var action = async () => await _sut.CreateNewNewsAsync(newNews);
+            var action = async () => await Sut.CreateNewNewsAsync(newNews);
 
             // Assert
             await action.Should()
@@ -292,7 +299,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var newsResponse = _mapper.Map<NewsResponse>(news);
 
             // Act
-            var result = await _sut.CreateNewNewsAsync(newNews);
+            var result = await Sut.CreateNewNewsAsync(newNews);
 
             // Assert
             result.Should().BeEquivalentTo(newsResponse);
@@ -352,7 +359,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var newsResponse = _mapper.Map<NewsResponse>(news);
 
             // Act
-            var result = await _sut.CreateNewNewsAsync(newNews);
+            var result = await Sut.CreateNewNewsAsync(newNews);
 
             // Assert
             result.Should().BeEquivalentTo(newsResponse);
@@ -373,7 +380,7 @@ namespace NewsSite.UnitTests.Systems.Services
             };
 
             // Act
-            var action = async () => await _sut.UpdateNewsAsync(updateNewsRequest);
+            var action = async () => await Sut.UpdateNewsAsync(updateNewsRequest);
 
             // Assert
             await action.Should()
@@ -404,7 +411,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Callback(() => newsResponse = _mapper.Map<NewsResponse>(news));
 
             // Act
-            var result = await _sut.UpdateNewsAsync(updateNewsRequest);
+            var result = await Sut.UpdateNewsAsync(updateNewsRequest);
 
             // Assert
             result.Should().Be(newsResponse);
@@ -422,7 +429,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Callback(() => newsList.Remove(news));
 
             // Act
-            await _sut.DeleteNewsAsync(news.Id);
+            await Sut.DeleteNewsAsync(news.Id);
 
             // Assert
             newsList.Should().NotContain(news);

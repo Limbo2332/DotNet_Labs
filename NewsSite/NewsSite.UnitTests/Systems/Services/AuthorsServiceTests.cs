@@ -15,20 +15,25 @@ namespace NewsSite.UnitTests.Systems.Services
     public class AuthorsServiceTests : BaseEntityServiceTests<Author, AuthorResponse>
     {
         private readonly Mock<IAuthorsRepository> _authorsRepositoryMock;
-        private readonly IQueryable<Author> _authorsQueryableMock;
 
-        protected override AuthorsService _sut { get; }
+        protected override IQueryable<Author> QueryableMock { get; }
+
+        protected override AuthorsService Sut { get; }
+
+        protected override List<Author> Entities { get; }
 
         public AuthorsServiceTests()
         {
             _authorsRepositoryMock = new Mock<IAuthorsRepository>();
-            _authorsQueryableMock = RepositoriesFakeData.Authors.BuildMock();
+            QueryableMock = RepositoriesFakeData.Authors.BuildMock();
+
+            Entities = RepositoriesFakeData.Authors;
 
             _authorsRepositoryMock
                 .Setup(ar => ar.GetAll())
-                .Returns(_authorsQueryableMock);
+                .Returns(QueryableMock);
 
-            _sut = new AuthorsService(
+            Sut = new AuthorsService(
                 _userManagerMock.Object,
                 _mapper,
                 _authorsRepositoryMock.Object);
@@ -51,12 +56,12 @@ namespace NewsSite.UnitTests.Systems.Services
             };
             var authorsResponse =
                 _mapper.Map<List<AuthorResponse>>(
-            _authorsQueryableMock
+                    QueryableMock
                         .Where(a => propertyValue.IsDateTime() 
                                     && a.BirthDate >= Convert.ToDateTime(propertyValue, CultureInfo.InvariantCulture)));
 
             // Act
-            var result = await _sut.GetAuthorsAsync(pageSettings);
+            var result = await Sut.GetAuthorsAsync(pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -93,7 +98,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var exceptionMessage = new NotFoundException(nameof(Author), authorId).Message;
 
             // Act
-            var action = async () => await _sut.GetAuthorByIdAsync(authorId);
+            var action = async () => await Sut.GetAuthorByIdAsync(authorId);
 
             // Assert
             await action.Should()
@@ -113,7 +118,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var authorResponse = _mapper.Map<AuthorResponse>(author);
 
             // Act
-            var result = await _sut.GetAuthorByIdAsync(author.Id);
+            var result = await Sut.GetAuthorByIdAsync(author.Id);
 
             // Assert
             result.Should().Be(authorResponse);
@@ -159,7 +164,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Callback(() => newAuthor.IdentityUser.UserName = newAuthor.FullName);
 
             // Act
-            var result = await _sut.UpdateAuthorAsync(updatedAuthor);
+            var result = await Sut.UpdateAuthorAsync(updatedAuthor);
 
             // Assert
             using (new AssertionScope())
@@ -182,7 +187,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Callback(() => authors.Remove(author));
 
             // Act
-            await _sut.DeleteAuthorAsync(author.Id);
+            await Sut.DeleteAuthorAsync(author.Id);
 
             // Assert
             authors.Should().NotContain(author);
@@ -197,7 +202,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Returns(false);
 
             // Act
-            var result = _sut.IsEmailUnique(It.IsAny<string>());
+            var result = Sut.IsEmailUnique(It.IsAny<string>());
 
             // Assert
             result.Should().BeFalse();
@@ -212,7 +217,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Returns(true);
 
             // Act
-            var result = _sut.IsEmailUnique(It.IsAny<string>());
+            var result = Sut.IsEmailUnique(It.IsAny<string>());
 
             // Assert
             result.Should().BeTrue();
@@ -227,7 +232,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Returns(false);
 
             // Act
-            var result = _sut.IsFullNameUnique(It.IsAny<string>());
+            var result = Sut.IsFullNameUnique(It.IsAny<string>());
 
             // Assert
             result.Should().BeFalse();
@@ -242,7 +247,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Returns(true);
 
             // Act
-            var result = _sut.IsFullNameUnique(It.IsAny<string>());
+            var result = Sut.IsFullNameUnique(It.IsAny<string>());
 
             // Assert
             result.Should().BeTrue();

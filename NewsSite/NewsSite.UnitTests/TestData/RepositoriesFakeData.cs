@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NewsSite.DAL.Context.Constants;
-using NewsSite.DAL.Entities;
-using NewsSite.DAL.Entities.Abstract;
 
 namespace NewsSite.UnitTests.TestData
 {
@@ -9,27 +7,11 @@ namespace NewsSite.UnitTests.TestData
     {
         public const int ITEMS_COUNT = 5;
 
-        public static List<T> GetEntities<T>() 
-            where T : BaseEntity
-        {
-            if (typeof(T) == typeof(Author))
-            {
-                return Authors.Cast<T>().ToList();
-            }
-
-            if (typeof(T) == typeof(News))
-            {
-                return News.Cast<T>().ToList();
-            }
-
-            return new List<T>();
-        }
-
         public static List<Author> Authors = new Faker<Author>()
             .UseSeed(1)
             .RuleFor(a => a.Id, f => f.Random.Guid())
-            .RuleFor(a => a.CreatedAt, f => DateTime.UtcNow)
-            .RuleFor(a => a.UpdatedAt, f => DateTime.UtcNow)
+            .RuleFor(a => a.CreatedAt, _ => DateTime.UtcNow)
+            .RuleFor(a => a.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(a => a.Email, f => f.Internet.Email())
             .RuleFor(a => a.FullName, f => f.Internet.UserName())
             .RuleFor(a => a.Sex, f => f.Random.Bool())
@@ -39,14 +21,14 @@ namespace NewsSite.UnitTests.TestData
                 f => f.Date.Between(
                     DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER * 2), 
                     DateTime.UtcNow).AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))
-            .RuleFor(a => a.IdentityUser, (f, a) => new IdentityUser(a.FullName))
+            .RuleFor(a => a.IdentityUser, (_, a) => new IdentityUser(a.FullName))
             .Generate(ITEMS_COUNT);
 
         public static List<News> News = new Faker<News>()
             .UseSeed(1)
             .RuleFor(n => n.Id, f => f.Random.Guid())
-            .RuleFor(n => n.CreatedAt, f => DateTime.UtcNow)
-            .RuleFor(n => n.UpdatedAt, f => DateTime.UtcNow)
+            .RuleFor(n => n.CreatedAt, _ => DateTime.UtcNow)
+            .RuleFor(n => n.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(n => n.CreatedBy, f => f.PickRandom(Authors).Id)
             .RuleFor(n => n.Subject, f => f.Lorem.Sentence())
             .RuleFor(n => n.Content, f => f.Lorem.Paragraph())
@@ -55,16 +37,16 @@ namespace NewsSite.UnitTests.TestData
         public static List<Rubric> Rubrics = new Faker<Rubric>()
             .UseSeed(1)
             .RuleFor(r => r.Id, f => f.Random.Guid())
-            .RuleFor(r => r.CreatedAt, f => DateTime.UtcNow)
-            .RuleFor(r => r.UpdatedAt, f => DateTime.UtcNow)
+            .RuleFor(r => r.CreatedAt, _ => DateTime.UtcNow)
+            .RuleFor(r => r.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(r => r.Name, f => f.Lorem.Word())
             .Generate(ITEMS_COUNT);
 
         public static List<Tag> Tags = new Faker<Tag>()
             .UseSeed(1)
             .RuleFor(t => t.Id, f => f.Random.Guid())
-            .RuleFor(t => t.CreatedAt, f => DateTime.UtcNow)
-            .RuleFor(t => t.UpdatedAt, f => DateTime.UtcNow)
+            .RuleFor(t => t.CreatedAt, _ => DateTime.UtcNow)
+            .RuleFor(t => t.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(t => t.Name, f => f.Lorem.Word())
             .Generate(ITEMS_COUNT);
 

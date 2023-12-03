@@ -3,7 +3,6 @@ using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Response.Abstract;
 using NewsSite.DAL.Entities.Abstract;
-using NewsSite.DAL.Repositories.Base;
 using NewsSite.UnitTests.TestData;
 
 namespace NewsSite.UnitTests.Systems.Services.Abstract
@@ -12,29 +11,21 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
         where TEntry : BaseEntity
         where TResult : BaseResponse
     {
-        private readonly IQueryable<TEntry> _queryableMock;
+        protected abstract IQueryable<TEntry> QueryableMock { get; }
 
-        protected abstract BaseEntityService<TEntry, TResult> _sut { get; }
+        protected abstract BaseEntityService<TEntry, TResult> Sut { get; }
 
-        protected BaseEntityServiceTests()
-        {
-            var repositoryMock = new Mock<IGenericRepository<TEntry>>();
-            _queryableMock = RepositoriesFakeData.GetEntities<TEntry>().BuildMock();
-
-            repositoryMock
-                .Setup(ar => ar.GetAll())
-                .Returns(_queryableMock);
-        }
+        protected abstract List<TEntry> Entities { get; }
 
         [Fact]
         public async Task GetAllAsync_ShouldReturnAll_WhenNoPageSettings()
         {
             // Arrange
             PageSettings? pageSettings = null;
-            var response = _mapper.Map<List<TResult>>(RepositoriesFakeData.GetEntities<TEntry>());
+            var response = _mapper.Map<List<TResult>>(Entities);
 
             // Act
-            var result = await _sut.GetAllAsync(_queryableMock, pageSettings);
+            var result = await Sut.GetAllAsync(QueryableMock, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -66,12 +57,12 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             };
             var response =
                 _mapper.Map<List<TResult>>(
-                RepositoriesFakeData.GetEntities<TEntry>()
+                Entities
                     .Skip(pageSize)
                     .Take(pageNumber));
 
             // Act
-            var result = await _sut.GetAllAsync(_queryableMock, pageSettings);
+            var result = await Sut.GetAllAsync(QueryableMock, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -99,12 +90,12 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             };
             var response =
                 _mapper.Map<List<TResult>>(
-                    _queryableMock
+                    QueryableMock
                         .Where($"{propertyName}.ToLowerInvariant().Contains(@0)",
                             propertyValue.ToLowerInvariant()));
 
             // Act
-            var result = await _sut.GetAllAsync(_queryableMock, pageSettings);
+            var result = await Sut.GetAllAsync(QueryableMock, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -134,10 +125,10 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
                     PropertyValue = propertyValue
                 }
             };
-            var response = _mapper.Map<List<TResult>>(_queryableMock);
+            var response = _mapper.Map<List<TResult>>(QueryableMock);
 
             // Act
-            var result = await _sut.GetAllAsync(_queryableMock, pageSettings);
+            var result = await Sut.GetAllAsync(QueryableMock, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -165,11 +156,11 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             };
             var response =
                 _mapper.Map<List<TResult>>(
-                    _queryableMock
+                    QueryableMock
                         .OrderBy($"{sortingProperty} {(order == SortingOrder.Ascending ? "asc" : "desc")}"));
 
             // Act
-            var result = await _sut.GetAllAsync(_queryableMock, pageSettings);
+            var result = await Sut.GetAllAsync(QueryableMock, pageSettings);
 
             // Assert
             using (new AssertionScope())
@@ -195,10 +186,10 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
                     SortingProperty = "sortingProperty"
                 }
             };
-            var response = _mapper.Map<List<TResult>>(_queryableMock);
+            var response = _mapper.Map<List<TResult>>(QueryableMock);
 
             // Act
-            var result = await _sut.GetAllAsync(_queryableMock, pageSettings);
+            var result = await Sut.GetAllAsync(QueryableMock, pageSettings);
 
             // Assert
             using (new AssertionScope())

@@ -5,7 +5,7 @@ using NewsSite.DAL.Context.Constants;
 using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.UI.Extensions;
 
-namespace NewsSite.UI.Validators.Request.Author
+namespace NewsSite.UI.Validators.Author
 {
     public class UpdatedAuthorRequestValidator : AbstractValidator<UpdatedAuthorRequest>
     {
@@ -19,11 +19,17 @@ namespace NewsSite.UI.Validators.Request.Author
             RuleFor(ua => ua.FullName)
                 .CustomFullName()
                 .Must(authorsService.IsFullNameUnique)
-                .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME));
+                    .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME));
 
             RuleFor(ur => ur.BirthDate)
                 .LessThan(DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))
-                .WithMessage(ValidationMessages.BirthDateLessThanYears);
+                    .WithMessage(ValidationMessages.BirthDateLessThanYears);
+
+            RuleFor(ur => ur.PublicInformation)
+                .MaximumLength(ConfigurationConstants.PUBLIC_INFORMATION_MAXLENGTH)
+                    .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(
+                        ValidationMessages.PUBLIC_INFORMATION_PROPERTY_NAME,
+                    ConfigurationConstants.PUBLIC_INFORMATION_MAXLENGTH));
         }
     }
 }

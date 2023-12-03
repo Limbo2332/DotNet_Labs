@@ -14,11 +14,11 @@ using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.DAL.DTO.Request.Tag;
 using NewsSite.DAL.Repositories;
 using NewsSite.DAL.Repositories.Base;
-using NewsSite.UI.Validators.Request.Auth;
-using NewsSite.UI.Validators.Request.Author;
-using NewsSite.UI.Validators.Request.News;
-using NewsSite.UI.Validators.Request.Rubric;
-using NewsSite.UI.Validators.Request.Tag;
+using NewsSite.UI.Validators.Auth;
+using NewsSite.UI.Validators.Author;
+using NewsSite.UI.Validators.News;
+using NewsSite.UI.Validators.Rubric;
+using NewsSite.UI.Validators.Tag;
 using System.Reflection;
 using System.Text;
 

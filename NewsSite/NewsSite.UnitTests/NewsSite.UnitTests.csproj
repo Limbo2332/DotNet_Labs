@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Systems\Validators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NewsSite.WebAPI\NewsSite.UI.csproj" />
   </ItemGroup>
 

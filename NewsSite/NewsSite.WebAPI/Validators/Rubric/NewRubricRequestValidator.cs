@@ -2,7 +2,7 @@
 using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.UI.Extensions;
 
-namespace NewsSite.UI.Validators.Request.Rubric
+namespace NewsSite.UI.Validators.Rubric
 {
     public class NewRubricRequestValidator : AbstractValidator<NewRubricRequest>
     {

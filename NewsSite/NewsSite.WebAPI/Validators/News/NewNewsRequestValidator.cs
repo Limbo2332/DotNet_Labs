@@ -2,11 +2,11 @@
 using NewsSite.DAL.DTO.Request.News;
 using NewsSite.UI.Extensions;
 
-namespace NewsSite.UI.Validators.Request.News
+namespace NewsSite.UI.Validators.News
 {
-    public class UpdateNewsRequestValidator : AbstractValidator<UpdateNewsRequest>
+    public class NewNewsRequestValidator : AbstractValidator<NewNewsRequest>
     {
-        public UpdateNewsRequestValidator()
+        public NewNewsRequestValidator()
         {
             RuleFor(nn => nn.Subject)
                 .CustomSubject();

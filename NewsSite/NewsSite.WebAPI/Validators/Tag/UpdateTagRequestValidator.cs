@@ -2,7 +2,7 @@
 using NewsSite.DAL.DTO.Request.Tag;
 using NewsSite.UI.Extensions;
 
-namespace NewsSite.UI.Validators.Request.Tag
+namespace NewsSite.UI.Validators.Tag
 {
     public class UpdateTagRequestValidator : AbstractValidator<UpdateTagRequest>
     {

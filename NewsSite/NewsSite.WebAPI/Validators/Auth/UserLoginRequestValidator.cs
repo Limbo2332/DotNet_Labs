@@ -2,7 +2,7 @@
 using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.UI.Extensions;
 
-namespace NewsSite.UI.Validators.Request.Auth
+namespace NewsSite.UI.Validators.Auth
 {
     public class UserLoginRequestValidator : AbstractValidator<UserLoginRequest>
     {

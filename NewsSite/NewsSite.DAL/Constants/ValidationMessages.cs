@@ -10,6 +10,7 @@ namespace NewsSite.DAL.Constants
         public const string FULL_NAME_PROPERTY_NAME = "FullName";
         public const string SUBJECT_PROPERTY_NAME = "Subject";
         public const string CONTENT_PROPERTY_NAME = "Content";
+        public const string PUBLIC_INFORMATION_PROPERTY_NAME = "PublicInformation";
 
         public static string GetEntityIsEmptyMessage(string propertyName) => $"{propertyName} is required";
 

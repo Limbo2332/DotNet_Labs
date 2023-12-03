@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using NewsSite.DAL.Constants;
-using NewsSite.DAL.Context.Constants;
 using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.UI.Extensions;
 

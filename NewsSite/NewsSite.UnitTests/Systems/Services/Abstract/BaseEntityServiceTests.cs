@@ -1,9 +1,9 @@
-﻿using System.Linq.Dynamic.Core;
-using NewsSite.BLL.Services.Abstract;
+﻿using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Response.Abstract;
 using NewsSite.DAL.Entities.Abstract;
 using NewsSite.UnitTests.TestData;
+using System.Linq.Dynamic.Core;
 
 namespace NewsSite.UnitTests.Systems.Services.Abstract
 {

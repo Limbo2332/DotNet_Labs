@@ -1,14 +1,14 @@
-﻿using System.Globalization;
+﻿using NewsSite.BLL.Exceptions;
+using NewsSite.BLL.Extensions;
 using NewsSite.BLL.Services;
 using NewsSite.DAL.DTO.Page;
+using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Repositories.Base;
 using NewsSite.UnitTests.Systems.Services.Abstract;
 using NewsSite.UnitTests.TestData;
-using NewsSite.BLL.Exceptions;
-using NewsSite.BLL.Extensions;
 using NewsSite.UnitTests.TestData.PageSettings.Authors;
-using NewsSite.DAL.DTO.Request.Author;
+using System.Globalization;
 
 namespace NewsSite.UnitTests.Systems.Services
 {
@@ -57,7 +57,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var authorsResponse =
                 _mapper.Map<List<AuthorResponse>>(
                     QueryableMock
-                        .Where(a => propertyValue.IsDateTime() 
+                        .Where(a => propertyValue.IsDateTime()
                                     && a.BirthDate >= Convert.ToDateTime(propertyValue, CultureInfo.InvariantCulture)));
 
             // Act

@@ -15,7 +15,7 @@ namespace NewsSite.DAL.Constants
 
         public static string GetEntityWithWrongFormatMessage(string propertyName) => $"{propertyName} is in incorrect format";
 
-        public static string GetEntityWithWrongMinimumLengthMessage(string propertyName, int minLength) => 
+        public static string GetEntityWithWrongMinimumLengthMessage(string propertyName, int minLength) =>
             $"{propertyName} must have at least {minLength} symbol";
 
         public static string GetEntityWithWrongMaximumLengthMessage(string propertyName, int maxLength) =>

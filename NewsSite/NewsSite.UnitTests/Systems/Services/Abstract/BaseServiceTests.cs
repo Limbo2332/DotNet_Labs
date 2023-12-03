@@ -22,7 +22,7 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.ConstructServicesUsing(_ =>  new IdentityUserResolver(_userManagerMock.Object));
+                cfg.ConstructServicesUsing(_ => new IdentityUserResolver(_userManagerMock.Object));
 
                 cfg.AddProfile<AuthorsProfile>();
                 cfg.AddProfile<NewsProfile>();

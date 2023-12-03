@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NewsSite.BLL.Exceptions;
@@ -9,9 +8,10 @@ using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Repositories.Base;
 using NewsSite.UnitTests.Systems.Services.Abstract;
-using NewsSite.UnitTests.TestData.PageSettings.Authors;
-using System.Text;
 using NewsSite.UnitTests.TestData;
+using NewsSite.UnitTests.TestData.PageSettings.Authors;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace NewsSite.UnitTests.Systems.Services
 {
@@ -31,8 +31,8 @@ namespace NewsSite.UnitTests.Systems.Services
                 .Returns(Guid.Empty.ToString());
 
             _sut = new AuthService(
-                _userManagerMock.Object, 
-                _mapper, 
+                _userManagerMock.Object,
+                _mapper,
                 _configMock.Object,
                 _authorsRepositoryMock.Object);
         }
@@ -112,7 +112,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var loginUserResponse = _mapper.Map<LoginUserResponse>(author);
 
             // Act
-            var result = await _sut.LoginAsync(userLogin); 
+            var result = await _sut.LoginAsync(userLogin);
 
             // Assert
             using (new AssertionScope())

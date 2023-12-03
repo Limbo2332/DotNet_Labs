@@ -117,7 +117,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var exceptionMessage = new NotFoundException(
                 nameof(Rubric),
                 rubricId,
-                nameof(News), 
+                nameof(News),
                 newsId).Message;
 
             // Act

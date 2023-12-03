@@ -1,6 +1,6 @@
-﻿using System.Net;
-using NewsSite.BLL.Exceptions;
+﻿using NewsSite.BLL.Exceptions;
 using NewsSite.DAL.Enums;
+using System.Net;
 
 namespace NewsSite.UI.Extensions
 {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using NewsSite.BLL.Exceptions;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
 using NewsSite.DAL.DTO.Request.Auth;
@@ -11,7 +12,6 @@ using NewsSite.DAL.Repositories.Base;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {

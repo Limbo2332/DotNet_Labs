@@ -17,9 +17,9 @@ namespace NewsSite.UnitTests.TestData
             .RuleFor(a => a.Sex, f => f.Random.Bool())
             .RuleFor(a => a.PublicInformation,
                 f => f.Lorem.Paragraph())
-            .RuleFor(a => a.BirthDate, 
+            .RuleFor(a => a.BirthDate,
                 f => f.Date.Between(
-                    DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER * 2), 
+                    DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER * 2),
                     DateTime.UtcNow).AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))
             .RuleFor(a => a.IdentityUser, (_, a) => new IdentityUser(a.FullName))
             .Generate(ITEMS_COUNT);

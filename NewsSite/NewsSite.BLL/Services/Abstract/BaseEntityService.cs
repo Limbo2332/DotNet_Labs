@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Response;
+using NewsSite.DAL.DTO.Response.Abstract;
 using NewsSite.DAL.Entities.Abstract;
 using System.Linq.Expressions;
-using NewsSite.DAL.DTO.Response.Abstract;
 
 namespace NewsSite.BLL.Services.Abstract
 {

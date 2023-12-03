@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Identity;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
 using NewsSite.UI.Extensions;
 using System.Text.Json.Serialization;
-using FluentValidation.AspNetCore;
 
 namespace NewsSite.UI
 {

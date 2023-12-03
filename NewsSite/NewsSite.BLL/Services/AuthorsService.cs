@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using NewsSite.BLL.Exceptions;
 using NewsSite.BLL.Extensions;
 using NewsSite.BLL.Interfaces;
 using NewsSite.BLL.Services.Abstract;
@@ -9,8 +9,8 @@ using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.DTO.Response;
 using NewsSite.DAL.Entities;
 using NewsSite.DAL.Repositories.Base;
+using System.Globalization;
 using System.Linq.Expressions;
-using NewsSite.BLL.Exceptions;
 
 namespace NewsSite.BLL.Services
 {
@@ -78,7 +78,7 @@ namespace NewsSite.BLL.Services
             {
                 "email" => author => author.Email.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
                 "fullname" => author => author.FullName.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),
-                "birthdate" => author => propertyValue.IsDateTime() 
+                "birthdate" => author => propertyValue.IsDateTime()
                                          && author.BirthDate >= Convert.ToDateTime(propertyValue, CultureInfo.InvariantCulture),
                 "publicinformation" => author => author.PublicInformation != null
                                                  && author.PublicInformation.ToLowerInvariant().Contains(propertyValue.ToLowerInvariant()),

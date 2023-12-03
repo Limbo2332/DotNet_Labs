@@ -1,26 +1,26 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using NewsSite.BLL.Interfaces;
-using NewsSite.BLL.MappingProfiles;
-using NewsSite.BLL.Services;
-using NewsSite.DAL.Repositories;
-using NewsSite.DAL.Repositories.Base;
-using System.Reflection;
-using System.Text;
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NewsSite.BLL.Interfaces;
+using NewsSite.BLL.MappingProfiles;
+using NewsSite.BLL.Services;
 using NewsSite.DAL.Context;
 using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.DTO.Request.News;
 using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.DAL.DTO.Request.Tag;
-using NewsSite.UI.Validators.Request.Author;
+using NewsSite.DAL.Repositories;
+using NewsSite.DAL.Repositories.Base;
 using NewsSite.UI.Validators.Request.Auth;
+using NewsSite.UI.Validators.Request.Author;
 using NewsSite.UI.Validators.Request.News;
 using NewsSite.UI.Validators.Request.Rubric;
 using NewsSite.UI.Validators.Request.Tag;
+using System.Reflection;
+using System.Text;
 
 namespace NewsSite.UI.Extensions
 {
@@ -77,11 +77,12 @@ namespace NewsSite.UI.Extensions
 
         public static void AddAuthenticationWithJwt(this IServiceCollection services, IConfiguration config)
         {
-            services.AddAuthentication(options => {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters

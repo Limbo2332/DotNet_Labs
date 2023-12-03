@@ -6,7 +6,7 @@
         {
             foreach (var tag in RepositoriesFakeData.Tags)
             {
-                Add(new List<Guid>{tag.Id});
+                Add(new List<Guid> { tag.Id });
             }
         }
     }

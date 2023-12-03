@@ -18,7 +18,7 @@ namespace NewsSite.UI.Extensions
                 .Matches(Regexes.EMAIL_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.EMAIL_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.EMAIL_MINLENGTH)
-                    .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.EMAIL_PROPERTY_NAME, 
+                    .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.EMAIL_PROPERTY_NAME,
                     ConfigurationConstants.EMAIL_MINLENGTH))
                 .MaximumLength(ConfigurationConstants.EMAIL_MAXLENGTH)
                     .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.EMAIL_PROPERTY_NAME,
@@ -35,7 +35,7 @@ namespace NewsSite.UI.Extensions
                 .Matches(Regexes.PASSWORD_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.PASSWORD_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.PASSWORD_MINLENGTH)
-                    .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.PASSWORD_PROPERTY_NAME, 
+                    .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.PASSWORD_PROPERTY_NAME,
                     ConfigurationConstants.PASSWORD_MINLENGTH))
                 .MaximumLength(ConfigurationConstants.PASSWORD_MAXLENGTH)
                     .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.PASSWORD_PROPERTY_NAME,
@@ -52,10 +52,10 @@ namespace NewsSite.UI.Extensions
                 .Matches(Regexes.FULL_NAME_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.FULL_NAME_MINLENGTH)
-                        .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME, 
+                        .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME,
                     ConfigurationConstants.FULL_NAME_MINLENGTH))
                 .MaximumLength(ConfigurationConstants.FULL_NAME_MAXLENGTH)
-                        .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME, 
+                        .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME,
                     ConfigurationConstants.FULL_NAME_MAXLENGTH));
         }
 
@@ -70,7 +70,7 @@ namespace NewsSite.UI.Extensions
                     .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.SUBJECT_PROPERTY_NAME,
                     ConfigurationConstants.SUBJECT_MINLENGTH))
                 .MaximumLength(ConfigurationConstants.SUBJECT_MAXLENGTH)
-                    .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.SUBJECT_PROPERTY_NAME, 
+                    .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.SUBJECT_PROPERTY_NAME,
                     ConfigurationConstants.SUBJECT_MAXLENGTH));
         }
 
@@ -82,7 +82,7 @@ namespace NewsSite.UI.Extensions
                 .Matches(Regexes.NO_SPACES_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.CONTENT_PROPERTY_NAME))
                 .MinimumLength(ConfigurationConstants.CONTENT_MINLENGTH)
-                    .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.CONTENT_PROPERTY_NAME, 
+                    .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.CONTENT_PROPERTY_NAME,
                     ConfigurationConstants.CONTENT_MINLENGTH))
                 .MaximumLength(ConfigurationConstants.CONTENT_MAXLENGTH)
                     .WithMessage(ValidationMessages.GetEntityWithWrongMaximumLengthMessage(ValidationMessages.CONTENT_PROPERTY_NAME,

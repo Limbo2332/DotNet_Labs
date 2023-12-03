@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace NewsSite.UnitTests.TestData.PageSettings.Authors
+﻿namespace NewsSite.UnitTests.TestData.PageSettings.Authors
 {
     public class AuthorsFilteringData : TheoryData<string, string>
     {

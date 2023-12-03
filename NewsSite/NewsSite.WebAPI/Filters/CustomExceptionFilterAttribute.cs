@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using NewsSite.UI.Extensions;
 
 namespace NewsSite.UI.Filters
@@ -17,7 +17,7 @@ namespace NewsSite.UI.Filters
             {
                 error = context.Exception.Message,
                 code = errorStatusCode
-            }); 
+            });
         }
     }
 }

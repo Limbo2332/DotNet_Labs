@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using NewsSite.BLL.Interfaces;
-using NewsSite.DAL.Constants;
 using NewsSite.DAL.DTO.Request.Auth;
 using NewsSite.UI.Extensions;
 

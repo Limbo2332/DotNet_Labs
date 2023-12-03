@@ -45,7 +45,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var response = _mapper.Map<List<RubricResponse>>(RepositoriesFakeData.Rubrics);
 
             // Act
-            var result = await Sut.GetAllRubricsAsync(pageSettings);
+            var result = await Sut.GetRubricsAsync(pageSettings);
 
             // Assert
             using (new AssertionScope())

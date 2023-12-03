@@ -45,7 +45,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var response = _mapper.Map<List<TagResponse>>(RepositoriesFakeData.Tags);
 
             // Act
-            var result = await Sut.GetAllTagsAsync(pageSettings);
+            var result = await Sut.GetTagsAsync(pageSettings);
 
             // Assert
             using (new AssertionScope())

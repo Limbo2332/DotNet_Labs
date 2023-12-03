@@ -10,9 +10,9 @@ namespace NewsSite.UI.Extensions
         {
             return exception switch
             {
-                BadRequestException _ => (HttpStatusCode.BadRequest, ErrorCode.BadRequest),
-                NotFoundException _ => (HttpStatusCode.NotFound, ErrorCode.NotFound),
-                InvalidEmailOrPasswordException _ => (HttpStatusCode.BadRequest, ErrorCode.InvalidEmailOrPassword),
+                BadRequestException => (HttpStatusCode.BadRequest, ErrorCode.BadRequest),
+                NotFoundException => (HttpStatusCode.NotFound, ErrorCode.NotFound),
+                InvalidEmailOrPasswordException => (HttpStatusCode.BadRequest, ErrorCode.InvalidEmailOrPassword),
                 _ => (HttpStatusCode.InternalServerError, ErrorCode.General)
             };
         }

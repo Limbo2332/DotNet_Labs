@@ -29,7 +29,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpGet("by-rubric")]
         [ProducesResponseType(typeof(PageList<NewsResponse>), 200)]
-        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByRubricAsync(
+        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByRubric(
             [FromQuery] Guid rubricId,
             [FromQuery] PageSettings? pageSettings)
         {
@@ -40,7 +40,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpGet("by-tags")]
         [ProducesResponseType(typeof(PageList<NewsResponse>), 200)]
-        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByTagsAsync(
+        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByTags(
             [FromQuery] List<Guid> tagsIds,
             [FromQuery] PageSettings? pageSettings)
         {
@@ -51,7 +51,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpGet("by-author")]
         [ProducesResponseType(typeof(PageList<NewsResponse>), 200)]
-        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByAuthorAsync(
+        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByAuthor(
             [FromQuery] Guid authorId,
             [FromQuery] PageSettings? pageSettings)
         {
@@ -62,7 +62,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpGet("by-date")]
         [ProducesResponseType(typeof(PageList<NewsResponse>), 200)]
-        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByPeriodOfTimeAsync(
+        public async Task<ActionResult<PageList<NewsResponse>>> GetNewsByPeriodOfTime(
             [FromQuery] DateTime startDate,
             [FromQuery] DateTime endDate,
             [FromQuery] PageSettings? pageSettings)
@@ -84,7 +84,7 @@ namespace NewsSite.UI.Controllers
         [HttpPost]
         [Authorize]
         [ProducesResponseType(typeof(NewsResponse), 201)]
-        public async Task<ActionResult<NewsResponse>> CreateNewNewsAsync([FromBody] NewNewsRequest newNewsRequest)
+        public async Task<ActionResult<NewsResponse>> CreateNewNews([FromBody] NewNewsRequest newNewsRequest)
         {
             var newNews = await _newsService.CreateNewNewsAsync(newNewsRequest);
 
@@ -94,7 +94,7 @@ namespace NewsSite.UI.Controllers
         [HttpPut]
         [Authorize]
         [ProducesResponseType(typeof(NewsResponse), 200)]
-        public async Task<ActionResult<NewsResponse>> UpdateNewsAsync([FromBody] UpdateNewsRequest updateNewsRequest)
+        public async Task<ActionResult<NewsResponse>> UpdateNews([FromBody] UpdateNewsRequest updateNewsRequest)
         {
             var updateNews = await _newsService.UpdateNewsAsync(updateNewsRequest);
 

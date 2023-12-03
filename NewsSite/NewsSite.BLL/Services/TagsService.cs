@@ -25,7 +25,7 @@ namespace NewsSite.BLL.Services
             _tagsRepository = tagsRepository;
         }
 
-        public async Task<PageList<TagResponse>> GetAllTagsAsync(PageSettings? pageSettings)
+        public async Task<PageList<TagResponse>> GetTagsAsync(PageSettings? pageSettings)
         {
             var tags = _tagsRepository.GetAll();
 

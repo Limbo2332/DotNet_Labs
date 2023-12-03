@@ -33,7 +33,7 @@ namespace NewsSite.UI.Extensions
                 .Matches(Regexes.NO_SPACES_REGEX)
                     .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.PASSWORD_PROPERTY_NAME))
                 .Matches(Regexes.PASSWORD_REGEX)
-                    .WithMessage(ValidationMessages.GetEntityWithWrongFormatMessage(ValidationMessages.PASSWORD_PROPERTY_NAME))
+                    .WithMessage(ValidationMessages.PASSWORD_WITH_WRONG_FORMAT_MESSAGE)
                 .MinimumLength(ConfigurationConstants.PASSWORD_MINLENGTH)
                     .WithMessage(ValidationMessages.GetEntityWithWrongMinimumLengthMessage(ValidationMessages.PASSWORD_PROPERTY_NAME,
                     ConfigurationConstants.PASSWORD_MINLENGTH))

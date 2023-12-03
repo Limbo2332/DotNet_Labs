@@ -24,7 +24,7 @@ namespace NewsSite.UI.Controllers
         [ProducesResponseType(typeof(PageList<RubricResponse>), 200)]
         public async Task<ActionResult<PageList<RubricResponse>>> GetRubrics([FromQuery] PageSettings? pageSettings)
         {
-            var pageList = await _rubricsService.GetAllRubricsAsync(pageSettings);
+            var pageList = await _rubricsService.GetRubricsAsync(pageSettings);
 
             return Ok(pageList);
         }
@@ -40,7 +40,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(RubricResponse), 201)]
-        public async Task<ActionResult<RubricResponse>> CreateNewRubricAsync([FromBody] NewRubricRequest newRubricRequest)
+        public async Task<ActionResult<RubricResponse>> CreateNewRubric([FromBody] NewRubricRequest newRubricRequest)
         {
             var newRubric = await _rubricsService.CreateNewRubricAsync(newRubricRequest);
 
@@ -58,7 +58,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpPut]
         [ProducesResponseType(typeof(RubricResponse), 200)]
-        public async Task<ActionResult<RubricResponse>> UpdateRubricAsync([FromBody] UpdateRubricRequest updateRubricRequest)
+        public async Task<ActionResult<RubricResponse>> UpdateRubric([FromBody] UpdateRubricRequest updateRubricRequest)
         {
             var updateRubric = await _rubricsService.UpdateRubricAsync(updateRubricRequest);
 

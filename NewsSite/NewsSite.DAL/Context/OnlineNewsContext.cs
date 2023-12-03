@@ -37,7 +37,7 @@ namespace NewsSite.DAL.Context
             foreach (var newEntry in newEntries)
             {
                 newEntry!.CreatedAt = DateTime.Now;
-                newEntry!.UpdatedAt = DateTime.Now;
+                newEntry.UpdatedAt = DateTime.Now;
             }
 
             var updatedEntries = ChangeTracker.Entries()

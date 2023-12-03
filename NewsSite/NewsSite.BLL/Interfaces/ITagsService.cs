@@ -6,7 +6,7 @@ namespace NewsSite.BLL.Interfaces
 {
     public interface ITagsService
     {
-        Task<PageList<TagResponse>> GetAllTagsAsync(PageSettings? pageSettings);
+        Task<PageList<TagResponse>> GetTagsAsync(PageSettings? pageSettings);
 
         Task<TagResponse> GetTagByIdAsync(Guid id);
 

@@ -6,7 +6,7 @@ namespace NewsSite.BLL.Interfaces
 {
     public interface IRubricsService
     {
-        Task<PageList<RubricResponse>> GetAllRubricsAsync(PageSettings? pageSettings);
+        Task<PageList<RubricResponse>> GetRubricsAsync(PageSettings? pageSettings);
 
         Task<RubricResponse> GetRubricByIdAsync(Guid id);
 

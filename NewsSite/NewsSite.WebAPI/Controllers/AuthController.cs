@@ -18,7 +18,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpPost("login")]
         [ProducesResponseType(typeof(LoginUserResponse), 200)]
-        public async Task<ActionResult<LoginUserResponse>> LoginAsync([FromBody] UserLoginRequest userLoginRequest)
+        public async Task<ActionResult<LoginUserResponse>> Login([FromBody] UserLoginRequest userLoginRequest)
         {
             var response = await _authService.LoginAsync(userLoginRequest);
 
@@ -27,7 +27,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpPost("register")]
         [ProducesResponseType(typeof(NewUserResponse), 201)]
-        public async Task<ActionResult<NewUserResponse>> RegisterAsync([FromBody] UserRegisterRequest userRegisterRequest)
+        public async Task<ActionResult<NewUserResponse>> Register([FromBody] UserRegisterRequest userRegisterRequest)
         {
             var response = await _authService.RegisterAsync(userRegisterRequest);
 

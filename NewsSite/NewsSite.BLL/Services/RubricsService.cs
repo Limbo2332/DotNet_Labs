@@ -25,7 +25,7 @@ namespace NewsSite.BLL.Services
             _rubricsRepository = rubricsRepository;
         }
 
-        public async Task<PageList<RubricResponse>> GetAllRubricsAsync(PageSettings? pageSettings)
+        public async Task<PageList<RubricResponse>> GetRubricsAsync(PageSettings? pageSettings)
         {
             var rubrics = _rubricsRepository.GetAll();
 

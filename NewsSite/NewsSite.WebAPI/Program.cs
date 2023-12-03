@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
 using NewsSite.UI.Extensions;
+using NewsSite.UI.Filters;
 using System.Text.Json.Serialization;
 
 namespace NewsSite.UI
@@ -24,7 +25,11 @@ namespace NewsSite.UI
             builder.Services.AddCustomServices();
 
             builder.Services
-                .AddControllers()
+                .AddControllers(options =>
+                {
+                    options.Filters.Add(typeof(ValidateFilterAttribute));
+                    options.Filters.Add(typeof(CustomExceptionFilterAttribute));
+                })
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             builder.Services.AddFluentValidationAutoValidation();

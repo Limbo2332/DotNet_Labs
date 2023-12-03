@@ -24,7 +24,7 @@ namespace NewsSite.UI.Controllers
         [ProducesResponseType(typeof(PageList<TagResponse>), 200)]
         public async Task<ActionResult<PageList<TagResponse>>> GetTags([FromQuery] PageSettings? pageSettings)
         {
-            var pageList = await _tagsService.GetAllTagsAsync(pageSettings);
+            var pageList = await _tagsService.GetTagsAsync(pageSettings);
 
             return Ok(pageList);
         }
@@ -40,7 +40,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(TagResponse), 201)]
-        public async Task<ActionResult<TagResponse>> CreateNewTagAsync([FromBody] NewTagRequest newTagRequest)
+        public async Task<ActionResult<TagResponse>> CreateNewTag([FromBody] NewTagRequest newTagRequest)
         {
             var newTag = await _tagsService.CreateNewTagAsync(newTagRequest);
 
@@ -58,7 +58,7 @@ namespace NewsSite.UI.Controllers
 
         [HttpPut]
         [ProducesResponseType(typeof(TagResponse), 200)]
-        public async Task<ActionResult<TagResponse>> UpdateTagAsync([FromBody] UpdateTagRequest updateTagRequest)
+        public async Task<ActionResult<TagResponse>> UpdateTag([FromBody] UpdateTagRequest updateTagRequest)
         {
             var updateTag = await _tagsService.UpdateTagAsync(updateTagRequest);
 

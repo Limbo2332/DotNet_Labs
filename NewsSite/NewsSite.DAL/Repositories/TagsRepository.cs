@@ -17,7 +17,7 @@ namespace NewsSite.DAL.Repositories
             _newsRepository = newsRepository;
         }
 
-        public async Task<Tag?> AddTagForNewsIdAsync(Guid tagId, Guid newsId)
+        public async Task<NewsTags?> AddTagForNewsIdAsync(Guid tagId, Guid newsId)
         {
             var tag = await GetByIdAsync(tagId);
             var news = await _newsRepository.GetByIdAsync(newsId);
@@ -37,7 +37,7 @@ namespace NewsSite.DAL.Repositories
             await _context.NewsTags.AddAsync(newNewsTags);
             await SaveChangesAsync();
 
-            return tag;
+            return newNewsTags;
         }
 
         public async Task DeleteTagForNewsIdAsync(Guid tagId, Guid newsId)

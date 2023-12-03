@@ -44,8 +44,10 @@ namespace NewsSite.BLL.Services
 
         public async Task<TagResponse> AddTagForNewsIdAsync(Guid tagId, Guid newsId)
         {
-            var tag = await _tagsRepository.AddTagForNewsIdAsync(tagId, newsId)
-                ?? throw new NotFoundException(nameof(Tag), tagId);
+            var newsTag = await _tagsRepository.AddTagForNewsIdAsync(tagId, newsId)
+                ?? throw new NotFoundException(nameof(Tag), tagId, nameof(News), newsId);
+
+            var tag = await GetTagByIdAsync(newsTag.TagId);
 
             return _mapper.Map<TagResponse>(tag);
         }
@@ -62,6 +64,8 @@ namespace NewsSite.BLL.Services
 
         public async Task<TagResponse> UpdateTagAsync(UpdateTagRequest newTag)
         {
+            _ = await GetTagByIdAsync(newTag.Id);
+
             var tag = _mapper.Map<Tag>(newTag);
 
             await _tagsRepository.UpdateAsync(tag);

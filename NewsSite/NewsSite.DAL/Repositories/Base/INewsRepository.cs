@@ -4,8 +4,8 @@ namespace NewsSite.DAL.Repositories.Base
 {
     public interface INewsRepository : IGenericRepository<News>
     {
-        Task AddNewsRubrics(Guid newsId, List<Guid> rubricId);
+        Task AddNewsRubricsAsync(Guid newsId, List<Guid> rubricId);
 
-        Task AddNewsTags(Guid newsId, List<Guid> tagsIds);
+        Task AddNewsTagsAsync(Guid newsId, List<Guid> tagsIds);
     }
 }

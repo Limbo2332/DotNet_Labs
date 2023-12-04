@@ -30,14 +30,21 @@ namespace NewsSite.DAL.Context
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            BaseSaveChanges();
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void BaseSaveChanges()
+        {
             var newEntries = ChangeTracker.Entries()
                 .Where(entryEntity => entryEntity is { State: EntityState.Added, Entity: BaseEntity })
                 .Select(entryEntity => entryEntity.Entity as BaseEntity);
 
             foreach (var newEntry in newEntries)
             {
-                newEntry!.CreatedAt = DateTime.Now;
-                newEntry.UpdatedAt = DateTime.Now;
+                newEntry!.CreatedAt = DateTime.UtcNow;
+                newEntry.UpdatedAt = DateTime.UtcNow;
             }
 
             var updatedEntries = ChangeTracker.Entries()
@@ -46,10 +53,8 @@ namespace NewsSite.DAL.Context
 
             foreach (var updatedEntry in updatedEntries)
             {
-                updatedEntry!.UpdatedAt = DateTime.Now;
+                updatedEntry!.UpdatedAt = DateTime.UtcNow;
             }
-
-            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

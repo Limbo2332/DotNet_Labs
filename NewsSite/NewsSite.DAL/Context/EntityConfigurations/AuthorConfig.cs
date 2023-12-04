@@ -24,7 +24,8 @@ namespace NewsSite.DAL.Context.EntityConfigurations
             builder
                 .HasMany(a => a.News)
                 .WithOne(pon => pon.Author)
-                .HasForeignKey(pon => pon.CreatedBy);
+                .HasForeignKey(pon => pon.CreatedBy)
+                .IsRequired();
         }
     }
 }

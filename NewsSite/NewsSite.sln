@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsSite.BLL", "NewsSite.BL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsSite.UnitTests", "NewsSite.UnitTests\NewsSite.UnitTests.csproj", "{E2ABE47E-15A6-4C4F-B930-C15B049A05A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsSite.IntegrationTests", "NewsSite.IntegrationTests\NewsSite.IntegrationTests.csproj", "{2D12423D-F3C4-4C15-A975-3471CFD0B510}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E2ABE47E-15A6-4C4F-B930-C15B049A05A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2ABE47E-15A6-4C4F-B930-C15B049A05A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2ABE47E-15A6-4C4F-B930-C15B049A05A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D12423D-F3C4-4C15-A975-3471CFD0B510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D12423D-F3C4-4C15-A975-3471CFD0B510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D12423D-F3C4-4C15-A975-3471CFD0B510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D12423D-F3C4-4C15-A975-3471CFD0B510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

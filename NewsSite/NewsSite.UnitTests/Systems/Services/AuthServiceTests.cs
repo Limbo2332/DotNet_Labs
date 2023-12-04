@@ -57,6 +57,35 @@ namespace NewsSite.UnitTests.Systems.Services
         }
 
         [Fact]
+        public async Task LoginAsync_ShouldThrowException_WhenNoUserWithEmail()
+        {
+            // Arrange
+            var exceptionMessage = new NotFoundException(nameof(Author)).Message;
+            var userLogin = new UserLoginRequest
+            {
+                Email = "email"
+            };
+
+            var identityUser = new IdentityUser();
+
+            _userManagerMock
+                .Setup(um => um.FindByEmailAsync(userLogin.Email))
+                .ReturnsAsync(identityUser);
+
+            _userManagerMock
+                .Setup(um => um.CheckPasswordAsync(identityUser, userLogin.Password))
+                .ReturnsAsync(true);
+
+            // Act
+            var action = async () => await _sut.LoginAsync(userLogin);
+
+            // Assert
+            await action.Should()
+                .ThrowAsync<NotFoundException>()
+                .WithMessage(exceptionMessage);
+        }
+
+        [Fact]
         public async Task LoginAsync_ShouldThrowException_WhenNoCorrectEmailOrPassword()
         {
             // Arrange

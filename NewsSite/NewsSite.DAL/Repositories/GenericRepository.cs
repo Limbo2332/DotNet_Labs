@@ -23,7 +23,7 @@ namespace NewsSite.DAL.Repositories
 
         public virtual async Task<T?> GetByIdAsync(Guid id)
         {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbSet.FindAsync(id);
         }
 
         public virtual async Task AddAsync(T entity)
@@ -40,7 +40,7 @@ namespace NewsSite.DAL.Repositories
 
         public virtual async Task DeleteAsync(Guid id)
         {
-            var entity = await GetByIdAsync(id);
+            var entity = await _dbSet.FindAsync(id);
 
             if (entity is not null)
             {

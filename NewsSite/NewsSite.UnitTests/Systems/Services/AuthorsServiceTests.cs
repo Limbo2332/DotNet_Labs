@@ -68,7 +68,7 @@ namespace NewsSite.UnitTests.Systems.Services
             {
                 result.Items.Should().BeEquivalentTo(authorsResponse);
                 result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(1);
+                result.TotalCount.Should().Be(2);
                 result.PageSize.Should().Be(PageList<AuthorResponse>.DEFAULT_PAGE_SIZE);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();

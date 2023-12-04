@@ -96,7 +96,7 @@ namespace NewsSite.UnitTests.Systems.Validators.Common
         public async Task CustomRubricName_Should_Success_WhenCorrectRubricName()
         {
             // Arrange
-            var rubricNameValue = new Faker().Random.String(
+            var rubricNameValue = new Faker().Random.String2(
                 ConfigurationConstants.RUBRIC_MINLENGTH,
                 ConfigurationConstants.RUBRIC_MAXLENGTH);
 

@@ -333,7 +333,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 .ReturnsAsync(author);
 
             _newsRepositoryMock
-                .Setup(nr => nr.AddNewsTags(It.IsAny<Guid>(), It.IsAny<List<Guid>>()))
+                .Setup(nr => nr.AddNewsTagsAsync(It.IsAny<Guid>(), It.IsAny<List<Guid>>()))
                 .Callback(() =>
                 {
                     news.NewsTags =
@@ -345,7 +345,7 @@ namespace NewsSite.UnitTests.Systems.Services
                 });
 
             _newsRepositoryMock
-                .Setup(nr => nr.AddNewsRubrics(It.IsAny<Guid>(), It.IsAny<List<Guid>>()))
+                .Setup(nr => nr.AddNewsRubricsAsync(It.IsAny<Guid>(), It.IsAny<List<Guid>>()))
                 .Callback(() =>
                 {
                     news.NewsRubrics =

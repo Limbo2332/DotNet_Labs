@@ -43,7 +43,8 @@ namespace NewsSite.BLL.Services
                 throw new InvalidEmailOrPasswordException();
             }
 
-            var author = await _authorsRepository.GetAuthorByEmailAsync(userLogin.Email);
+            var author = await _authorsRepository.GetAuthorByEmailAsync(userLogin.Email)
+                ?? throw new NotFoundException(nameof(Author));
 
             var response = _mapper.Map<LoginUserResponse>(author);
             response.Token = GenerateTokenString(author.Email, author.FullName);

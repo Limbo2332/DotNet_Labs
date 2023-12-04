@@ -18,9 +18,9 @@ namespace NewsSite.DAL.Repositories
             _userManager = userManager;
         }
 
-        public async Task<Author> GetAuthorByEmailAsync(string email)
+        public async Task<Author?> GetAuthorByEmailAsync(string email)
         {
-            return await _dbSet.FirstAsync(a => a.Email == email);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(a => a.Email == email);
         }
 
         public bool IsEmailUnique(string email)
@@ -41,9 +41,9 @@ namespace NewsSite.DAL.Repositories
             {
                 var identityUser = await _userManager.FindByEmailAsync(author.Email);
                 await _userManager.DeleteAsync(identityUser!);
-            }
 
-            await base.DeleteAsync(id);
+                _dbSet.Remove(author);
+            }
         }
     }
 }

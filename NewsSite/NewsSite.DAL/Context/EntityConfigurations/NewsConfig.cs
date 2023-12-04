@@ -20,12 +20,14 @@ namespace NewsSite.DAL.Context.EntityConfigurations
             builder
                 .HasMany(pon => pon.NewsTags)
                 .WithOne(nt => nt.News)
-                .HasForeignKey(nt => nt.NewsId);
+                .HasForeignKey(nt => nt.NewsId)
+                .IsRequired();
 
             builder
                 .HasMany(pon => pon.NewsRubrics)
                 .WithOne(nt => nt.News)
-                .HasForeignKey(nt => nt.NewsId);
+                .HasForeignKey(nt => nt.NewsId)
+                .IsRequired();
         }
     }
 }

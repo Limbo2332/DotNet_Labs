@@ -103,12 +103,12 @@ namespace NewsSite.BLL.Services
 
             if (newNewsRequest.RubricsIds is not null && newNewsRequest.RubricsIds.Any())
             {
-                await _newsRepository.AddNewsRubrics(newNews.Id, newNewsRequest.RubricsIds);
+                await _newsRepository.AddNewsRubricsAsync(newNews.Id, newNewsRequest.RubricsIds);
             }
 
             if (newNewsRequest.TagsIds is not null && newNewsRequest.TagsIds.Any())
             {
-                await _newsRepository.AddNewsTags(newNews.Id, newNewsRequest.TagsIds);
+                await _newsRepository.AddNewsTagsAsync(newNews.Id, newNewsRequest.TagsIds);
             }
 
             await _newsRepository.SaveChangesAsync();

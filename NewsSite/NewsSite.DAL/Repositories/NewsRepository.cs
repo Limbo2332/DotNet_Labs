@@ -11,7 +11,7 @@ namespace NewsSite.DAL.Repositories
         {
         }
 
-        public async Task AddNewsRubrics(Guid newsId, List<Guid> rubricsIds)
+        public async Task AddNewsRubricsAsync(Guid newsId, List<Guid> rubricsIds)
         {
             await DeleteNewsRubricsByNewsIdAsync(newsId);
 
@@ -25,7 +25,7 @@ namespace NewsSite.DAL.Repositories
             await _context.NewsRubrics.AddRangeAsync(newsRubrics);
         }
 
-        public async Task AddNewsTags(Guid newsId, List<Guid> tagsIds)
+        public async Task AddNewsTagsAsync(Guid newsId, List<Guid> tagsIds)
         {
             await DeleteNewsTagsByNewsIsAsync(newsId);
 

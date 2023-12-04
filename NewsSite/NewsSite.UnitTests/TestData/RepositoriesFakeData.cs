@@ -7,25 +7,10 @@ namespace NewsSite.UnitTests.TestData
     {
         public const int ITEMS_COUNT = 5;
 
-        public static List<Author> Authors = new Faker<Author>()
-            .UseSeed(1)
-            .RuleFor(a => a.Id, f => f.Random.Guid())
-            .RuleFor(a => a.CreatedAt, _ => DateTime.UtcNow)
-            .RuleFor(a => a.UpdatedAt, _ => DateTime.UtcNow)
-            .RuleFor(a => a.Email, f => f.Internet.Email())
-            .RuleFor(a => a.FullName, f => f.Internet.UserName())
-            .RuleFor(a => a.Sex, f => f.Random.Bool())
-            .RuleFor(a => a.PublicInformation,
-                f => f.Lorem.Paragraph())
-            .RuleFor(a => a.BirthDate,
-                f => f.Date.Between(
-                    DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER * 2),
-                    DateTime.UtcNow).AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))
-            .RuleFor(a => a.IdentityUser, (_, a) => new IdentityUser(a.FullName))
-            .Generate(ITEMS_COUNT);
+        public static List<Author> Authors = GenerateAuthors(ITEMS_COUNT, 1000);
 
         public static List<News> News = new Faker<News>()
-            .UseSeed(1)
+            .UseSeed(2000)
             .RuleFor(n => n.Id, f => f.Random.Guid())
             .RuleFor(n => n.CreatedAt, _ => DateTime.UtcNow)
             .RuleFor(n => n.UpdatedAt, _ => DateTime.UtcNow)
@@ -35,7 +20,7 @@ namespace NewsSite.UnitTests.TestData
             .Generate(ITEMS_COUNT);
 
         public static List<Rubric> Rubrics = new Faker<Rubric>()
-            .UseSeed(1)
+            .UseSeed(3000)
             .RuleFor(r => r.Id, f => f.Random.Guid())
             .RuleFor(r => r.CreatedAt, _ => DateTime.UtcNow)
             .RuleFor(r => r.UpdatedAt, _ => DateTime.UtcNow)
@@ -43,27 +28,61 @@ namespace NewsSite.UnitTests.TestData
             .Generate(ITEMS_COUNT);
 
         public static List<Tag> Tags = new Faker<Tag>()
-            .UseSeed(1)
+            .UseSeed(4000)
             .RuleFor(t => t.Id, f => f.Random.Guid())
             .RuleFor(t => t.CreatedAt, _ => DateTime.UtcNow)
             .RuleFor(t => t.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(t => t.Name, f => f.Lorem.Word())
             .Generate(ITEMS_COUNT);
 
-        public static List<NewsRubrics> NewsRubrics = new Faker<NewsRubrics>()
-            .UseSeed(1)
-            .RuleFor(nr => nr.NewsId, f => f.PickRandom(News).Id)
-            .RuleFor(nr => nr.RubricId, f => f.PickRandom(Rubrics).Id)
-            .Generate(ITEMS_COUNT * 2)
-            .DistinctBy(nr => new { nr.RubricId, nr.NewsId })
-            .ToList();
+        public static List<NewsRubrics> NewsRubrics = GenerateNewsRubrics(ITEMS_COUNT * 2, 5000);
 
-        public static List<NewsTags> NewsTags = new Faker<NewsTags>()
-            .UseSeed(1)
-            .RuleFor(nt => nt.NewsId, f => f.PickRandom(News).Id)
-            .RuleFor(nt => nt.TagId, f => f.PickRandom(Tags).Id)
-            .Generate(ITEMS_COUNT * 2)
-            .DistinctBy(nt => new { nt.TagId, nt.NewsId })
-            .ToList();
+        public static List<NewsTags> NewsTags = GenerateNewsTags(ITEMS_COUNT * 2, 6000);
+
+        public static List<Author> GenerateAuthors(int count, int seed)
+        {
+            return new Faker<Author>()
+                .UseSeed(seed)
+                .RuleFor(a => a.Id, f => f.Random.Guid())
+                .RuleFor(a => a.CreatedAt, _ => DateTime.UtcNow)
+                .RuleFor(a => a.UpdatedAt, _ => DateTime.UtcNow)
+                .RuleFor(a => a.Email, f => f.Internet.Email())
+                .RuleFor(a => a.FullName, f => f.Internet.UserName())
+                .RuleFor(a => a.Sex, f => f.Random.Bool())
+                .RuleFor(a => a.PublicInformation,
+                    f => f.Lorem.Paragraph())
+                .RuleFor(a => a.BirthDate,
+                    f => f.Date.Between(
+                        DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER * 2),
+                        DateTime.UtcNow).AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))
+                .RuleFor(a => a.IdentityUser, (_, a) => new IdentityUser
+                {
+                    Email = a.Email,
+                    UserName = a.FullName
+                })
+                .Generate(count);
+        }
+
+        public static List<NewsRubrics> GenerateNewsRubrics(int count, int seed)
+        {
+            return new Faker<NewsRubrics>()
+                .UseSeed(seed)
+                .RuleFor(nr => nr.NewsId, f => f.PickRandom(News).Id)
+                .RuleFor(nr => nr.RubricId, f => f.PickRandom(Rubrics).Id)
+                .Generate(count)
+                .DistinctBy(nr => new { nr.RubricId, nr.NewsId })
+                .ToList();
+        }
+
+        public static List<NewsTags> GenerateNewsTags(int count, int seed)
+        {
+            return new Faker<NewsTags>()
+                .UseSeed(seed)
+                .RuleFor(nt => nt.NewsId, f => f.PickRandom(News).Id)
+                .RuleFor(nt => nt.TagId, f => f.PickRandom(Tags).Id)
+                .Generate(count)
+                .DistinctBy(nt => new { nt.TagId, nt.NewsId })
+                .ToList();
+        }
     }
 }

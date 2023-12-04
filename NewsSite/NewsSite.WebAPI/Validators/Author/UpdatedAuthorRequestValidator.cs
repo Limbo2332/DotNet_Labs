@@ -12,14 +12,10 @@ namespace NewsSite.UI.Validators.Author
         public UpdatedAuthorRequestValidator(IAuthorsService authorsService)
         {
             RuleFor(ua => ua.Email)
-                .CustomEmail()
-                .Must(authorsService.IsEmailUnique)
-                    .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.EMAIL_PROPERTY_NAME));
+                .CustomEmail();
 
             RuleFor(ua => ua.FullName)
-                .CustomFullName()
-                .Must(authorsService.IsFullNameUnique)
-                    .WithMessage(ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME));
+                .CustomFullName();
 
             RuleFor(ur => ur.BirthDate)
                 .LessThan(DateTime.UtcNow.AddYears(-ConfigurationConstants.MIN_YEARS_TO_REGISTER))

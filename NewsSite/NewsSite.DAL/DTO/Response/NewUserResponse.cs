@@ -11,5 +11,7 @@
         public string? PublicInformation { get; set; }
 
         public DateTime BirthDate { get; set; }
+
+        public string Token { get; set; } = string.Empty;
     }
 }

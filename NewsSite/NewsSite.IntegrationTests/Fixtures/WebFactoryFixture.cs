@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NewsSite.UnitTests.TestData;
+using System.Net.Http.Headers;
+using System.Net.Http;
 
 namespace NewsSite.IntegrationTests.Fixtures
 {
-    public class DbContextAndUserManagerFixture : IDisposable
+    public class WebFactoryFixture : IDisposable
     {
         private readonly WebApplicationFactory<Program> _factory;
         private readonly IServiceScope _scope;
@@ -17,7 +19,9 @@ namespace NewsSite.IntegrationTests.Fixtures
 
         public UserManager<IdentityUser> UserManager { get; }
 
-        public DbContextAndUserManagerFixture()
+        public HttpClient HttpClient { get; }
+
+        public WebFactoryFixture()
         {
             _factory = InitializeFactory();
 
@@ -25,8 +29,7 @@ namespace NewsSite.IntegrationTests.Fixtures
 
             DbContext = InitializeContext();
             UserManager = InitializeUserManager();
-
-            _factory.CreateClient();
+            HttpClient = _factory.CreateClient();
         }
 
         private WebApplicationFactory<Program> InitializeFactory()

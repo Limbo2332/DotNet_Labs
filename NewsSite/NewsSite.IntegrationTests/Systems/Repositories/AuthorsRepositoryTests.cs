@@ -9,13 +9,13 @@ using NewsSite.UnitTests.TestData.PageSettings.Authors;
 
 namespace NewsSite.IntegrationTests.Systems.Repositories
 {
-    [Collection(nameof(DbContextAndUserManagerFixture))]
+    [Collection(nameof(WebFactoryFixture))]
     public class AuthorsRepositoryTests
     {
         private readonly OnlineNewsContext _dbContext;
         private readonly IAuthorsRepository _sut;
 
-        public AuthorsRepositoryTests(DbContextAndUserManagerFixture fixture)
+        public AuthorsRepositoryTests(WebFactoryFixture fixture)
         {
             _dbContext = fixture.DbContext;
             UserManager<IdentityUser> userManager = fixture.UserManager;

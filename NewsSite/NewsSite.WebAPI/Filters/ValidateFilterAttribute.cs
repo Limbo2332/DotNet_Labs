@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NewsSite.DAL.Constants;
+using NewsSite.DAL.DTO;
 
 namespace NewsSite.UI.Filters
 {
@@ -12,13 +16,12 @@ namespace NewsSite.UI.Filters
             {
                 var errors = context.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
 
-                var result = new
+                context.Result = new BadRequestObjectResult(new BadRequestModel
                 {
-                    Message = "Validation errors",
-                    Errors = errors
-                };
-
-                context.Result = new BadRequestObjectResult(result);
+                    Errors = errors,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
+                    Message = ValidationMessages.VALIDATION_MESSAGE_RESPONSE
+                });
             }
         }
     }

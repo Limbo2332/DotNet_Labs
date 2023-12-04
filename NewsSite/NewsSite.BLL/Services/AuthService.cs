@@ -74,7 +74,10 @@ namespace NewsSite.BLL.Services
             await _authorsRepository.AddAsync(author);
             await _authorsRepository.SaveChangesAsync();
 
-            return _mapper.Map<NewUserResponse>(author);
+            var response = _mapper.Map<NewUserResponse>(author);
+            response.Token = GenerateTokenString(author.Email, author.FullName);
+
+            return response;
         }
 
         private string GenerateTokenString(string email, string fullName)

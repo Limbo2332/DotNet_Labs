@@ -64,8 +64,6 @@ namespace NewsSite.BLL.Services
 
         public async Task<RubricResponse> UpdateRubricAsync(UpdateRubricRequest newRubric)
         {
-            _ = await GetRubricByIdAsync(newRubric.Id);
-
             var rubric = _mapper.Map<Rubric>(newRubric);
 
             await _rubricsRepository.UpdateAsync(rubric);

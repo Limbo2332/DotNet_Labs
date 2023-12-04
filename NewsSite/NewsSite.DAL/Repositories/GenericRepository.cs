@@ -34,7 +34,6 @@ namespace NewsSite.DAL.Repositories
         public virtual async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-
             await SaveChangesAsync();
         }
 

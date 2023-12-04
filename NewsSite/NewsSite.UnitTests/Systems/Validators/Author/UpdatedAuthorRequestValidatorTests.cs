@@ -34,31 +34,6 @@ namespace NewsSite.UnitTests.Systems.Validators.Author
 
         [Theory]
         [ClassData(typeof(UpdatedAuthorRequestValidatorCorrectData))]
-        public async Task ValidateUpdatedAuthorRequest_Should_Fail_WhenEmailAndFullNameAlreadyExists(UpdatedAuthorRequest updatedAuthorRequest)
-        {
-            // Arrange
-            _authorsService
-                .IsEmailUnique(updatedAuthorRequest.Email)
-                .Returns(false);
-
-            _authorsService
-                .IsFullNameUnique(updatedAuthorRequest.FullName)
-                .Returns(false);
-
-            // Act
-            var result = await _sut.TestValidateAsync(updatedAuthorRequest);
-
-            // Assert
-            result.ShouldHaveValidationErrorFor(x => x.Email)
-                .WithErrorMessage(
-                    ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.EMAIL_PROPERTY_NAME));
-            result.ShouldHaveValidationErrorFor(x => x.FullName)
-                .WithErrorMessage(
-                    ValidationMessages.GetEntityIsNotUniqueMessage(ValidationMessages.FULL_NAME_PROPERTY_NAME));
-        }
-
-        [Theory]
-        [ClassData(typeof(UpdatedAuthorRequestValidatorCorrectData))]
         public async Task ValidateUpdatedAuthorRequest_Should_Success_WhenUpdatedAuthorRequest(UpdatedAuthorRequest updatedAuthorRequest)
         {
             // Arrange

@@ -4,6 +4,8 @@ namespace NewsSite.DAL.Constants
 {
     public static class ValidationMessages
     {
+        public const string VALIDATION_MESSAGE_RESPONSE = "Validation errors";
+
         public const string EMAIL_PROPERTY_NAME = "Email";
         public const string PASSWORD_PROPERTY_NAME = "Password";
         public const string NAME_PROPERTY_NAME = "Name";

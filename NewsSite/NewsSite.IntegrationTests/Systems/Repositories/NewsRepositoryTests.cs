@@ -6,13 +6,13 @@ using NewsSite.UnitTests.TestData;
 
 namespace NewsSite.IntegrationTests.Systems.Repositories
 {
-    [Collection(nameof(DbContextAndUserManagerFixture))]
+    [Collection(nameof(WebFactoryFixture))]
     public class NewsRepositoryTests
     {
         private readonly OnlineNewsContext _dbContext;
         private readonly INewsRepository _sut;
 
-        public NewsRepositoryTests(DbContextAndUserManagerFixture fixture)
+        public NewsRepositoryTests(WebFactoryFixture fixture)
         {
             _dbContext = fixture.DbContext;
 

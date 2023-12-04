@@ -15,7 +15,8 @@ namespace NewsSite.BLL.MappingProfiles
             CreateMap<NewNewsRequest, News>()
                 .ForMember(dest => dest.CreatedBy, src => src.MapFrom(n => n.AuthorId));
 
-            CreateMap<UpdateNewsRequest, News>();
+            CreateMap<UpdateNewsRequest, News>()
+                .ForMember(dest => dest.CreatedBy, src => src.MapFrom(n => n.AuthorId)); ;
         }
     }
 }

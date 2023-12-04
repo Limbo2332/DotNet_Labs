@@ -276,8 +276,8 @@ namespace NewsSite.UnitTests.Systems.Services
             var result = await _sut.RegisterAsync(userRegister);
 
             // Assert
-            result.Should().BeEquivalentTo(newUserResponse);
-            authors.Should().Contain(authorToAdd);
+            result.Should().BeEquivalentTo(newUserResponse, opt => opt.Excluding(r => r.Token));
+            authors.Should().ContainEquivalentOf(authorToAdd);
         }
     }
 }

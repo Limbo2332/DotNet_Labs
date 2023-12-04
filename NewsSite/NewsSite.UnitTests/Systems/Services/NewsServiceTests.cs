@@ -367,27 +367,6 @@ namespace NewsSite.UnitTests.Systems.Services
             news.NewsRubrics.Count().Should().Be(rubricsIds.Count);
         }
 
-        [Fact]
-        public async Task UpdateNewsAsync_ShouldThrowException_WhenNoNewsFound()
-        {
-            // Arrange
-            var newsId = Guid.Empty;
-            var exceptionMessage = new NotFoundException(nameof(News), newsId).Message;
-
-            var updateNewsRequest = new UpdateNewsRequest
-            {
-                Id = newsId
-            };
-
-            // Act
-            var action = async () => await Sut.UpdateNewsAsync(updateNewsRequest);
-
-            // Assert
-            await action.Should()
-                .ThrowAsync<NotFoundException>()
-                .WithMessage(exceptionMessage);
-        }
-
         [Theory]
         [ClassData(typeof(NewsTestData))]
         public async Task UpdateNewsAsync_ShouldUpdateNews_WhenNewsFound(News news)

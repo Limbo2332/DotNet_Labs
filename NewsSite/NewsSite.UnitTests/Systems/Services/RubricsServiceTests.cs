@@ -191,27 +191,6 @@ namespace NewsSite.UnitTests.Systems.Services
             rubricList.Should().Contain(rubric);
         }
 
-        [Fact]
-        public async Task UpdateRubricAsync_ShouldThrowException_WhenNoRubricFound()
-        {
-            // Arrange
-            var rubricId = Guid.Empty;
-            var exceptionMessage = new NotFoundException(nameof(Rubric), rubricId).Message;
-
-            var updateRubricRequest = new UpdateRubricRequest
-            {
-                Id = rubricId
-            };
-
-            // Act
-            var action = async () => await Sut.UpdateRubricAsync(updateRubricRequest);
-
-            // Assert
-            await action.Should()
-                .ThrowAsync<NotFoundException>()
-                .WithMessage(exceptionMessage);
-        }
-
         [Theory]
         [ClassData(typeof(RubricsTestData))]
         public async Task UpdateRubricAsync_ShouldUpdateRubric_WhenRubricFound(Rubric rubric)

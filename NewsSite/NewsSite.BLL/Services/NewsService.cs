@@ -118,10 +118,7 @@ namespace NewsSite.BLL.Services
 
         public async Task<NewsResponse> UpdateNewsAsync(UpdateNewsRequest updateNewsRequest)
         {
-            var news = await GetNewsByIdAsync(updateNewsRequest.Id);
             var updateNews = _mapper.Map<News>(updateNewsRequest);
-
-            updateNews.CreatedBy = news.AuthorId;
 
             await _newsRepository.UpdateAsync(updateNews);
             await _newsRepository.SaveChangesAsync();

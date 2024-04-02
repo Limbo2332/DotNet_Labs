@@ -2,8 +2,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using NewsSite.DAL.Context;
 using NewsSite.UI.Extensions;
-using NewsSite.UI.Filters;
 using System.Text.Json.Serialization;
+using NewsSite.UI.Endpoints;
 
 namespace NewsSite.UI
 {
@@ -25,11 +25,7 @@ namespace NewsSite.UI
             builder.Services.AddCustomServices();
 
             builder.Services
-                .AddControllers(options =>
-                {
-                    options.Filters.Add(typeof(ValidateFilterAttribute));
-                    options.Filters.Add(typeof(CustomExceptionFilterAttribute));
-                })
+                .AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             builder.Services.AddFluentValidationAutoValidation();
@@ -44,13 +40,14 @@ namespace NewsSite.UI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+        
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+            app.MapAuthEndpoints();
 
             app.Run();
         }

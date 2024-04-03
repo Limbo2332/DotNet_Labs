@@ -57,7 +57,6 @@ namespace NewsSite.BLL.Services
             var rubric = _mapper.Map<Rubric>(newRubric);
 
             await _rubricsRepository.AddAsync(rubric);
-            await _rubricsRepository.SaveChangesAsync();
 
             return _mapper.Map<RubricResponse>(rubric);
         }
@@ -74,7 +73,6 @@ namespace NewsSite.BLL.Services
         public async Task DeleteRubricAsync(Guid id)
         {
             await _rubricsRepository.DeleteAsync(id);
-            await _rubricsRepository.SaveChangesAsync();
         }
 
         public async Task DeleteRubricForNewsIdAsync(Guid rubricId, Guid newsId)

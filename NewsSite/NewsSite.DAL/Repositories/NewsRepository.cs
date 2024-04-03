@@ -23,6 +23,7 @@ namespace NewsSite.DAL.Repositories
                 });
 
             await _context.NewsRubrics.AddRangeAsync(newsRubrics);
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddNewsTagsAsync(Guid newsId, List<Guid> tagsIds)
@@ -37,27 +38,32 @@ namespace NewsSite.DAL.Repositories
                 });
 
             await _context.NewsTags.AddRangeAsync(newsTags);
+            await _context.SaveChangesAsync();
         }
 
         private async Task DeleteNewsRubricsByNewsIdAsync(Guid newsId)
         {
             var existingNewsRubrics = _context.NewsRubrics
+                .AsNoTracking()
                 .Where(nr => nr.NewsId == newsId);
 
             if (await existingNewsRubrics.AnyAsync())
             {
                 _context.NewsRubrics.RemoveRange(existingNewsRubrics);
+                await _context.SaveChangesAsync();
             }
         }
 
         private async Task DeleteNewsTagsByNewsIsAsync(Guid newsId)
         {
             var existingNewsTags = _context.NewsTags
+                .AsNoTracking()
                 .Where(nt => nt.NewsId == newsId);
 
             if (await existingNewsTags.AnyAsync())
             {
                 _context.NewsTags.RemoveRange(existingNewsTags);
+                await _context.SaveChangesAsync();
             }
         }
     }

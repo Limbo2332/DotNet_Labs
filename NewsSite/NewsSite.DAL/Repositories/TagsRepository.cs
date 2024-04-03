@@ -35,7 +35,7 @@ namespace NewsSite.DAL.Repositories
             };
 
             await _context.NewsTags.AddAsync(newNewsTags);
-            await SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return newNewsTags;
         }
@@ -47,13 +47,14 @@ namespace NewsSite.DAL.Repositories
             if (newsTags is not null)
             {
                 _context.NewsTags.Remove(newsTags);
-                await SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
 
         private async Task<NewsTags?> GetNewsTagsAsync(Guid tagId, Guid newsId)
         {
             return await _context.NewsTags
+                .AsNoTracking()
                 .FirstOrDefaultAsync(nt => nt.TagId == tagId && nt.NewsId == newsId);
         }
     }

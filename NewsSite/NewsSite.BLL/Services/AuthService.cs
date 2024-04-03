@@ -72,7 +72,6 @@ namespace NewsSite.BLL.Services
             var author = _mapper.Map<Author>(userRegister);
 
             await _authorsRepository.AddAsync(author);
-            await _authorsRepository.SaveChangesAsync();
 
             var response = _mapper.Map<NewUserResponse>(author);
             response.Token = GenerateTokenString(author.Email, author.FullName);

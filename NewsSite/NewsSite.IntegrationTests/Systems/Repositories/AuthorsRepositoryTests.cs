@@ -72,7 +72,6 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
 
             // Act
             await _sut.AddAsync(author);
-            await _sut.SaveChangesAsync();
 
             // Assert
             var authors = _sut.GetAll();
@@ -84,14 +83,14 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
         {
             // Arrange
             var birthDate = DateTime.MinValue;
-            var author = await _dbContext.Authors.FirstAsync();
+            var author = await _dbContext.Authors.AsNoTracking().FirstAsync();
             author.BirthDate = birthDate;
 
             // Act
             await _sut.UpdateAsync(author);
 
             // Assert
-            var updatedAuthor = await _dbContext.Authors.FindAsync(author.Id);
+            var updatedAuthor = await _sut.GetByIdAsync(author.Id);
             updatedAuthor.Should().BeEquivalentTo(author, opt => opt.Excluding(a => a.IdentityUser));
             updatedAuthor!.BirthDate.Should().Be(birthDate);
         }
@@ -100,14 +99,16 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
         public async Task DeleteAsync_ShouldDeleteAuthor_WhenAuthorExists()
         {
             // Arrange
-            var author = RepositoriesFakeData.Authors.First();
+            var author = _dbContext.Authors.AsNoTracking().First();
 
             // Act
             await _sut.DeleteAsync(author.Id);
-            await _sut.SaveChangesAsync();
 
             // Assert
             _dbContext.Authors.AsNoTracking().Should().NotContainEquivalentOf(author);
+            
+            // Cleanup
+            await _sut.AddAsync(author);
         }
 
         [Fact]

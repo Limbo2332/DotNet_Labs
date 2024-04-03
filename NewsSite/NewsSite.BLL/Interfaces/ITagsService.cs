@@ -10,7 +10,7 @@ namespace NewsSite.BLL.Interfaces
 
         Task<TagResponse> GetTagByIdAsync(Guid id);
 
-        Task<TagResponse> AddTagForNewsIdAsync(Guid tagId, Guid newsId);
+        Task<TagResponse> AddTagForNewsIdAsync(NewsTagRequest newsTagRequest);
 
         Task<TagResponse> CreateNewTagAsync(NewTagRequest newTag);
 

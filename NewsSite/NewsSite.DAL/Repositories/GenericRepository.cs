@@ -18,38 +18,35 @@ namespace NewsSite.DAL.Repositories
 
         public virtual IQueryable<T> GetAll()
         {
-            return _dbSet.AsQueryable().AsNoTracking();
+            return _dbSet.AsNoTracking();
         }
 
         public virtual async Task<T?> GetByIdAsync(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public virtual async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
         public virtual async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            await SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync(Guid id)
         {
-            var entity = await _dbSet.FindAsync(id);
+            var entity = await GetByIdAsync(id);
 
             if (entity is not null)
             {
                 _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
             }
-        }
-
-        public virtual async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
         }
     }
 }

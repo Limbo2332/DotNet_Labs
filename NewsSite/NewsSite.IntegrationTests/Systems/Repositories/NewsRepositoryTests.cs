@@ -27,7 +27,6 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
 
             // Act
             await _sut.DeleteAsync(news.Id);
-            await _sut.SaveChangesAsync();
 
             // Assert
             _dbContext.News.AsNoTracking().Should().NotContainEquivalentOf(news);
@@ -53,7 +52,6 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
 
             // Act
             await _sut.AddNewsRubricsAsync(newsId, rubricsIds);
-            await _sut.SaveChangesAsync();
 
             // Assert
             _dbContext.NewsRubrics
@@ -83,7 +81,6 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
 
             // Act
             await _sut.AddNewsTagsAsync(newsId, rubricsIds);
-            await _sut.SaveChangesAsync();
 
             // Assert
             _dbContext.NewsTags

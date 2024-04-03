@@ -40,9 +40,13 @@ namespace NewsSite.DAL.Repositories
             if (author is not null)
             {
                 var identityUser = await _userManager.FindByEmailAsync(author.Email);
-                await _userManager.DeleteAsync(identityUser!);
+                if (identityUser is not null)
+                {
+                    await _userManager.DeleteAsync(identityUser);
+                }
 
                 _dbSet.Remove(author);
+                await _context.SaveChangesAsync();
             }
         }
     }

@@ -111,8 +111,6 @@ namespace NewsSite.BLL.Services
                 await _newsRepository.AddNewsTagsAsync(newNews.Id, newNewsRequest.TagsIds);
             }
 
-            await _newsRepository.SaveChangesAsync();
-
             return _mapper.Map<NewsResponse>(newNews);
         }
 
@@ -121,7 +119,6 @@ namespace NewsSite.BLL.Services
             var updateNews = _mapper.Map<News>(updateNewsRequest);
 
             await _newsRepository.UpdateAsync(updateNews);
-            await _newsRepository.SaveChangesAsync();
 
             return _mapper.Map<NewsResponse>(updateNews);
         }
@@ -129,7 +126,6 @@ namespace NewsSite.BLL.Services
         public async Task DeleteNewsAsync(Guid newsId)
         {
             await _newsRepository.DeleteAsync(newsId);
-            await _newsRepository.SaveChangesAsync();
         }
 
         public override Expression<Func<News, bool>> GetFilteringExpressionFunc(string propertyName, string propertyValue)

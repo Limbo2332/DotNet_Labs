@@ -14,7 +14,7 @@ namespace NewsSite.UnitTests.Systems.Services
     {
         private readonly Mock<ITagsRepository> _tagsRepositoryMock;
 
-        protected override IQueryable<Tag> QueryableMock { get; }
+        protected sealed override IQueryable<Tag> QueryableMock { get; }
 
         protected override TagsService Sut { get; }
 
@@ -112,16 +112,19 @@ namespace NewsSite.UnitTests.Systems.Services
         public async Task AddTagForNewsIdAsync_ShouldThrowException_WhenNoTag()
         {
             // Arrange
-            var tagId = Guid.Empty;
-            var newsId = Guid.Empty;
+            var newNewsTagRequest = new NewsTagRequest
+            {
+                TagId = Guid.Empty,
+                NewsId = Guid.Empty
+            };
             var exceptionMessage = new NotFoundException(
                 nameof(Tag),
-                tagId,
+                newNewsTagRequest.TagId,
                 nameof(News),
-                newsId).Message;
+                newNewsTagRequest.NewsId).Message;
 
             // Act
-            var action = async () => await Sut.AddTagForNewsIdAsync(tagId, newsId);
+            var action = async () => await Sut.AddTagForNewsIdAsync(newNewsTagRequest);
 
             // Assert
             await action.Should()
@@ -141,6 +144,11 @@ namespace NewsSite.UnitTests.Systems.Services
                 TagId = tag.Id,
                 NewsId = newsId
             };
+            var newNewsTagRequest = new NewsTagRequest
+            {
+                TagId = newNewsTags.TagId,
+                NewsId = newsId
+            };
 
             _tagsRepositoryMock
                 .Setup(r => r.GetByIdAsync(tag.Id))
@@ -157,7 +165,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var tagResponse = _mapper.Map<TagResponse>(tag);
 
             // Act
-            var result = await Sut.AddTagForNewsIdAsync(tag.Id, newsId);
+            var result = await Sut.AddTagForNewsIdAsync(newNewsTagRequest);
 
             // Assert
             result.Should().BeEquivalentTo(tagResponse);

@@ -35,7 +35,7 @@ namespace NewsSite.DAL.Repositories
             };
 
             await _context.NewsRubrics.AddAsync(newNewsRubrics);
-            await SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return newNewsRubrics;
         }
@@ -47,13 +47,14 @@ namespace NewsSite.DAL.Repositories
             if (newsRubrics is not null)
             {
                 _context.NewsRubrics.Remove(newsRubrics);
-                await SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
 
         private async Task<NewsRubrics?> GetNewsRubricsAsync(Guid rubricId, Guid newsId)
         {
             return await _context.NewsRubrics
+                .AsNoTracking()
                 .FirstOrDefaultAsync(nt => nt.RubricId == rubricId && nt.NewsId == newsId);
         }
     }

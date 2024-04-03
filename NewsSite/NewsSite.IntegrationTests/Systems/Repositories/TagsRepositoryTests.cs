@@ -41,7 +41,7 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
         public async Task AddTagForNewsIdAsync_ShouldAddTag()
         {
             // Arrange
-            var tagId = _dbContext.Tags.Last().Id;
+            var tagId = _dbContext.Tags.AsNoTracking().Last().Id;
             var newsId = _newsRepository.GetAll().First().Id;
 
             var expectedNewsTag = new NewsTags
@@ -68,7 +68,7 @@ namespace NewsSite.IntegrationTests.Systems.Repositories
         public async Task DeleteTagForNewsIdAsync_ShouldDelete()
         {
             // Arrange
-            var newsTags = await _dbContext.NewsTags.FirstAsync();
+            var newsTags = await _dbContext.NewsTags.AsNoTracking().FirstAsync();
 
             // Act
             await _sut.DeleteTagForNewsIdAsync(newsTags.TagId, newsTags.NewsId);

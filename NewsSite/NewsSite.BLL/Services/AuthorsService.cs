@@ -57,7 +57,6 @@ namespace NewsSite.BLL.Services
         public async Task DeleteAuthorAsync(Guid authorId)
         {
             await _authorsRepository.DeleteAsync(authorId);
-            await _authorsRepository.SaveChangesAsync();
         }
 
         public bool IsEmailUnique(string email)

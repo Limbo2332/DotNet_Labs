@@ -42,10 +42,13 @@ namespace NewsSite.BLL.Services
             return _mapper.Map<TagResponse>(tag);
         }
 
-        public async Task<TagResponse> AddTagForNewsIdAsync(Guid tagId, Guid newsId)
+        public async Task<TagResponse> AddTagForNewsIdAsync(NewsTagRequest newsTagRequest)
         {
-            var newsTag = await _tagsRepository.AddTagForNewsIdAsync(tagId, newsId)
-                ?? throw new NotFoundException(nameof(Tag), tagId, nameof(News), newsId);
+            var newsTag = await _tagsRepository.AddTagForNewsIdAsync(newsTagRequest.TagId, newsTagRequest.NewsId)
+                ?? throw new NotFoundException(nameof(Tag), 
+                    newsTagRequest.TagId, 
+                    nameof(News), 
+                    newsTagRequest.NewsId);
 
             var tag = await GetTagByIdAsync(newsTag.TagId);
 
@@ -57,7 +60,6 @@ namespace NewsSite.BLL.Services
             var tag = _mapper.Map<Tag>(newTag);
 
             await _tagsRepository.AddAsync(tag);
-            await _tagsRepository.SaveChangesAsync();
 
             return _mapper.Map<TagResponse>(tag);
         }
@@ -76,7 +78,6 @@ namespace NewsSite.BLL.Services
         public async Task DeleteTagAsync(Guid id)
         {
             await _tagsRepository.DeleteAsync(id);
-            await _tagsRepository.SaveChangesAsync();
         }
 
         public async Task DeleteTagForNewsIdAsync(Guid tagId, Guid newsId)

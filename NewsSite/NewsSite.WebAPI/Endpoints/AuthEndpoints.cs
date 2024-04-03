@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using NewsSite.BLL.Exceptions;
 using NewsSite.BLL.Interfaces;
@@ -46,11 +47,10 @@ public static class AuthEndpoints
         }
     }
 
-    private static async Task<Results<Created<NewUserResponse>, BadRequest<BadRequestModel>>>
-        Register(
-            [FromBody] UserRegisterRequest userRegisterRequest,
-            IAuthService authService,
-            IValidator<UserRegisterRequest> validator)
+    private static async Task<Results<Created<NewUserResponse>, BadRequest<BadRequestModel>>> Register(
+        [FromBody] UserRegisterRequest userRegisterRequest,
+        IAuthService authService,
+        IValidator<UserRegisterRequest> validator)
     {
         var validationResult = await validator.ValidateAsync(userRegisterRequest);
         if (!validationResult.IsValid)

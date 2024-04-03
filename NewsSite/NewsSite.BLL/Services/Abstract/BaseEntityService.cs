@@ -59,7 +59,7 @@ namespace NewsSite.BLL.Services.Abstract
             return new PageList<TResult>()
             {
                 TotalCount = totalItemsCount,
-                PageSize = pageSettings?.PagePagination?.PageSize ?? PageList<AuthorResponse>.DEFAULT_PAGE_SIZE,
+                PageSize = pageSettings?.PagePagination?.PageSize ?? PageList<AuthorResponse>.DefaultPageSize,
                 PageNumber = pageSettings?.PagePagination?.PageNumber ?? 1,
                 Items = _mapper.Map<List<TResult>>(itemsEnumerable)
             };

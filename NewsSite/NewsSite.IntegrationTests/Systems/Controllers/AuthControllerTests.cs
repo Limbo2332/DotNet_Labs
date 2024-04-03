@@ -25,7 +25,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -49,7 +49,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -69,12 +69,12 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
 
             var userLoginRequest = new UserLoginRequest
             {
-                Email = _userRegisterRequest.Email,
-                Password = _userRegisterRequest.Password + _userRegisterRequest.Email
+                Email = UserRegisterRequest.Email,
+                Password = UserRegisterRequest.Password + UserRegisterRequest.Email
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -95,12 +95,12 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
 
             var userLoginRequest = new UserLoginRequest
             {
-                Email = _userRegisterRequest.Email,
-                Password = _userRegisterRequest.Password
+                Email = UserRegisterRequest.Email,
+                Password = UserRegisterRequest.Password
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/login", userLoginRequest);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -121,7 +121,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync("api/auth/register", userRegisterRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/register", userRegisterRequest);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -145,7 +145,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync("api/auth/register", userRegisterRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/register", userRegisterRequest);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -171,7 +171,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             };
 
             // Act
-            var response = await _httpClient.PostAsJsonAsync(
+            var response = await HttpClient.PostAsJsonAsync(
                 "api/auth/register", 
                 userRegisterRequest);
 

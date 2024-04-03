@@ -52,8 +52,8 @@ namespace NewsSite.UnitTests.Systems.Services
             {
                 result.Items.Should().BeEquivalentTo(response);
                 result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<RubricResponse>.DEFAULT_PAGE_SIZE);
+                result.TotalCount.Should().Be(RepositoriesFakeData.ItemsCount);
+                result.PageSize.Should().Be(PageList<RubricResponse>.DefaultPageSize);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();
                 result.HasPreviousPage.Should().BeFalse();

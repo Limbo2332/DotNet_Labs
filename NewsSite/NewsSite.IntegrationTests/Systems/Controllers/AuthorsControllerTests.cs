@@ -1,18 +1,11 @@
-﻿using NewsSite.DAL.DTO.Request.Auth;
-using NewsSite.DAL.DTO.Response;
+﻿using NewsSite.DAL.DTO.Response;
 using NewsSite.IntegrationTests.Fixtures;
 using NewsSite.IntegrationTests.Systems.Controllers.Abstract;
 using System.Net.Http.Json;
 using System.Net;
 using Microsoft.AspNetCore.WebUtilities;
 using NewsSite.DAL.DTO.Page;
-using NewsSite.DAL.DTO.Request.Author;
 using NewsSite.DAL.Entities;
-using NewsSite.UnitTests.TestData;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using Newtonsoft.Json;
-using System.Text;
 
 namespace NewsSite.IntegrationTests.Systems.Controllers
 {
@@ -30,21 +23,20 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
         public async Task GetAuthors_ShouldReturnOk()
         {
             // Arrange
-            var query = new Dictionary<string, string>()
+            var query = new Dictionary<string, string?>
             {
                 ["PageSorting.SortingProperty"] = nameof(Author.FullName),
                 ["PageSorting.SortingOrder"] = SortingOrder.Descending.ToString()
             };
 
-            var requestUri = QueryHelpers.AddQueryString("api/authors", query!);
+            var requestUri = QueryHelpers.AddQueryString("api/authors", query);
 
             // Act
-            var response = await _httpClient.GetAsync(requestUri);
+            var response = await HttpClient.GetAsync(requestUri);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var responseContent = 
-                await response.Content.ReadFromJsonAsync<PageList<AuthorResponse>>();
+            var responseContent = await response.Content.ReadFromJsonAsync<PageList<AuthorResponse>>();
 
             responseContent.Should().NotBeNull();
             responseContent!.Items.Should().BeInDescendingOrder(i => i.FullName);
@@ -57,12 +49,11 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             var author = _dbContext.Authors.First();
 
             // Act
-            var response = await _httpClient.GetAsync($"api/authors/{author.Id}");
+            var response = await HttpClient.GetAsync($"api/authors/{author.Id}");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var responseContent =
-                await response.Content.ReadFromJsonAsync<AuthorResponse>();
+            var responseContent = await response.Content.ReadFromJsonAsync<AuthorResponse>();
 
             responseContent.Should().NotBeNull();
             responseContent!.Id.Should().Be(author.Id);
@@ -76,7 +67,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             var author = _dbContext.Authors.Last();
 
             // Act
-            var response = await _httpClient.DeleteAsync($"api/authors/{author.Id}");
+            var response = await HttpClient.DeleteAsync($"api/authors/{author.Id}");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);

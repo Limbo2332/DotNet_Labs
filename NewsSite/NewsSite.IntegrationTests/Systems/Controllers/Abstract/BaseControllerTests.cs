@@ -8,14 +8,14 @@ namespace NewsSite.IntegrationTests.Systems.Controllers.Abstract
 {
     public abstract class BaseControllerTests
     {
-        protected readonly HttpClient _httpClient;
-        protected readonly UserRegisterRequest _userRegisterRequest;
+        protected readonly HttpClient HttpClient;
+        protected readonly UserRegisterRequest UserRegisterRequest;
 
         protected BaseControllerTests(WebFactoryFixture fixture)
         {
-            _httpClient = fixture.HttpClient;
+            HttpClient = fixture.HttpClient;
 
-            _userRegisterRequest = new UserRegisterRequest
+            UserRegisterRequest = new UserRegisterRequest
             {
                 FullName = "testFullName",
                 Email = "testEmail@gmail.com",
@@ -25,13 +25,13 @@ namespace NewsSite.IntegrationTests.Systems.Controllers.Abstract
 
         protected async Task AuthenticateAsync()
         {
-            _httpClient.DefaultRequestHeaders.Authorization ??= 
+            HttpClient.DefaultRequestHeaders.Authorization ??= 
                 new AuthenticationHeaderValue("Bearer", await GenerateTokenAsync());
         }
 
-        protected async Task<string> GenerateTokenAsync()
+        private async Task<string> GenerateTokenAsync()
         {
-            var response = await _httpClient.PostAsJsonAsync("api/auth/register", _userRegisterRequest);
+            var response = await HttpClient.PostAsJsonAsync("api/auth/register", UserRegisterRequest);
 
             var registrationResponse = await response.Content.ReadFromJsonAsync<NewUserResponse>();
 

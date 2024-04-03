@@ -2,9 +2,9 @@
 {
     public class PageList<T> where T : class
     {
-        public const int MAX_PAGE_SIZE = 100;
-        public const int DEFAULT_PAGE_SIZE = 30;
-        private int _pageSize = DEFAULT_PAGE_SIZE;
+        private const int MAX_PAGE_SIZE = 100;
+        public const int DefaultPageSize = 30;
+        private int _pageSize = DefaultPageSize;
 
         public List<T> Items { get; set; } = null!;
 

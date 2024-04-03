@@ -32,8 +32,8 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             {
                 result.Items.Should().BeEquivalentTo(response);
                 result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<TResult>.DEFAULT_PAGE_SIZE);
+                result.TotalCount.Should().Be(RepositoriesFakeData.ItemsCount);
+                result.PageSize.Should().Be(PageList<TResult>.DefaultPageSize);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();
                 result.HasPreviousPage.Should().BeFalse();
@@ -69,7 +69,7 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             {
                 result.Items.Should().BeEquivalentTo(response);
                 result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.ITEMS_COUNT);
+                result.TotalCount.Should().Be(RepositoriesFakeData.ItemsCount);
                 result.PageSize.Should().Be(pageSize);
                 result.PageNumber.Should().Be(pageNumber);
                 result.HasNextPage.Should().BeFalse();
@@ -103,7 +103,7 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
                 result.Items.Should().BeEquivalentTo(response);
                 result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
                 result.TotalCount.Should().Be(1);
-                result.PageSize.Should().Be(PageList<TResult>.DEFAULT_PAGE_SIZE);
+                result.PageSize.Should().Be(PageList<TResult>.DefaultPageSize);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();
                 result.HasPreviousPage.Should().BeFalse();
@@ -135,8 +135,8 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             {
                 result.Items.Should().BeEquivalentTo(response);
                 result.Items.Should().BeInAscendingOrder(i => i.UpdatedAt);
-                result.TotalCount.Should().Be(RepositoriesFakeData.ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<TResult>.DEFAULT_PAGE_SIZE);
+                result.TotalCount.Should().Be(RepositoriesFakeData.ItemsCount);
+                result.PageSize.Should().Be(PageList<TResult>.DefaultPageSize);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();
                 result.HasPreviousPage.Should().BeFalse();
@@ -166,8 +166,8 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             using (new AssertionScope())
             {
                 result.Items.Should().ContainInConsecutiveOrder(response);
-                result.TotalCount.Should().Be(RepositoriesFakeData.ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<TResult>.DEFAULT_PAGE_SIZE);
+                result.TotalCount.Should().Be(RepositoriesFakeData.ItemsCount);
+                result.PageSize.Should().Be(PageList<TResult>.DefaultPageSize);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();
                 result.HasPreviousPage.Should().BeFalse();
@@ -195,8 +195,8 @@ namespace NewsSite.UnitTests.Systems.Services.Abstract
             using (new AssertionScope())
             {
                 result.Items.Should().ContainInConsecutiveOrder(response);
-                result.TotalCount.Should().Be(RepositoriesFakeData.ITEMS_COUNT);
-                result.PageSize.Should().Be(PageList<TResult>.DEFAULT_PAGE_SIZE);
+                result.TotalCount.Should().Be(RepositoriesFakeData.ItemsCount);
+                result.PageSize.Should().Be(PageList<TResult>.DefaultPageSize);
                 result.PageNumber.Should().Be(1);
                 result.HasNextPage.Should().BeFalse();
                 result.HasPreviousPage.Should().BeFalse();

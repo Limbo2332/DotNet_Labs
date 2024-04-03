@@ -19,33 +19,7 @@ namespace NewsSite.UnitTests.Systems.Controllers
 
             _sut = new TagsController(_tagsService);
         }
-
-        [Fact]
-        public async Task GetTags_ShouldBeSuccessful()
-        {
-            // Arrange
-            var pageSettings = Substitute.For<PageSettings>();
-            var tagResponseList = Substitute.For<PageList<TagResponse>>();
-
-            _tagsService
-                .GetTagsAsync(pageSettings)
-                .Returns(tagResponseList);
-
-            // Act
-            var result = await _sut.GetTags(pageSettings);
-            var response = result.Result as OkObjectResult;
-
-            // Assert
-            using (new AssertionScope())
-            {
-                _tagsService.ReceivedCalls().Count().Should().Be(1);
-
-                response.Should().NotBeNull();
-                response!.Value.Should().Be(tagResponseList);
-                response.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            }
-        }
-
+        
         [Fact]
         public async Task GetTagById_ShouldBeSuccessful()
         {

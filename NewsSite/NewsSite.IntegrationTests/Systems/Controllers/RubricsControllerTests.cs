@@ -31,7 +31,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             };
 
             // Act
-            var response = await _httpClient.PutAsJsonAsync("api/rubrics", rubricToUpdate);
+            var response = await HttpClient.PutAsJsonAsync("api/rubrics", rubricToUpdate);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

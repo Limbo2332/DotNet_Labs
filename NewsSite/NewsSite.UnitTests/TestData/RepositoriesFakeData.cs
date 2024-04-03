@@ -3,13 +3,13 @@ using NewsSite.DAL.Context.Constants;
 
 namespace NewsSite.UnitTests.TestData
 {
-    public class RepositoriesFakeData
+    public abstract class RepositoriesFakeData
     {
-        public const int ITEMS_COUNT = 5;
+        public const int ItemsCount = 5;
 
-        public static List<Author> Authors = GenerateAuthors(ITEMS_COUNT, 1000);
+        public static readonly List<Author> Authors = GenerateAuthors(ItemsCount, 1000);
 
-        public static List<News> News = new Faker<News>()
+        public static readonly List<News> News = new Faker<News>()
             .UseSeed(2000)
             .RuleFor(n => n.Id, f => f.Random.Guid())
             .RuleFor(n => n.CreatedAt, _ => DateTime.UtcNow)
@@ -17,27 +17,27 @@ namespace NewsSite.UnitTests.TestData
             .RuleFor(n => n.CreatedBy, f => f.PickRandom(Authors).Id)
             .RuleFor(n => n.Subject, f => f.Lorem.Sentence())
             .RuleFor(n => n.Content, f => f.Lorem.Paragraph())
-            .Generate(ITEMS_COUNT);
+            .Generate(ItemsCount);
 
-        public static List<Rubric> Rubrics = new Faker<Rubric>()
+        public static readonly List<Rubric> Rubrics = new Faker<Rubric>()
             .UseSeed(3000)
             .RuleFor(r => r.Id, f => f.Random.Guid())
             .RuleFor(r => r.CreatedAt, _ => DateTime.UtcNow)
             .RuleFor(r => r.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(r => r.Name, f => f.Lorem.Word())
-            .Generate(ITEMS_COUNT);
+            .Generate(ItemsCount);
 
-        public static List<Tag> Tags = new Faker<Tag>()
+        public static readonly List<Tag> Tags = new Faker<Tag>()
             .UseSeed(4000)
             .RuleFor(t => t.Id, f => f.Random.Guid())
             .RuleFor(t => t.CreatedAt, _ => DateTime.UtcNow)
             .RuleFor(t => t.UpdatedAt, _ => DateTime.UtcNow)
             .RuleFor(t => t.Name, f => f.Lorem.Word())
-            .Generate(ITEMS_COUNT);
+            .Generate(ItemsCount);
 
-        public static List<NewsRubrics> NewsRubrics = GenerateNewsRubrics(ITEMS_COUNT * 2, 5000);
+        public static readonly List<NewsRubrics> NewsRubrics = GenerateNewsRubrics(ItemsCount * 2, 5000);
 
-        public static List<NewsTags> NewsTags = GenerateNewsTags(ITEMS_COUNT * 2, 6000);
+        public static readonly List<NewsTags> NewsTags = GenerateNewsTags(ItemsCount * 2, 6000);
 
         public static List<Author> GenerateAuthors(int count, int seed)
         {

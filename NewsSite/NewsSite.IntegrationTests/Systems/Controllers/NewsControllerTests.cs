@@ -27,17 +27,17 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             // Arrange
             var rubricId = _dbContext.NewsRubrics.First().RubricId;
 
-            var query = new Dictionary<string, string>()
+            var query = new Dictionary<string, string?>()
             {
                 ["rubricId"] = rubricId.ToString(),
                 ["PageSorting.SortingProperty"] = nameof(News.Content),
                 ["PageSorting.SortingOrder"] = SortingOrder.Ascending.ToString()
             };
 
-            var requestUri = QueryHelpers.AddQueryString("api/news/by-rubric", query!);
+            var requestUri = QueryHelpers.AddQueryString("api/news/by-rubric", query);
 
             // Act
-            var response = await _httpClient.GetAsync(requestUri);
+            var response = await HttpClient.GetAsync(requestUri);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -64,7 +64,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
             var requestUri = QueryHelpers.AddQueryString("api/news/by-tags", query!);
 
             // Act
-            var response = await _httpClient.GetAsync(requestUri);
+            var response = await HttpClient.GetAsync(requestUri);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

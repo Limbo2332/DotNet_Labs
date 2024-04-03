@@ -45,9 +45,10 @@ namespace NewsSite.UI
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.MapControllers();
             app.MapAuthEndpoints();
+            app.MapTagsEndpoints();
 
             app.Run();
         }

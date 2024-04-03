@@ -19,16 +19,6 @@ namespace NewsSite.UI.Controllers
             _tagsService = tagsService;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [ProducesResponseType(typeof(PageList<TagResponse>), 200)]
-        public async Task<ActionResult<PageList<TagResponse>>> GetTags([FromQuery] PageSettings? pageSettings)
-        {
-            var pageList = await _tagsService.GetTagsAsync(pageSettings);
-
-            return Ok(pageList);
-        }
-
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(TagResponse), 200)]
         public async Task<ActionResult<PageList<TagResponse>>> GetTagById([FromRoute] Guid id)

@@ -51,6 +51,7 @@ namespace NewsSite.UI
             app.MapTagsEndpoints();
             app.MapRubricsEndpoints();
             app.MapNewsEndpoints();
+            app.MapAuthorsEndpoints();
 
             app.Run();
         }

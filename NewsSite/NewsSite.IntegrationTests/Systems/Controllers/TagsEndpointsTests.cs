@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace NewsSite.IntegrationTests.Systems.Controllers;
 
 [Collection(nameof(WebFactoryFixture))]
-public class TagsControllerTests(WebFactoryFixture fixture) : BaseControllerTests(fixture)
+public class TagsEndpointsTests(WebFactoryFixture fixture) : BaseControllerTests(fixture)
 {
     private readonly OnlineNewsContext _dbContext = fixture.DbContext;
     

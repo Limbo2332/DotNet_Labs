@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace NewsSite.IntegrationTests.Systems.Controllers
 {
     [Collection(nameof(WebFactoryFixture))]
-    public class AuthControllerTests(WebFactoryFixture fixture) : BaseControllerTests(fixture)
+    public class AuthEndpointsTests(WebFactoryFixture fixture) : BaseControllerTests(fixture)
     {
         [Fact]
         public async Task Login_ShouldReturnBadRequest_WhenValidationIsWrong()

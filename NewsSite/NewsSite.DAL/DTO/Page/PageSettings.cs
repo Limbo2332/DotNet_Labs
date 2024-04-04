@@ -23,7 +23,7 @@ namespace NewsSite.DAL.DTO.Page
                 .Request
                 .Query[$"{nameof(PageSorting)}.{nameof(PageSorting.SortingOrder)}"]
                 .FirstOrDefault() ?? "asc";
-            var sortingOrder = sortingOrderString.Contains("desc") 
+            var sortingOrder = sortingOrderString.ToLower().Contains("desc") 
                 ? SortingOrder.Descending 
                 : SortingOrder.Ascending;
 

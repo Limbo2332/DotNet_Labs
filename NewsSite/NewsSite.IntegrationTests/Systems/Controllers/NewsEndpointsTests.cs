@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 namespace NewsSite.IntegrationTests.Systems.Controllers
 {
     [Collection(nameof(WebFactoryFixture))]
-    public class NewsControllerTests(WebFactoryFixture fixture) : BaseControllerTests(fixture)
+    public class NewsEndpointsTests(WebFactoryFixture fixture) : BaseControllerTests(fixture)
     {
         private readonly OnlineNewsContext _dbContext = fixture.DbContext;
 
@@ -330,7 +330,7 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
 
         #endregion
         
-        #region CreateNewsAsync Tests
+        #region UpdateNewsAsync Tests
 
         [Fact]
         public async Task UpdateNewsAsync_ShouldReturnCreated_WhenValidationIsPassed()

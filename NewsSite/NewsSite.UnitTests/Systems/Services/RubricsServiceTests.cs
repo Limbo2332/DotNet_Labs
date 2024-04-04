@@ -112,16 +112,19 @@ namespace NewsSite.UnitTests.Systems.Services
         public async Task AddRubricForNewsIdAsync_ShouldThrowException_WhenNoRubric()
         {
             // Arrange
-            var rubricId = Guid.Empty;
-            var newsId = Guid.Empty;
+            var newsRubricRequest = new NewsRubricRequest
+            {
+                RubricId = Guid.Empty,
+                NewsId = Guid.Empty
+            };
             var exceptionMessage = new NotFoundException(
                 nameof(Rubric),
-                rubricId,
+                newsRubricRequest.RubricId,
                 nameof(News),
-                newsId).Message;
+                newsRubricRequest.NewsId).Message;
 
             // Act
-            var action = async () => await Sut.AddRubricForNewsIdAsync(rubricId, newsId);
+            var action = async () => await Sut.AddRubricForNewsIdAsync(newsRubricRequest);
 
             // Assert
             await action.Should()
@@ -137,6 +140,11 @@ namespace NewsSite.UnitTests.Systems.Services
             var newsId = Guid.Empty;
             var newsRubricsList = RepositoriesFakeData.NewsRubrics.ToList();
             var newNewsRubrics = new NewsRubrics
+            {
+                RubricId = rubric.Id,
+                NewsId = newsId
+            };
+            var newsRubricRequest = new NewsRubricRequest
             {
                 RubricId = rubric.Id,
                 NewsId = newsId
@@ -157,7 +165,7 @@ namespace NewsSite.UnitTests.Systems.Services
             var rubricResponse = _mapper.Map<RubricResponse>(rubric);
 
             // Act
-            var result = await Sut.AddRubricForNewsIdAsync(rubric.Id, newsId);
+            var result = await Sut.AddRubricForNewsIdAsync(newsRubricRequest);
 
             // Assert
             result.Should().BeEquivalentTo(rubricResponse);

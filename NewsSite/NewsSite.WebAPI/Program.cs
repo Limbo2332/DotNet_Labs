@@ -49,6 +49,7 @@ namespace NewsSite.UI
             app.MapControllers();
             app.MapAuthEndpoints();
             app.MapTagsEndpoints();
+            app.MapRubricsEndpoints();
 
             app.Run();
         }

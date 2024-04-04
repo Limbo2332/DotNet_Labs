@@ -42,10 +42,13 @@ namespace NewsSite.BLL.Services
             return _mapper.Map<RubricResponse>(rubric);
         }
 
-        public async Task<RubricResponse> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId)
+        public async Task<RubricResponse> AddRubricForNewsIdAsync(NewsRubricRequest newsRubricRequest)
         {
-            var newsRubric = await _rubricsRepository.AddRubricForNewsIdAsync(rubricId, newsId)
-                      ?? throw new NotFoundException(nameof(Rubric), rubricId, nameof(News), newsId);
+            var newsRubric = await _rubricsRepository.AddRubricForNewsIdAsync(newsRubricRequest.RubricId, newsRubricRequest.NewsId)
+                      ?? throw new NotFoundException(nameof(Rubric), 
+                          newsRubricRequest.RubricId, 
+                          nameof(News), 
+                          newsRubricRequest.NewsId);
 
             var rubric = await GetRubricByIdAsync(newsRubric.RubricId);
 

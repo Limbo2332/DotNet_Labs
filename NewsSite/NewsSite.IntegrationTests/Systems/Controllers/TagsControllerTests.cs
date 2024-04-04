@@ -9,6 +9,7 @@ using NewsSite.DAL.DTO;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.Tag;
 using NewsSite.DAL.DTO.Response;
+using NewsSite.DAL.Entities;
 using NewsSite.IntegrationTests.Fixtures;
 using NewsSite.IntegrationTests.Systems.Controllers.Abstract;
 using Newtonsoft.Json;
@@ -123,6 +124,27 @@ public class TagsControllerTests(WebFactoryFixture fixture) : BaseControllerTest
 
         responseContent.Should().NotBeNull();
         responseContent.Should().BeEquivalentTo(tag, src => src.Excluding(t => t.CreatedAt));
+    }
+    
+    [Fact]
+    public async Task GetTagByIdAsync_ShouldReturnBadRequest_WhenTagNotFound()
+    {
+        // Arrange
+        var tagId = Guid.Empty;
+        var exceptionMessage = new NotFoundException(nameof(Tag), tagId).Message;
+
+        // Act
+        var response = await HttpClient.GetAsync($"api/tags/{tagId}");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var badRequestModel = JsonConvert.DeserializeObject<BadRequestModel>(responseContent);
+
+        badRequestModel.Should().NotBeNull();
+        badRequestModel!.Errors.Should().NotBeEmpty();
+        badRequestModel.Message.Should().Be(exceptionMessage);
+        badRequestModel.HttpStatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
     #endregion
@@ -337,6 +359,7 @@ public class TagsControllerTests(WebFactoryFixture fixture) : BaseControllerTest
     public async Task DeleteTagForNewsAsync_ShouldReturnNoContent()
     {
         // Arrange
+        await AuthenticateAsync();
         var newsTag = _dbContext.NewsTags.First();
         
         // Act

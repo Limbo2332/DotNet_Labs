@@ -12,7 +12,7 @@ namespace NewsSite.BLL.Interfaces
 
         Task<RubricResponse> CreateNewRubricAsync(NewRubricRequest newRubric);
 
-        Task<RubricResponse> AddRubricForNewsIdAsync(Guid rubricId, Guid newsId);
+        Task<RubricResponse> AddRubricForNewsIdAsync(NewsRubricRequest newsRubricRequest);
 
         Task<RubricResponse> UpdateRubricAsync(UpdateRubricRequest newRubric);
 

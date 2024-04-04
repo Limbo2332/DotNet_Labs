@@ -14,7 +14,7 @@ public static class TagsEndpoints
 {
     public static void MapTagsEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tags");
+        var group = app.MapGroup("api/tags").RequireAuthorization();
         group.MapGet(string.Empty, GetTagsAsync).AllowAnonymous();
         group.MapGet("{id:guid}", GetTagByIdAsync);
         group.MapPost(string.Empty, CreateNewTagAsync);
@@ -33,13 +33,20 @@ public static class TagsEndpoints
         return Results.Ok(pageList);
     }
 
-    private static async Task<IResult> GetTagByIdAsync(
+    private static async Task<Results<Ok<TagResponse>, NotFound<BadRequestModel>>> GetTagByIdAsync(
         [FromRoute] Guid id,
         ITagsService tagsService)
     {
-        var tag = await tagsService.GetTagByIdAsync(id);
+        try
+        {
+            var tag = await tagsService.GetTagByIdAsync(id);
 
-        return Results.Ok(tag);
+            return TypedResults.Ok(tag);
+        }
+        catch (Exception ex)
+        {
+            return TypedResults.NotFound(ex.ToBadRequestModel());
+        }
     }
 
     private static async Task<Results<Created<TagResponse>, BadRequest<BadRequestModel>>> CreateNewTagAsync(

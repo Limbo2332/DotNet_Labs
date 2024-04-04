@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NewsSite.UnitTests.TestData;
-using System.Net.Http.Headers;
-using System.Net.Http;
 
 namespace NewsSite.IntegrationTests.Fixtures
 {

@@ -6,22 +6,15 @@ using NewsSite.IntegrationTests.Fixtures;
 
 namespace NewsSite.IntegrationTests.Systems.Controllers.Abstract
 {
-    public abstract class BaseControllerTests
+    public class BaseControllerTests(WebFactoryFixture fixture)
     {
-        protected readonly HttpClient HttpClient;
-        protected readonly UserRegisterRequest UserRegisterRequest;
-
-        protected BaseControllerTests(WebFactoryFixture fixture)
+        protected readonly HttpClient HttpClient = fixture.HttpClient;
+        protected readonly UserRegisterRequest UserRegisterRequest = new()
         {
-            HttpClient = fixture.HttpClient;
-
-            UserRegisterRequest = new UserRegisterRequest
-            {
-                FullName = "testFullName",
-                Email = "testEmail@gmail.com",
-                Password = "testPassword123$"
-            };
-        }
+            FullName = "testFullName",
+            Email = "testEmail@gmail.com",
+            Password = "testPassword123$"
+        };
 
         protected async Task AuthenticateAsync()
         {

@@ -11,6 +11,7 @@ using NewsSite.DAL.DTO;
 using NewsSite.DAL.DTO.Page;
 using NewsSite.DAL.DTO.Request.Rubric;
 using NewsSite.DAL.Entities;
+using NewsSite.UnitTests.TestData;
 using Newtonsoft.Json;
 
 namespace NewsSite.IntegrationTests.Systems.Controllers
@@ -212,12 +213,11 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
     {
         // Arrange
         await AuthenticateAsync();
-        var rubric = _dbContext.Rubrics.First();
-
+        var newsRubric = RepositoriesFakeData.GenerateNewsRubrics(1, 1).First();
         var newNewsRubricRequest = new NewsRubricRequest
         {
-            RubricId = rubric.Id,
-            NewsId = _dbContext.News.First().Id
+            RubricId = newsRubric.RubricId,
+            NewsId = newsRubric.NewsId
         };
 
         // Act
@@ -228,10 +228,10 @@ namespace NewsSite.IntegrationTests.Systems.Controllers
         var responseContent = await response.Content.ReadFromJsonAsync<RubricResponse>();
 
         responseContent.Should().NotBeNull();
-        responseContent.Should().BeEquivalentTo(rubric, src => src.Excluding(t => t.CreatedAt));
+        _dbContext.NewsRubrics.AsNoTracking().ToList().Should().ContainEquivalentOf(newsRubric);
         
         // Cleanup
-        var newsRubrics = _dbContext.NewsRubrics.First(nt => nt.RubricId == rubric.Id && nt.NewsId == newNewsRubricRequest.NewsId);
+        var newsRubrics = _dbContext.NewsRubrics.AsNoTracking().First(nt => nt.RubricId == newsRubric.RubricId && nt.NewsId == newNewsRubricRequest.NewsId);
         _dbContext.NewsRubrics.Remove(newsRubrics);
         await _dbContext.SaveChangesAsync();
     }

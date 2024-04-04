@@ -50,6 +50,7 @@ namespace NewsSite.UI
             app.MapAuthEndpoints();
             app.MapTagsEndpoints();
             app.MapRubricsEndpoints();
+            app.MapNewsEndpoints();
 
             app.Run();
         }
